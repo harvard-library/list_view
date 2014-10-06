@@ -1,0 +1,26 @@
+<% if @record %>
+  <div class="comment">
+    <pre>
+<%= @record.comment %>
+    </pre>
+  </div>
+  <div class="url">
+    <a class="ll url" href="<%= @record.url %>">Record Link</a>
+  </div>
+  <ul>
+    <% @record.links.each do |link| %>
+      <li><span class="name"><%= link.name %></span> <a class="url" href="<%= link.url %>"><%= link.url %></a></li>
+    <% end %>
+  </ul>
+  <div>
+    <pre>
+<%= @record.cached_metadata %>
+    </pre>
+  </div>
+<% else %>
+  <ul>
+    <% Dir.glob('public/spreadsheets/*.xlsx').each do |xlsx| %>
+      <li><a href="<%= xlsx.match(/\d{9}/)[0] %>"><%= xlsx %></a></li>
+    <% end %>
+  </ul>
+<% end %>
