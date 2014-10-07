@@ -1,5 +1,9 @@
+@import "harvard";
+
+$link-color: $bluebonnet;
+$text-color: $ink;
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-@import "harvard";
 @import "global";

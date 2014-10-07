@@ -5,6 +5,25 @@
   }
 }
 
+h2 {
+  text-align: center;
+  color: $indigo;
+  margin-bottom: 1em;
+}
+
+#content {
+  @include make-xs-column(12);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+}
+
+a[href] {
+  text-decoration: underline;
+  &:hover {
+    color: $link-color - #222;
+  }
+}
+
 #content div {
   margin-bottom: 1em;
 }

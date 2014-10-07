@@ -4,6 +4,8 @@ class LinkListsController < ApplicationController
     unless params[:number].blank?
       (@record = LinkList.find_by_ext_id params[:number]) ||
         (@record = LinkList.import_xlsx(Roo::Excelx.new("public/spreadsheets/HOLLIS_Links_#{params[:number]}.xlsx"))).save!
+
+      @mods = JSON.parse(@record.cached_metadata)
     end
   end
 end

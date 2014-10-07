@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>HollisLinksNg</title>
+  <link type="image/vnd.microsoft.icon" href="http://guidelines.hwp.harvard.edu/profiles/openscholar/themes/hwpi_classic/favicon.ico" rel="shortcut icon">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -11,7 +12,7 @@
   <div class="page-header">
     <h1>HollisLinks NG</h1>
   </div>
-  <div id="content" class="col-xs-8 col-xs-offset-2">
+  <div id="content">
     <%= yield %>
   </div>
 </div>
