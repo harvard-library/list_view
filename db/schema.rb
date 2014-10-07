@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(version: 20141006160238) do
   end
 
   create_table "links", force: true do |t|
-    t.integer "position",     default: 0, null: false
-    t.integer "link_list_id",             null: false
-    t.string  "name",                     null: false
-    t.string  "url",                      null: false
+    t.integer "position",     null: false
+    t.integer "link_list_id", null: false
+    t.string  "name",         null: false
+    t.string  "url",          null: false
   end
 
 end

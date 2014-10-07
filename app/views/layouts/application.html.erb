@@ -7,8 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>HollisLinks NG</h1>
+  </div>
+  <div id="content" class="col-xs-8 col-xs-offset-2">
+    <%= yield %>
+  </div>
+</div>
 
 </body>
 </html>

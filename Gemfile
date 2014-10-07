@@ -11,6 +11,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'roo'
 gem 'acts_as_list'
 gem 'httparty'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 
 group :development do
   gem 'spring'

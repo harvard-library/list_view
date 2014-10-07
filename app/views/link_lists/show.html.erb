@@ -1,17 +1,23 @@
 <% if @record %>
   <div class="comment">
-    <pre>
-<%= @record.comment %>
-    </pre>
+<%== @record.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
   </div>
   <div class="url">
     <a class="ll url" href="<%= @record.url %>">Record Link</a>
   </div>
-  <ul>
-    <% @record.links.each do |link| %>
-      <li><span class="name"><%= link.name %></span> <a class="url" href="<%= link.url %>"><%= link.url %></a></li>
-    <% end %>
-  </ul>
+  <table style="border: 1px solid #ddd" class="table table-striped">
+    <thead>
+      <tr><th>Label</th> <th>Link</th></tr>
+    </thead>
+    <tbody>
+      <% @record.links.each do |link| %>
+        <tr>
+          <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>"><%= link.url %></a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <div>
     <pre>
 <%= @record.cached_metadata %>
@@ -20,7 +26,7 @@
 <% else %>
   <ul>
     <% Dir.glob('public/spreadsheets/*.xlsx').each do |xlsx| %>
-      <li><a href="<%= xlsx.match(/\d{9}/)[0] %>"><%= xlsx %></a></li>
+      <li><a href="<%= xlsx.match(/\d{8,}/)[0] %>"><%= xlsx %></a></li>
     <% end %>
   </ul>
 <% end %>

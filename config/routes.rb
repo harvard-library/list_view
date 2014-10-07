@@ -54,5 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get 'hollis(/:number)' => 'link_lists#show'
+  get '(:number)' => 'link_lists#show'
+
+  root 'link_lists#show'
 end

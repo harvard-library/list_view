@@ -30,12 +30,16 @@ GEM
     acts_as_list (0.4.0)
       activerecord (>= 3.0)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (3.1.1.20141001)
+      execjs
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
     builder (3.2.2)
     capistrano (3.1.0)
       i18n
@@ -166,8 +170,10 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list
+  autoprefixer-rails
   better_errors
   binding_of_caller
+  bootstrap-sass (~> 3.2.0)
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
