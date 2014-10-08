@@ -38,16 +38,25 @@ class LinkList < ActiveRecord::Base
       Link.new(:name => label, :url => url)
     end
 
-    # fetch MODS metadata
-    response = HTTParty.get("http://webservices.lib.harvard.edu/rest/mods/#{result.ext_id_type}/#{result.ext_id}",
-                            :headers => {"Accept" => "application/json"})
-    if response.code == 200
-      result.cached_metadata = response.body
-    else
-      puts "Blarghed out on fetching metadata"
-    end
-
     result
   end
 
+  def fetch_metadata
+    # fetch MODS metadata
+    begin
+      response = HTTParty.get("http://webservices.lib.harvard.edu/rest/mods/#{ext_id_type}/#{ext_id}",
+                              :headers => {"Accept" => "application/json"})
+      if response.code == 200 && !response.body.blank?
+        cached_metadata = response.body
+      else
+        raise StandardError, "Failed to fetch metadata"
+      end
+    rescue StandardError => e
+      if e.message == "Failed to fetch metadata"
+        cached_metadata = nil
+      else
+        raise e
+      end
+    end
+  end
 end
