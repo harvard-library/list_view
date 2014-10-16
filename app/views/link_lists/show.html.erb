@@ -1,35 +1,25 @@
-<% if @record %>
-  <div class="comment">
-<%== @record.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
-  </div>
-  <div class="url">
-    <a class="ll url" href="<%= @record.url %>">Record Link</a>
-  </div>
-  <table style="border: 1px solid #ddd" class="table table-striped">
-    <thead>
-      <tr><th>Label</th> <th>Link</th></tr>
-    </thead>
-    <tbody>
-      <% @record.links.each do |link| %>
-        <tr>
-          <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>"><%= link.url %></a></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <div>
-    <pre>
-<%= @record.cached_metadata || "No metadata available" %>
-    </pre>
-  </div>
-<% else %>
-  <h2>Records</h2>
-  <table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
-    <tbody>
-    <% Dir.glob('public/spreadsheets/*.xlsx').each do |xlsx| %>
-      <tr><td><a href="<%= xlsx.match(/\d{8,}/)[0] %>"><%= xlsx %></a></tr></td>
+<div class="comment">
+  <%== @record.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
+</div>
+<div class="url">
+  <a class="ll url" href="<%= @record.url %>">Record Link</a>
+</div>
+<%# NOTE: Maybe present as single list, no table, link directly from label. %>
+<table style="border: 1px solid #ddd" class="table table-striped">
+  <thead>
+    <tr><th>Label</th> <th>Link</th></tr>
+  </thead>
+  <tbody>
+    <% @record.links.each do |link| %>
+      <tr>
+        <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>"><%= link.url %></a></td>
+      </tr>
     <% end %>
-    </tbody>
-  </table>
-<% end %>
+  </tbody>
+</table>
+
+<div>
+  <pre>
+<%= @record.cached_metadata || "No metadata available" %>
+  </pre>
+</div>

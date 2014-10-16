@@ -1,0 +1,19 @@
+<%= semantic_form_for @link_list do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :ext_id %>
+    <%= f.input :ext_id_type %>
+    <%= f.input :url %>
+    <%= f.input :continues_name %>
+    <%= f.input :continues_url %>
+    <%= f.input :continued_by_name %>
+    <%= f.input :continued_by_url %>
+    <%= f.input :fts_search_url %>
+    <%= f.input :comment %>
+    <h3>Links</h3>
+    <div class="links">
+      <%= f.inputs :name, :url, :for => :links, :class => 'inputs links' %>
+    </div>
+  <% end %>
+
+  <%= f.actions %>
+<% end %>

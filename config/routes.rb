@@ -54,7 +54,8 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get '(:number)' => 'link_lists#show'
+  resources :link_lists
+  get ':number' => 'link_lists#show'
 
-  root 'link_lists#show'
+  root 'link_lists#index'
 end

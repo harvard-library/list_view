@@ -5,5 +5,7 @@ $text-color: $ink;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "formtastic-bootstrap";
 
 @import "global";
+@import "link_lists";

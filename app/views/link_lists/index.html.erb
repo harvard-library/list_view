@@ -1,0 +1,8 @@
+<h2>Records</h2>
+<table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
+  <tbody>
+    <% Dir.glob('public/spreadsheets/*.xlsx').each do |xlsx| %>
+      <tr><td><a href="<%= xlsx.match(/\d{8,}/)[0] %>"><%= xlsx %></a></tr></td>
+    <% end %>
+  </tbody>
+</table>

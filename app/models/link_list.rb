@@ -1,8 +1,10 @@
 class LinkList < ActiveRecord::Base
-  belongs_to :continues, :class_name => :link_list
-  belongs_to :continued_by, :class_name => :link_list
   has_many :links, -> { order('position ASC')}
+  accepts_nested_attributes_for :links
 
+  class HTTPAsplodeError < StandardError;end
+
+  # NOTE: Cells that can be interpreted as number values will be so interpreted - coercion to string should be forced.
   def self.import_xlsx(excel)
     result = LinkList.new
 
@@ -13,7 +15,7 @@ class LinkList < ActiveRecord::Base
 
     raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
     result.url = url
-    result.ext_id = url.match(/\d{8,}/)[0]
+    result.ext_id = url.match(/\d{8,}/)[0] # throw exception if blank!
 
     # process headers
     rows[1...separator].each do |(key, content, extra)|
@@ -25,7 +27,7 @@ class LinkList < ActiveRecord::Base
         result.continued_by_name = content
         result.continued_by_url = extra
       when /^fts_search/i
-        content
+        content # Do something here, dude
       when key.blank?
         # Nothing
       else
@@ -43,6 +45,9 @@ class LinkList < ActiveRecord::Base
 
   def fetch_metadata
     # fetch MODS metadata
+    # NOTES: Status codes need different handling (404 vs 5XX)
+    #        Check to make sure there's a reasonable timeout
+    #        Location of mods (and possibly structure of call) should be moved to config
     begin
       response = HTTParty.get("http://webservices.lib.harvard.edu/rest/mods/#{ext_id_type}/#{ext_id}",
                               :headers => {"Accept" => "application/json"})
@@ -52,11 +57,8 @@ class LinkList < ActiveRecord::Base
         raise StandardError, "Failed to fetch metadata"
       end
     rescue StandardError => e
-      if e.message == "Failed to fetch metadata"
-        cached_metadata = nil
-      else
-        raise e
-      end
+    rescue SocketError => e
+      # squelch
     end
   end
 end

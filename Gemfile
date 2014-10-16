@@ -13,6 +13,8 @@ gem 'acts_as_list'
 gem 'httparty'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
+gem 'formtastic', '~> 3.0.0'
+gem 'formtastic-bootstrap'
 
 group :development do
   gem 'spring'
