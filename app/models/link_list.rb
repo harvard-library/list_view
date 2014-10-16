@@ -1,6 +1,6 @@
 class LinkList < ActiveRecord::Base
   has_many :links, -> { order('position ASC')}
-  accepts_nested_attributes_for :links
+  accepts_nested_attributes_for :links, :reject_if => :all_blank, :allow_destroy => true
 
   class HTTPAsplodeError < StandardError;end
 

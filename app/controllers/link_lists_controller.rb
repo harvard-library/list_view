@@ -44,6 +44,6 @@ class LinkListsController < ApplicationController
                                         :continued_by_url,
                                         :fts_search_url,
                                         :comment,
-                                        :links_attributes => [:id, :name, :url])
+                                        :links_attributes => [:id, :name, :url, :_destroy])
     end
 end

@@ -10,8 +10,13 @@
     <%= f.input :fts_search_url %>
     <%= f.input :comment %>
     <h3>Links</h3>
-    <div class="links">
-      <%= f.inputs :name, :url, :for => :links, :class => 'inputs links' %>
+    <div id="links">
+      <%= f.semantic_fields_for :links do |lf| %>
+        <%= render 'link_fields', :f => lf %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association "Add a link", f, :links, :html_options => {:class => "btn btn-primary"}  %>
+      </div>
     </div>
   <% end %>
 

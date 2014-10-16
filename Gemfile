@@ -15,6 +15,7 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'formtastic', '~> 3.0.0'
 gem 'formtastic-bootstrap'
+gem 'cocoon'
 
 group :development do
   gem 'spring'
