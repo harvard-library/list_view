@@ -15,10 +15,12 @@
         <%= render 'link_fields', :f => lf %>
       <% end %>
       <div class="links">
-        <%= link_to_add_association "Add a link", f, :links, :html_options => {:class => "btn btn-primary"}  %>
+        <%= link_to_add_association "Add a link", f, :links, :class => "btn btn-success add-link"  %>
       </div>
     </div>
   <% end %>
 
-  <%= f.actions %>
+  <%= f.actions do %>
+    <%= f.submit :class => "btn btn-primary" %>
+  <% end %>
 <% end %>
