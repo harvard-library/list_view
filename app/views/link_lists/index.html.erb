@@ -1,8 +1,8 @@
 <h2>Records</h2>
-<table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
-  <tbody>
+  <table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
+    <tbody>
     <% Dir.glob('public/spreadsheets/*.xlsx').each do |xlsx| %>
-      <tr><td><a href="<%= xlsx.match(/\d{8,}/)[0] %>"><%= xlsx %></a></tr></td>
+      <tr><td><%= link_to xlsx, link_lists_path + "/" + xlsx.match(/\d{8,}/)[0] %></a></tr></td>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>

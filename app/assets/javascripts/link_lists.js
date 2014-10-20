@@ -9,7 +9,7 @@ $(function () {
     $rem.show();
     $rem = $(removed_item);
     if ($rem.hasClass('undelete')) {
-      $rem.find('.links > input').remove();
+      $rem.find('.links input').val('false');
       $rem.removeClass('deleted').removeClass('undelete')
       $rem.find('.links > a')
         .removeClass('btn-warning')
@@ -22,6 +22,7 @@ $(function () {
         .removeClass('btn-danger')
         .addClass('btn-warning')
         .text('Restore')
+      $rem.find('.links input').val('1');
     }
   });
   $(document).on('cocoon:after-insert', function (e, added_item) {

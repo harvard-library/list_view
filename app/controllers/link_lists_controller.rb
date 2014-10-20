@@ -1,12 +1,8 @@
 class LinkListsController < ApplicationController
   def show
-    params.permit(:number)
-    if params[:number]
-      @record = LinkList.find_by_ext_id(params[:number]) ||
-        LinkList.import_xlsx(Roo::Excelx.new("public/spreadsheets/HOLLIS_Links_#{params[:number]}.xlsx"))
-    else
-      @record = LinkList.find(params[:id])
-    end
+    @record = LinkList.find_by(:ext_id => params[:ext_id]) ||
+      LinkList.import_xlsx(Roo::Excelx.new("public/spreadsheets/HOLLIS_Links_#{params[:ext_id]}.xlsx"))
+
     @record.fetch_metadata unless @record.cached_metadata
 
     @record.save! if @record.changed?
@@ -15,8 +11,7 @@ class LinkListsController < ApplicationController
   end
 
   def edit
-    params.permit(:id)
-    @link_list = LinkList.find(params[:id])
+    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
   end
 
   def new
@@ -24,11 +19,31 @@ class LinkListsController < ApplicationController
   end
 
   def update
-    @link_list = LinkList.find(params[:id])
+    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
     @link_list.update!(link_list_params)
     if @link_list.save
-      flash[:notice] = "#{@link_list.ext_id} Updated successfully!"
+      flash[:notice] = "#{@link_list.ext_id} updated successfully!"
       redirect_to :action => :show
+    end
+  end
+
+  def create
+    @link_list = LinkList.new(link_list_params)
+    if @link_list.save
+      flash[:notice] = "#{@link_list.ext_id} created successfully!"
+      respond_to do |format|
+        format.html { redirect_to @link_list }
+      end
+    end
+  end
+
+  def destroy
+    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
+    if @link_list.destroy.save
+      flash[:notice] = "#{@link_list.ext_id} sucessfully destroyed."
+      respond_to do |format|
+        format.html { redirect_to link_lists_path }
+      end
     end
   end
 

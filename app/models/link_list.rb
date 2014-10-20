@@ -2,7 +2,10 @@ class LinkList < ActiveRecord::Base
   has_many :links, -> { order('position ASC')}
   accepts_nested_attributes_for :links, :reject_if => :all_blank, :allow_destroy => true
 
-  class HTTPAsplodeError < StandardError;end
+  # Override to force use of ext_id as identifier
+  def to_param
+    ext_id
+  end
 
   # NOTE: Cells that can be interpreted as number values will be so interpreted - coercion to string should be forced.
   def self.import_xlsx(excel)
@@ -15,7 +18,7 @@ class LinkList < ActiveRecord::Base
 
     raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
     result.url = url
-    result.ext_id = url.match(/\d{8,}/)[0] # throw exception if blank!
+    result.ext_id = url.match(/\d+$/)[0] # throw exception if blank!
 
     # process headers
     rows[1...separator].each do |(key, content, extra)|

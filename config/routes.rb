@@ -54,8 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :link_lists
-  get ':number' => 'link_lists#show'
+  resources :link_lists, :param => :ext_id
 
-  root 'link_lists#index'
+  root :to => 'link_lists#index'
 end
