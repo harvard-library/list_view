@@ -54,7 +54,11 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :link_lists, :param => :ext_id
+  resources :link_lists, :param => :ext_id do
+    collection do
+      post 'import'
+    end
+  end
 
   root :to => 'link_lists#index'
 end

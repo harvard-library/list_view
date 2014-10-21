@@ -1,13 +1,16 @@
 class LinkListsController < ApplicationController
   def show
-    @record = LinkList.find_by(:ext_id => params[:ext_id]) ||
-      LinkList.import_xlsx(Roo::Excelx.new("public/spreadsheets/HOLLIS_Links_#{params[:ext_id]}.xlsx"))
+    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
 
-    @record.fetch_metadata unless @record.cached_metadata
+    @link_list.fetch_metadata if @link_list.cached_metadata.blank?
 
-    @record.save! if @record.changed?
+    @link_list.save! if @link_list.changed?
 
-    @mods = JSON.parse(@record.cached_metadata) if @record.cached_metadata
+    @mods = JSON.parse(@link_list.cached_metadata) unless @link_list.cached_metadata.blank?
+  end
+
+  def index
+    @link_lists = LinkList.all
   end
 
   def edit
@@ -15,6 +18,7 @@ class LinkListsController < ApplicationController
   end
 
   def new
+    flash.now[:notice] = "This is a new record, and has not been saved to the database."
     @link_list = LinkList.new
   end
 
@@ -37,10 +41,31 @@ class LinkListsController < ApplicationController
     end
   end
 
+  def import
+    # Handle params
+    params.require(:import_link_lists).permit(:xlsx)
+    file = params[:import_link_lists][:xlsx]
+
+    tfile = Tempfile.new(['excel', '.xlsx'])
+    tfile.binmode
+    tfile.write file.read
+
+
+    @link_list = LinkList.import_xlsx(Roo::Excelx.new(tfile.path))
+
+    tfile.close
+    tfile.unlink
+
+    flash.now[:notice] = "Your record has been imported, but will not be saved to the database until you submit it."
+    respond_to do |format|
+      format.html { render :action => :new }
+    end
+  end
+
   def destroy
     @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
     if @link_list.destroy.save
-      flash[:notice] = "#{@link_list.ext_id} sucessfully destroyed."
+      flash[:notice] = "#{@link_list.ext_id} sucessfully deleted."
       respond_to do |format|
         format.html { redirect_to link_lists_path }
       end

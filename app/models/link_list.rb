@@ -54,8 +54,9 @@ class LinkList < ActiveRecord::Base
     begin
       response = HTTParty.get("http://webservices.lib.harvard.edu/rest/mods/#{ext_id_type}/#{ext_id}",
                               :headers => {"Accept" => "application/json"})
+
       if response.code == 200 && !response.body.blank?
-        cached_metadata = response.body
+        self.cached_metadata = response.body
       else
         raise StandardError, "Failed to fetch metadata"
       end
@@ -63,5 +64,6 @@ class LinkList < ActiveRecord::Base
     rescue SocketError => e
       # squelch
     end
+    self
   end
 end

@@ -1,16 +1,22 @@
+<% unless @link_list.continues_url.blank? %>
+  <div class="continues">
+    <b>Continues:</b> <%= link_to @link_list.continues_name, @link_list.continues_url %>
+  </div>
+<% end %>
 <div class="comment">
-  <%== @record.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
+  <%== @link_list.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
 </div>
 <div class="url">
-  <a class="ll url" href="<%= @record.url %>">Record Link</a>
+  <a class="ll url" href="<%= @link_list.url %>">Record Link</a>
 </div>
+<%# Anchor pointing at this! %>
 <%# NOTE: Maybe present as single list, no table, link directly from label. %>
 <table style="border: 1px solid #ddd" class="table table-striped">
   <thead>
     <tr><th>Label</th> <th>Link</th></tr>
   </thead>
   <tbody>
-    <% @record.links.each do |link| %>
+    <% @link_list.links.each do |link| %>
       <tr>
         <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>"><%= link.url %></a></td>
       </tr>
@@ -20,8 +26,14 @@
 
 <div>
   <pre>
-<%= @record.cached_metadata || "No metadata available" %>
+<%= @link_list.cached_metadata || "No metadata available" %>
   </pre>
 </div>
 
-<%= link_to "Delete this record", link_list_path(@record), :method => :delete, :class => 'btn btn-danger' %>
+<% unless @link_list.continued_by_url.blank? %>
+  <div class="continued_by">
+    <b>Continued By:</b> <%= link_to @link_list.continued_by_name, @link_list.continued_by_url %>
+  </div>
+<% end %>
+
+<%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %>
