@@ -15,6 +15,9 @@
 /log/*.log
 /tmp
 
+# Ignore non-exemplars in config/deploy
+/config/deploy/*.rb
+
 # Ignore editor detritus
 *~
 .#*
