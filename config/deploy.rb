@@ -15,6 +15,8 @@ set :scm, :git
 
 set :format, :pretty
 
+set :bundle_binstubs, nil
+
 # Default value for :log_level is :debug
 # set :log_level, :debug
 
@@ -24,7 +26,7 @@ set :format, :pretty
 # Create these in /path/to/deploy/shared
 set :linked_files, %w{config/database.yml .env}
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
 set :keep_releases, 3
 

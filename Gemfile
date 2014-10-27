@@ -16,6 +16,7 @@ gem 'autoprefixer-rails'
 gem 'formtastic', '~> 3.0.0'
 gem 'formtastic-bootstrap'
 gem 'cocoon'
+gem 'dotenv-deployment'
 
 group :development do
   gem 'spring'
