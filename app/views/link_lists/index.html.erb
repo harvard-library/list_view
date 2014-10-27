@@ -9,7 +9,7 @@
 <hr>
 <div style="width: 50%; float: left;">
   <p style="font-weight: bold">Create a new linked list from scratch.</p>
-  <%= button_to "Create New Link List", new_link_list_path, :class => 'btn btn-primary' %>
+  <%= link_to "Create New Link List", new_link_list_path, :class => 'btn btn-primary' %>
 </div>
 <div style="width: 50%; float: left;">
   <%= semantic_form_for :import_link_lists, :url => import_link_lists_path, :method => :post, :multipart => true do |f| %>
