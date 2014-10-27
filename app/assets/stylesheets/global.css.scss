@@ -17,7 +17,7 @@ h2 {
   @include make-sm-column-offset(2);
 }
 
-a[href] {
+a[href]:not(.btn) {
   text-decoration: underline;
   &:hover {
     color: $link-color - #222;
