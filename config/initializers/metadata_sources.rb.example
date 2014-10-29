@@ -1,0 +1,6 @@
+# Initializer for metadata sources.  Should point to an endpoint that returns MODS metadata
+MetadataSources = {
+  'hollis' => {
+    'template' => ->(r) { "http://webservices.lib.harvard.edu/rest/mods/#{r.ext_id_type}/#{r.ext_id}"}
+  }
+}

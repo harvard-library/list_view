@@ -2,6 +2,10 @@
   h1 {
     color: $crimson;
     text-align:center;
+    > a, > a:hover {
+      color: $crimson !important;
+      text-decoration: none !important;
+    }
   }
 }
 

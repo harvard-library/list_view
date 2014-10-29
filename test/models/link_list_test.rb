@@ -1,14 +1,14 @@
 require 'test_helper'
 
 class LinkListTest < ActiveSupport::TestCase
-  test "imports an xslx file" do
+  test "imports an xlsx file" do
     excel = Roo::Excelx.new('test/data/HOLLIS_Links_0013124263.xlsx')
     me = LinkList.import_xlsx(excel)
     assert_instance_of LinkList, me, "is not a linklist"
     assert me.save, "failed to save successfully"
   end
 
-  test "imported xslx does not convert numbers to floats" do
+  test "imported xlsx does not convert numbers to floats" do
     begin
     excel = Roo::Excelx.new('test/data/HOLLIS_Links_001787337.xlsx')
     me = LinkList.import_xlsx(excel)

@@ -24,7 +24,7 @@ set :bundle_binstubs, nil
 # set :pty, true
 
 # Create these in /path/to/deploy/shared
-set :linked_files, %w{config/database.yml .env}
+set :linked_files, %w{config/database.yml .env config/initializers/metadata_sources.rb}
 
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 

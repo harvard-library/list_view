@@ -32,9 +32,9 @@ class LinkList < ActiveRecord::Base
 
     raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
     result.url = url
-    result.ext_id = url.match(/\d+$/)[0] # throw exception if blank!
+    result.ext_id = url.match(/\d+$/)[0].rjust(9, '0') # throw exception if blank!
 
-    (1..separator).each do |row_i|
+    (1...separator).each do |row_i|
       (key, content, extra) = *((1..3).map {|col_i| excel.hl_cell row_i, col_i })
       case key
       when /^continues/i
@@ -67,7 +67,7 @@ class LinkList < ActiveRecord::Base
     #        Check to make sure there's a reasonable timeout
     #        Location of mods (and possibly structure of call) should be moved to config
     begin
-      response = HTTParty.get("http://webservices.lib.harvard.edu/rest/mods/#{ext_id_type}/#{ext_id}",
+      response = HTTParty.get(MetadataSources['hollis']['template'].call(self),
                               :headers => {"Accept" => "application/json"})
 
       if response.code == 200 && !response.body.blank?
@@ -80,5 +80,40 @@ class LinkList < ActiveRecord::Base
       # squelch
     end
     self
+  end
+
+  def self.process_name_field name_field
+    result = []
+    case name_field
+    when Hash
+      if name_field['type'].in? %w|personal family corporate conference|
+        content = name_field['namePart']
+        if content.is_a? Array
+          result += content.map do |c|
+            c.is_a?(String) ? c : c['content']
+          end
+        elsif content.is_a? Hash
+          result << content['namePart']
+        else
+          result << content
+        end
+      end
+    when Array
+      result += name_field.map{|m| LinkList.process_name_field m}.map {|m| m.join ' '}
+    end
+    result
+  end
+
+  def self.process_title_field title_field
+    result = ''
+    case title_field
+    when Hash
+      result << %w|nonSort title subTitle partNumber partName|.select {|f| title_field.keys.member? f}.map do |f|
+        title_field[f]
+      end.join(' ')
+    when Array
+      result << LinkList.process_title_field(title_field.first)
+    end
+    result
   end
 end
