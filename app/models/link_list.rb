@@ -120,4 +120,37 @@ class LinkList < ActiveRecord::Base
     end
     result
   end
+
+  def self.process_pub_field pub_field
+    relevant = pub_field.select {|k, _v| %w|place publisher dateIssued dateCreated dateOther|.member? k}
+    relevant.map do |k, v|
+      case k
+      when 'place'
+        v.select {|pt| pt['type'] == 'text'}.map {|pt| pt['content']}.join(" ")
+      when 'publisher'
+        v
+      when 'dateIssued', 'dateCreated'
+        case v
+        when Numeric
+          v.to_s
+        when Array
+          if v.first.is_a? String
+            v.first
+          else
+            v.first['content'].to_s.gsub(/\^/, '')
+          end
+        when Hash
+          v['content'].to_s.gsub(/\^/, '')
+        else
+          'No date of publication provided.'
+        end
+      when 'dateOther'
+        if v['type'] == 'manufacturer'
+          v['content']
+        else
+          ''
+        end
+      end
+    end.reject(&:blank?).join(', ')
+  end
 end
