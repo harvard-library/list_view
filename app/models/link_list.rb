@@ -44,7 +44,7 @@ class LinkList < ActiveRecord::Base
         result.continued_by_name = content
         result.continued_by_url = extra
       when /^fts_search/i
-        content # Do something here, dude
+        result.fts_search_url = content
       when key.blank?
         # Nothing
       else
@@ -121,36 +121,74 @@ class LinkList < ActiveRecord::Base
     result
   end
 
-  def self.process_pub_field pub_field
-    relevant = pub_field.select {|k, _v| %w|place publisher dateIssued dateCreated dateOther|.member? k}
-    relevant.map do |k, v|
-      case k
-      when 'place'
-        v.select {|pt| pt['type'] == 'text'}.map {|pt| pt['content']}.join(" ")
-      when 'publisher'
-        v
-      when 'dateIssued', 'dateCreated'
-        case v
-        when Numeric
-          v.to_s
-        when Array
-          if v.first.is_a? String
-            v.first
-          else
-            v.first['content'].to_s.gsub(/\^/, '')
-          end
-        when Hash
-          v['content'].to_s.gsub(/\^/, '')
-        else
-          'No date of publication provided.'
-        end
-      when 'dateOther'
-        if v['type'] == 'manufacturer'
-          v['content']
-        else
-          ''
-        end
+  def self.process_date_subfield date_sf
+    case date_sf
+    when Numeric
+      date_sf.to_s
+    when Array
+      if date_sf.first.is_a? String
+        date_sf.first
+      else
+        date_sf.first['content'].to_s.gsub(/\^/, '')
       end
-    end.reject(&:blank?).join(', ')
+    when Hash
+      date_sf['content'].to_s.gsub(/\^/, '')
+    else
+      'No date of publication provided.'
+    end
+  end
+
+  def self.process_placeterm pt
+    case pt['type']
+    when 'text'
+      pt['content']
+    when 'code'
+      if pt['authority'] == 'marccountry'
+        "#{ MarcCountryCodes[pt['content'].sub(/\^+/, '')] }"
+      else
+        nil
+      end
+    else
+      nil
+    end
+  end
+
+  def self.process_pub_field pub_field
+    result = []
+    case pub_field
+    when Hash
+      relevant = pub_field.select {|k, _v| %w|place publisher dateIssued dateCreated dateOther|.member? k}
+      result << relevant.map do |k, v|
+        case k
+        when 'place'
+          if v.is_a? Array
+            text = v.select {|pt| pt['placeTerm']['type'] == 'text'}.map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
+            if text.blank?
+              text = v.select {|pt| pt['placeTerm']['type'] == 'code'}.map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
+            end
+            text
+          else
+            text = process_placeterm v['placeTerm']
+            if text.blank?
+              text = 'No place, unknown, or undetermined'
+            end
+            text
+          end
+        when 'publisher'
+          v
+        when 'dateIssued', 'dateCreated'
+          process_date_subfield v
+        when 'dateOther'
+          if v['type'] == 'manufacturer'
+            v['content']
+          else
+            ''
+          end
+        end
+      end.reject(&:blank?).join(' | ')
+    when Array
+      result = pub_field.map {|pf| process_pub_field pf }
+    end
+    result
   end
 end
