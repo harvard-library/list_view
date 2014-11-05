@@ -1,7 +1,7 @@
 /* Form styling */
 #links > fieldset {
   @include clearfix();
-  padding: 0.5em 1em;
+  padding: 0.5% 1em;
   &:nth-of-type(2n+1) {
     background-color: lightgrey;
   }
@@ -21,8 +21,26 @@
     }
   }
 }
+form.link_list {
+  padding-bottom: 60px;
+}
+form.link_list fieldset.form-actions {
+  padding: 10px 0;
+  background: white;
+  position: fixed;
+  @media (max-width: $screen-xs-max) {
+    width: 91%;
+  }
+  @media (min-width: $screen-sm-min) {
+    width: 65%;
+  }
+  bottom: 0;
+  input[type="submit"] {
+    float:left;
+  }
+}
 
-.links > a.add-link {
-  margin: 1em 0.5em;
-  float:right;
+.links {
+  display: inline;
+  float: right;
 }
