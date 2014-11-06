@@ -62,14 +62,15 @@ class LinkList < ActiveRecord::Base
   end
 
   def source_url
-    Erubis::Eruby.new(MetadataSources[ext_id_type]['template']).result(self.attributes.select {|k,v| k.in? %w|ext_id ext_id_type|})
+    Erubis::Eruby
+      .new(MetadataSources[ext_id_type]['template'])
+      .result(attributes.select {|k,v| k.in? %w|ext_id ext_id_type|})
   end
 
   def fetch_metadata
     # fetch MODS metadata
     # NOTES: Status codes need different handling (404 vs 5XX)
     #        Check to make sure there's a reasonable timeout
-    #        Location of mods (and possibly structure of call) should be moved to config
     begin
       response = HTTParty.get(source_url,
                               :headers => {"Accept" => "application/json"})
