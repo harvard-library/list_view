@@ -26,6 +26,27 @@ $(function () {
     }
   });
   $(document).on('cocoon:after-insert', function (e, added_item) {
-    $(document).scrollTop($(document).scrollTop() + $(added_item).outerHeight());
+    $(document).scrollTop($(document).height() -$(window).height());
+    highlight(added_item);
   });
+
+  var resize_fixed_fieldset = function () {
+    $('fieldset.form-actions').width( $('fieldset.inputs').width() + 1 );
+  }
+
+  $(document).on('ready page:load', resize_fixed_fieldset);
+  $(window).on('resize', resize_fixed_fieldset);
+
+  var highlight = function (thing) {
+    var $me = $(thing);
+    var oc = $me.css('background-color');
+
+    $me.animate({backgroundColor: hollis_links.colors.creme}, 300)
+      .animate({backgroundColor: oc}, 300)
+      .promise('fx')
+      .done(function () {
+        $me.css('backgroundColor', '')
+      })
+  }
+
 });
