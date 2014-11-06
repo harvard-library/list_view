@@ -139,6 +139,24 @@ class LinkList < ActiveRecord::Base
     end
   end
 
+  def self.process_place_subfield place
+    if place.is_a? Array
+      text = place.select {|pt| pt['placeTerm']['type'] == 'text'}
+             .map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
+      if text.blank?
+        text = place.select {|pt| pt['placeTerm']['type'] == 'code'}
+               .map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
+      end
+      text
+    else
+      text = process_placeterm place['placeTerm']
+      if text.blank?
+        text = 'No place, unknown, or undetermined'
+      end
+      text
+    end
+  end
+
   def self.process_placeterm pt
     case pt['type']
     when 'text'
@@ -158,38 +176,15 @@ class LinkList < ActiveRecord::Base
     result = []
     case pub_field
     when Hash
-      relevant = pub_field.select {|k, _v| %w|place publisher dateIssued dateCreated dateOther|.member? k}
-      result << relevant.map do |k, v|
-        case k
-        when 'place'
-          if v.is_a? Array
-            text = v.select {|pt| pt['placeTerm']['type'] == 'text'}.map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
-            if text.blank?
-              text = v.select {|pt| pt['placeTerm']['type'] == 'code'}.map {|pt| process_placeterm pt['placeTerm']}.reject(&:nil?).join(" ")
-            end
-            text
-          else
-            text = process_placeterm v['placeTerm']
-            if text.blank?
-              text = 'No place, unknown, or undetermined'
-            end
-            text
-          end
-        when 'publisher'
-          v
-        when 'dateIssued', 'dateCreated'
-          process_date_subfield v
-        when 'dateOther'
-          if v['type'] == 'manufacturer'
-            v['content']
-          else
-            ''
-          end
-        end
-      end.reject(&:blank?).join(' | ')
+      publisher = pub_field['publisher'] || 'No listed publisher'
+      place =  pub_field['place']       ? process_place_subfield(pub_field['place'])      : nil
+      date_i = pub_field['dateIssued']  ? process_date_subfield(pub_field['dateIssued'])  : nil
+      date_c = pub_field['dateCreated'] ? process_date_subfield(pub_field['dateCreated']) : nil
+
+      return [place, publisher, date_c, date_i]
     when Array
-      result = pub_field.map {|pf| process_pub_field pf }
+      pub_field.map {|pf| process_pub_field pf }
     end
-    result
   end
+
 end
