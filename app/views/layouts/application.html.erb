@@ -7,7 +7,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="<%= "c_#{controller.controller_name} a_#{controller.action_name}" %>">
 <div class="container-fluid">
   <div class="page-header">
     <h1><%= link_to "HollisLinks NG", "/" %></h1>

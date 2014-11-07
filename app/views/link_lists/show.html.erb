@@ -22,9 +22,31 @@
     <b>Continues:</b> <%= link_to @link_list.continues_name, @link_list.continues_url %>
   </div>
 <% end %>
+
+<% unless @link_list.continued_by_url.blank? %>
+  <div class="continued_by">
+    <b>Continued By:</b> <%= link_to @link_list.continued_by_name, @link_list.continued_by_url %>
+  </div>
+<% end %>
+
 <div class="comment">
-  <%== @link_list.comment.split(/\n/).map { |line| '<div><b>' + line.sub(/:/, ':</b>') + '</div>' }.join("\n") %>
+  <%== @link_list.comment.split(/\n/).map { |line| '<div>' << line << '</div>' }.join("\n") %>
 </div>
+
+<% unless @link_list.fts_search_url.blank? %>
+  <div class="search-box">
+    <form class="formtastic" id="fts" action="<%= @link_list.fts_search_url %>" method='GET'>
+      <p>Full Text Search</p>
+      <div class="input-group">
+        <input name="Q" class="form-control" type="text" placeholder="Enter search terms here" />
+        <span class="input-group-btn">
+          <%= submit_tag 'Search', :class => 'btn btn-primary', :name => nil %>
+        </span>
+      </div>
+    </form>
+  </div>
+<% end %>
+
 <div class="url">
   <a class="ll url" href="<%= @link_list.url %>">Record Link</a>
 </div>
@@ -43,16 +65,22 @@
   </tbody>
 </table>
 
-<div>
-  <pre>
-<%= @link_list.cached_metadata || "No metadata available" %>
-  </pre>
-</div>
+<% unless @link_list.continues_url.blank? %>
+  <div class="continues">
+    <b>Continues:</b> <%= link_to @link_list.continues_name, @link_list.continues_url %>
+  </div>
+<% end %>
 
 <% unless @link_list.continued_by_url.blank? %>
   <div class="continued_by">
     <b>Continued By:</b> <%= link_to @link_list.continued_by_name, @link_list.continued_by_url %>
   </div>
 <% end %>
+
+<div>
+  <pre>
+<%= @link_list.cached_metadata || "No metadata available" %>
+  </pre>
+</div>
 
 <%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %>

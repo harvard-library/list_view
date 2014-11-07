@@ -44,7 +44,7 @@ class LinkList < ActiveRecord::Base
         result.continued_by_name = content
         result.continued_by_url = extra
       when /^fts_search/i
-        result.fts_search_url = content
+        result.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
       when key.blank?
         # Nothing
       else
@@ -64,7 +64,7 @@ class LinkList < ActiveRecord::Base
   def source_url
     Erubis::Eruby
       .new(MetadataSources[ext_id_type]['template'])
-      .result(attributes.select {|k,v| k.in? %w|ext_id ext_id_type|})
+      .result(attributes.slice('ext_id', 'ext_id_type'))
   end
 
   def fetch_metadata
