@@ -9,7 +9,7 @@ class LinkListsController < ApplicationController
     @mods = JSON.parse(@link_list.cached_metadata) unless @link_list.cached_metadata.blank?
 
     if @mods
-      @title = LinkList.process_title_field(@mods['mods']['titleInfo'])
+      @title = LinkList.process_title_field(*@mods['mods'].slice('titleInfo', 'note').values)
       @author = LinkList.process_name_field(@mods['mods']['name'])
     end
   end

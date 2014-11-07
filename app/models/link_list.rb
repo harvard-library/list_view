@@ -87,6 +87,22 @@ class LinkList < ActiveRecord::Base
     self
   end
 
+  def self.process_statement_of_responsibility note
+    case note
+    when Hash
+      if note['type'] == 'statement of responsibility'
+        note['content']
+      else
+        nil
+      end
+    when Array
+      statements = note.select {|n| n.is_a?(Hash) && n['type'] == 'statement of responsibility' }
+      statements.first['content'] unless statements.empty?
+    when nil
+      nil
+    end
+  end
+
   def self.process_name_field name_field
     result = []
     case name_field
@@ -109,8 +125,9 @@ class LinkList < ActiveRecord::Base
     result
   end
 
-  def self.process_title_field title_field
+  def self.process_title_field title_field, note = nil
     result = ''
+    sor = process_statement_of_responsibility(note)
     case title_field
     when Hash
       result << %w|nonSort title subTitle partNumber partName|.select {|f| title_field.keys.member? f}.map do |f|
@@ -119,7 +136,7 @@ class LinkList < ActiveRecord::Base
     when Array
       result << LinkList.process_title_field(title_field.first)
     end
-    result
+    "#{result}#{" / " << sor if sor}"
   end
 
   def self.process_date_subfield date_sf
