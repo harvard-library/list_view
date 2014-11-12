@@ -15,6 +15,9 @@
 /log/*.log
 /tmp
 
+# Ignore dotenv config file
+/.env
+
 # Ignore non-exemplars in config/deploy
 /config/deploy/*.rb
 

@@ -16,6 +16,9 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # Action mailer must have a configured host value for devise, take from environment
+  config.action_mailer.default_url_options = { host: ENV['ROOT_URL'] }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

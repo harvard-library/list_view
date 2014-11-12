@@ -1,4 +1,6 @@
 class LinkListsController < ApplicationController
+  before_action :authenticate_login!, :except => [:index, :show]
+
   def show
     @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
 
