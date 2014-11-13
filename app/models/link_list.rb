@@ -17,7 +17,7 @@ class LinkList < ActiveRecord::Base
 
   # Override to force use of ext_id as identifier
   def to_param
-    ext_id
+    "#{ext_id_type}-#{ext_id}"
   end
 
   # Converts from .xlsx format, treating all fields as strings.

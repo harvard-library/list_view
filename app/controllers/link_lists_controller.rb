@@ -1,8 +1,9 @@
 class LinkListsController < ApplicationController
+  include LinkListsHelper
   before_action :authenticate_login!, :except => [:index, :show]
 
   def show
-    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
+    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
 
     @link_list.fetch_metadata if @link_list.cached_metadata.blank?
 
@@ -21,7 +22,7 @@ class LinkListsController < ApplicationController
   end
 
   def edit
-    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
+    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
   end
 
   def new
@@ -30,7 +31,7 @@ class LinkListsController < ApplicationController
   end
 
   def update
-    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
+    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
     @link_list.update!(link_list_params)
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} updated successfully!"
@@ -70,7 +71,7 @@ class LinkListsController < ApplicationController
   end
 
   def destroy
-    @link_list = LinkList.find_by!(:ext_id => params[:ext_id])
+    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
     if @link_list.destroy.save
       flash[:notice] = "#{@link_list.ext_id} sucessfully deleted."
       respond_to do |format|
@@ -84,6 +85,7 @@ class LinkListsController < ApplicationController
       params.require(:link_list).permit(:id,
                                         :ext_id,
                                         :ext_id_type,
+                                        :quaffle,
                                         :url,
                                         :continues_name,
                                         :continues_url,

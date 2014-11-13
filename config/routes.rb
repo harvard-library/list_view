@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :link_lists, :param => :ext_id do
+  resources :link_lists, :param => :quaffle, :constraints => { :quaffle => %r|[^/]+/[^/]+| } do
     collection do
       post 'import'
     end

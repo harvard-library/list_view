@@ -2,7 +2,7 @@
 <table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
   <tbody>
     <% @link_lists.each do |ll| %>
-      <tr><td><%= link_to "#{ll.ext_id_type.upcase}: #{ll.ext_id}", ll %> <%== current_user && "(" << link_to("Edit", edit_link_list_path(ll)) << ")" %></tr></td>
+      <tr><td><%= link_to "#{ll.ext_id_type.upcase}: #{ll.ext_id}", ll %> <%== current_user && "(" << link_to("Edit", CGI::unescapeHTML(edit_link_list_path(ll))) << ")" %></tr></td>
     <% end %>
   </tbody>
 </table>
