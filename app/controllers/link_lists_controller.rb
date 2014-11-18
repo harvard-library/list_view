@@ -1,9 +1,8 @@
 class LinkListsController < ApplicationController
-  include LinkListsHelper
   before_action :authenticate_login!, :except => [:index, :show]
 
   def show
-    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
 
     @link_list.fetch_metadata if @link_list.cached_metadata.blank?
 
@@ -18,11 +17,15 @@ class LinkListsController < ApplicationController
   end
 
   def index
+    params.permit(:ext_id_type)
     @link_lists = LinkList.all
+    if params[:ext_id_type]
+      @link_lists = @link_lists.where(:ext_id_type => params[:ext_id_type])
+    end
   end
 
   def edit
-    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
   end
 
   def new
@@ -31,7 +34,7 @@ class LinkListsController < ApplicationController
   end
 
   def update
-    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
     @link_list.update!(link_list_params)
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} updated successfully!"
@@ -71,7 +74,7 @@ class LinkListsController < ApplicationController
   end
 
   def destroy
-    @link_list = LinkList.find_by!(dequaffle(params[:quaffle]))
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
     if @link_list.destroy.save
       flash[:notice] = "#{@link_list.ext_id} sucessfully deleted."
       respond_to do |format|
@@ -85,7 +88,7 @@ class LinkListsController < ApplicationController
       params.require(:link_list).permit(:id,
                                         :ext_id,
                                         :ext_id_type,
-                                        :quaffle,
+                                        :qualified_id,
                                         :url,
                                         :continues_name,
                                         :continues_url,
@@ -95,4 +98,10 @@ class LinkListsController < ApplicationController
                                         :comment,
                                         :links_attributes => [:id, :name, :url, :_destroy])
     end
+
+    ### Helper Methods ###
+    def split_qualified_id(q_id)
+      HashWithIndifferentAccess.new([:ext_id_type, :ext_id].zip(q_id.split('-')).to_h)
+    end
+
 end

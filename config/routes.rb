@@ -55,11 +55,13 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :link_lists, :param => :quaffle, :constraints => { :quaffle => %r|[^/]+/[^/]+| } do
+  resources :link_lists, :param => :qualified_id, :constraints => { :qualified_id => %r|[^/]+-[^/]+| }, :path => :links do
     collection do
       post 'import'
     end
   end
+
+  get 'links/:ext_id_type' => 'link_lists#index', :constraints => {:ext_id_type => /[[:alnum:]]+/}
 
   root :to => 'link_lists#index'
 end
