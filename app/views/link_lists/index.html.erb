@@ -1,4 +1,4 @@
-<h2>Records</h2>
+<h2><%= @typed ? @typed.capitalize : 'All'%> Records</h2>
 <% if current_user %>
   <div style="width: 50%; float: left;">
     <p style="font-weight: bold">Create a new linked list from scratch.</p>
@@ -16,10 +16,22 @@
   </div>
   <hr class="clearfix">
 <% end %>
-<table class="table table-striped" style="border: 1px solid #ddd, align: center; text-align: center;">
+<table class="table table-striped" style="border: 1px solid #ddd, align: center;">
   <tbody>
+    <tr>
+      <th>Title</th>
+      <% unless @typed %>
+        <th>External ID Type</th>
+      <% end %>
+      <th>Number of Records</th></tr>
     <% @link_lists.each do |ll| %>
-      <tr><td><%= link_to ll.comment.match(/(?<=Title: ).*?(?=\n)/).to_s, ll %> <%== current_user && "(" << link_to("Edit", CGI::unescapeHTML(edit_link_list_path(ll))) << ")" %></td></tr>
+      <tr>
+        <td><%= link_to ll.comment.match(/(?<=Title: ).*?(?=\n)/).to_s, ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ")" %></td>
+        <% unless @typed %>
+          <td><%= ll.ext_id_type %></td>
+        <% end %>
+        <td><%= ll.links.count %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

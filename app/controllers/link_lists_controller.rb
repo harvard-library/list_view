@@ -7,6 +7,7 @@ class LinkListsController < ApplicationController
     params.permit(:ext_id_type)
     @link_lists = LinkList.all
     if params[:ext_id_type]
+      @typed = params[:ext_id_type]
       @link_lists = @link_lists.where(:ext_id_type => params[:ext_id_type])
     end
   end
