@@ -50,6 +50,18 @@ form.link_list fieldset.form-actions {
   margin-bottom: 1em;
 }
 
-.search-box p {
-  font-weight: bold;
+.search-box {
+  p {
+    font-weight: bold;
+  }
+  .date-qualified {
+    margin: 0.6em 0;
+    > div {
+      display: inline-block;
+      margin-right: 1em;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
