@@ -1,20 +1,7 @@
 class LinkListsController < ApplicationController
   before_action :authenticate_login!, :except => [:index, :show]
 
-  def show
-    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
-
-    @link_list.fetch_metadata if @link_list.cached_metadata.blank?
-
-    @link_list.save! if @link_list.changed?
-
-    @mods = JSON.parse(@link_list.cached_metadata) unless @link_list.cached_metadata.blank?
-
-    if @mods
-      @title = LinkList.process_title_field(*@mods['mods'].slice('titleInfo', 'note').values)
-      @author = LinkList.process_name_field(@mods['mods']['name'])
-    end
-  end
+  #### Collection actions
 
   def index
     params.permit(:ext_id_type)
@@ -24,22 +11,9 @@ class LinkListsController < ApplicationController
     end
   end
 
-  def edit
-    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
-  end
-
   def new
     flash.now[:notice] = "This is a new record, and has not been saved to the database."
     @link_list = LinkList.new
-  end
-
-  def update
-    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
-    @link_list.update!(link_list_params)
-    if @link_list.save
-      flash[:notice] = "#{@link_list.ext_id} updated successfully!"
-      redirect_to :action => :show
-    end
   end
 
   def create
@@ -50,6 +24,10 @@ class LinkListsController < ApplicationController
         format.html { redirect_to @link_list }
       end
     end
+  end
+
+  def types
+    @types = LinkList.distinct(:ext_id_type).pluck(:ext_id_type)
   end
 
   def import
@@ -70,6 +48,36 @@ class LinkListsController < ApplicationController
     flash.now[:notice] = "Your record has been imported, but will not be saved to the database until you submit it."
     respond_to do |format|
       format.html { render :action => :new }
+    end
+  end
+
+  ### Member actions
+
+  def show
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+
+    @link_list.fetch_metadata if @link_list.cached_metadata.blank?
+
+    @link_list.save! if @link_list.changed?
+
+    @mods = JSON.parse(@link_list.cached_metadata) unless @link_list.cached_metadata.blank?
+
+    if @mods
+      @title = LinkList.process_title_field(*@mods['mods'].slice('titleInfo', 'note').values)
+      @author = LinkList.process_name_field(@mods['mods']['name'])
+    end
+  end
+
+  def edit
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+  end
+
+  def update
+    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+    @link_list.update!(link_list_params)
+    if @link_list.save
+      flash[:notice] = "#{@link_list.ext_id} updated successfully!"
+      redirect_to :action => :show
     end
   end
 

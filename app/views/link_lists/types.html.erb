@@ -1,0 +1,15 @@
+<h2 style="margin-bottom: 0;">External ID Types</h2>
+<p class="help-block" style="text-align:center;">Records indexed by type of external ID.</p>
+<% unless @types.blank? %>
+<table class="table table-striped" style="border: 1px solid #ddd, align:center;text-align:center;">
+  <tbody>
+    <% @types.each do |t| %>
+      <tr>
+        <td><%= link_to "#{t.upcase}", [types_path, t].join("/") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<h3 style="text-align:center;">There are no records.</h2>
+<% end %>
