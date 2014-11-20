@@ -43,16 +43,17 @@
           <%= submit_tag 'Search', :class => 'btn btn-primary', :name => nil %>
         </span>
       </div>
-
-      <div class="input-group date-qualified">
-        <div><label for="D_N">Disable:</label>&nbsp;<%= radio_button_tag 'D', 'N', true %></div>
-        <div><label for="D_Y">Loose (Return Undated):</label>&nbsp;<%= radio_button_tag 'D', 'Y', false %></div>
-        <div><label for="D_S">Strict (No Undated Results):</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
-      </div>
-      <div class="input-group date-range">
-        <label for="L">From:</label>&nbsp;<input name="L" placeholder="YYYY(/MM(/DD))" />
-        <label for="U">To:</label>&nbsp;<input name="U" placeholder="YYYY(/MM(/DD))" />
-      </div>
+      <% if @link_list.dateable? %>
+        <div class="input-group date-qualified">
+          <div><label for="D_N">Disable:</label>&nbsp;<%= radio_button_tag 'D', 'N', true %></div>
+          <div><label for="D_Y">Loose (Return Undated):</label>&nbsp;<%= radio_button_tag 'D', 'Y', false %></div>
+          <div><label for="D_S">Strict (No Undated Results):</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
+        </div>
+        <div class="input-group date-range">
+          <label for="L">From:</label>&nbsp;<input name="L" placeholder="YYYY(/MM(/DD))" />
+          <label for="U">To:</label>&nbsp;<input name="U" placeholder="YYYY(/MM(/DD))" />
+        </div>
+      <% end %>
     </form>
   </div>
 <% end %>

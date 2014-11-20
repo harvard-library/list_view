@@ -45,6 +45,8 @@ class LinkList < ActiveRecord::Base
         result.continued_by_url = extra
       when /^fts_search/i
         result.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
+      when /^fts_nodate/i
+        result.dateable = false
       when key.blank?
         # Nothing
       else

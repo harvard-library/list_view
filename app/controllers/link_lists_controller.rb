@@ -104,6 +104,7 @@ class LinkListsController < ApplicationController
                                         :continued_by_name,
                                         :continued_by_url,
                                         :fts_search_url,
+                                        :dateable,
                                         :comment,
                                         :links_attributes => [:id, :name, :url, :_destroy])
     end

@@ -11,22 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112154839) do
+ActiveRecord::Schema.define(version: 20141120035729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "link_lists", force: true do |t|
-    t.string "ext_id",                               null: false
-    t.string "ext_id_type",       default: "hollis", null: false
-    t.string "url",                                  null: false
-    t.string "continues_name"
-    t.string "continues_url"
-    t.string "continued_by_name"
-    t.string "continued_by_url"
-    t.string "fts_search_url"
-    t.text   "comment"
-    t.text   "cached_metadata"
+    t.string  "ext_id",                               null: false
+    t.string  "ext_id_type",       default: "hollis", null: false
+    t.string  "url",                                  null: false
+    t.string  "continues_name"
+    t.string  "continues_url"
+    t.string  "continued_by_name"
+    t.string  "continued_by_url"
+    t.string  "fts_search_url"
+    t.text    "comment"
+    t.text    "cached_metadata"
+    t.boolean "dateable",          default: true
   end
 
   create_table "links", force: true do |t|

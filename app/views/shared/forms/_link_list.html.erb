@@ -1,15 +1,66 @@
 <%# NOTE: Comment should be shrunk.  Fields should show if changes present. %>
 <%= semantic_form_for @link_list do |f| %>
   <%= f.inputs do %>
-    <%= f.input :ext_id %>
-    <%= f.input :ext_id_type %>
-    <%= f.input :url %>
-    <%= f.input :continues_name %>
-    <%= f.input :continues_url %>
-    <%= f.input :continued_by_name %>
-    <%= f.input :continued_by_url %>
-    <%= f.input :fts_search_url %>
-    <%= f.input :comment %>
+    <%= f.input :ext_id,
+      :label => 'External ID',
+      :hint => 'ID of the bibliographic record pointing at this link page.'
+    %>
+
+    <%= f.input :ext_id_type,
+      :label => 'External ID Type',
+      :hint => 'The type or source of the external ID referencing this record.'
+    %>
+
+    <%= f.input :url,
+      :label => 'URL',
+      :hint => 'The URL of the bibliographic record pointing at this link page.'
+    %>
+
+    <hr/>
+
+    <%= f.input :continues_name,
+      :label => 'Continues (Name)',
+      :hint => 'Name of series this record continues.'
+    %>
+
+    <%= f.input :continues_url,
+      :label => 'Continues (URL)',
+      :hint => 'URL of series this record continues.'
+    %>
+
+    <hr/>
+
+    <%= f.input :continued_by_name,
+      :label => 'Continued by (Name)',
+      :hint => 'Name of series this record is continued by.'
+    %>
+
+    <%= f.input :continued_by_url,
+      :label => 'Continued by (URL)',
+      :hint => 'URL of series this record is continued by.'
+    %>
+
+    <hr/>
+
+    <%= f.input :fts_search_url,
+      :label => 'Search URL',
+      :hint => 'URL for full text search form.'
+    %>
+
+    <%= f.input :dateable,
+      :label => 'Date qualified?',
+      :hint => 'Should date range support be provided by the search box?'
+    %>
+
+    <hr/>
+
+    <%= f.input :comment,
+      :label => 'Curator Comment Field',
+      :hint => 'Free text field for curator-supplied description'
+    %>
+
+    <hr/>
+
     <h3>Links</h3>
     <div id="links">
       <%= f.semantic_fields_for :links do |lf| %>
