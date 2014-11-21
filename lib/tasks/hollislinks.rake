@@ -26,4 +26,17 @@ namespace :hl do
       end
     end
   end
+
+  desc "Create an initial admin user for the app."
+  task :bootstrap => :environment do
+    raise "Already users in the DB, illegal attempt to re-bootstrap" if User.count > 0
+    password = SecureRandom::base64.sub(/=+$/, '')
+    User.create!(:email => "admin@#{ENV['ROOT_URL']}", :password => password)
+    puts <<-DISPLAY
+      Admin account created!
+      ======================
+      Email:    admin@#{ENV['ROOT_URL']}
+      Password: #{password}
+    DISPLAY
+  end
 end
