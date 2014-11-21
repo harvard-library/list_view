@@ -154,7 +154,7 @@ class LinkList < ActiveRecord::Base
     when Hash
       date_sf['content'].to_s.gsub(/\^/, '')
     else
-      'No date of publication provided.'
+      nil
     end
   end
 
@@ -200,7 +200,7 @@ class LinkList < ActiveRecord::Base
       date_i = pub_field['dateIssued']  ? process_date_subfield(pub_field['dateIssued'])  : nil
       date_c = pub_field['dateCreated'] ? process_date_subfield(pub_field['dateCreated']) : nil
 
-      return [place, publisher, date_c, date_i]
+      return "#{place.sub(/:(?:\s+)?\z/, '')} : #{publisher.sub(/,(?:\s+)?\z/, '')}, #{(date_c || date_i || 'No date of publication provided')}"
     when Array
       pub_field.map {|pf| process_pub_field pf }
     end
