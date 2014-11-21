@@ -23,7 +23,7 @@
       <% unless @typed %>
         <th>External ID Type</th>
       <% end %>
-      <th>Number of Records</th></tr>
+      <th>Number of Links</th></tr>
     <% @link_lists.each do |ll| %>
       <tr>
         <td><%= link_to ll.comment.match(/(?<=Title: ).*?(?=\n)/).to_s, ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ")" %></td>
