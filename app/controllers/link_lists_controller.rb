@@ -94,8 +94,7 @@ class LinkListsController < ApplicationController
 
   private
     def link_list_params
-      params.require(:link_list).permit(:id,
-                                        :ext_id,
+      params.require(:link_list).permit(:ext_id,
                                         :ext_id_type,
                                         :qualified_id,
                                         :url,
