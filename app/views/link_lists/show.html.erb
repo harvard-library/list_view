@@ -88,10 +88,4 @@
   </div>
 <% end %>
 
-<div>
-  <pre>
-<%= @link_list.cached_metadata || "No metadata available" %>
-  </pre>
-</div>
-
 <%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %>
