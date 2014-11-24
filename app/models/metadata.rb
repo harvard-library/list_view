@@ -1,23 +1,24 @@
 class Metadata < Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication)
-## commenting this out, since I'm not sure I know how the result method gets called
-#  def source_url
-#    Erubis::Eruby
-#      .new(MetadataSources[ext_id_type]['template'])
-#      .result(attributes.slice('ext_id', 'ext_id_type'))
-#  end
 
 
-  def self.fetch_metadata source_url
+  def source_url
+    Erubis::Eruby
+      .new(MetadataSources[ext_id_type]['template'])
+      .result(self.ext_id, selfext_id_type)
+  end
+
+
+  def fetch_metadata 
     # fetch MODS metadata
     # NOTES: Status codes need different handling (404 vs 5XX)
     #        Check to make sure there's a reasonable timeout
     begin
-      response = HTTParty.get(source_url,
+      response = HTTParty.get(self.source_url,
                               :headers => {"Accept" => "application/json"})
 
       if response.code == 200 && !response.body.blank?
-        metadata = Metadata.new(nil, nil,response.body)
-	metadata.populate
+        self.body = response.body
+	self.populate
       else
         raise StandardError, "Failed to fetch metadata"
       end
@@ -25,7 +26,7 @@ class Metadata < Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publ
     rescue SocketError => e
       # squelch
     end
-    metadata
+    self
   end
   
   def populate
