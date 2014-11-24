@@ -1,19 +1,39 @@
 <%# NOTE: Comment should be shrunk.  Fields should show if changes present. %>
 <%= semantic_form_for @link_list do |f| %>
   <%= f.inputs do %>
-    <%= f.input :ext_id,
-      :label => 'External ID',
-      :hint => 'ID of the bibliographic record pointing at this link page.'
-    %>
 
     <%= f.input :ext_id_type,
       :label => 'External ID Type',
       :hint => 'The type or source of the external ID referencing this record.'
     %>
 
+    <%= f.input :ext_id,
+      :label => 'External ID',
+      :hint => 'ID of the bibliographic record pointing at this link page.'
+    %>
+
     <%= f.input :url,
       :label => 'URL',
       :hint => 'The URL of the bibliographic record pointing at this link page.'
+    %>
+
+    <%= f.input :title, :as => :string,
+      :hint => 'Title of the record.'
+    %>
+
+    <%= f.input :author,
+      :input_html => {:rows => 3},
+      :hint => 'Author/Creator statement.'
+    %>
+
+    <%= f.input :publication, :as => :text,
+      :input_html => {:rows => 3},
+      :hint => 'Publication statement, suggested format is "{Place} : {Publisher}, {Date}", with multiple publishers each on their own line.' %>
+
+    <%= f.input :comment,
+      :label => 'Curator Comment Field',
+      :input_html => {:rows => 5},
+      :hint => 'Free text field for additional curator-supplied description'
     %>
 
     <hr/>
@@ -50,13 +70,6 @@
     <%= f.input :dateable,
       :label => 'Date qualified?',
       :hint => 'Should date range support be provided by the search box?'
-    %>
-
-    <hr/>
-
-    <%= f.input :comment,
-      :label => 'Curator Comment Field',
-      :hint => 'Free text field for curator-supplied description'
     %>
 
     <hr/>
