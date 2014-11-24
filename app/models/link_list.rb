@@ -106,15 +106,15 @@ class LinkList < ActiveRecord::Base
   end
 
   def self.process_name_field name_field
-    result = []
+    result = ""
     case name_field
     when Hash
       if name_field['type'].in? %w|personal family corporate conference|
         content = name_field['namePart']
         if content.is_a? Array
-          result += content.map do |c|
+          result << content.map do |c|
             c.is_a?(String) ? c : c['content']
-          end
+          end.join(' ')
         elsif content.is_a? Hash
           result << content['namePart']
         else
@@ -122,7 +122,7 @@ class LinkList < ActiveRecord::Base
         end
       end
     when Array
-      result += name_field.map{|m| LinkList.process_name_field m}.map {|m| m.join ' '}
+      result += name_field.map{|m| LinkList.process_name_field m}.join("\n")
     end
     result
   end
@@ -200,9 +200,9 @@ class LinkList < ActiveRecord::Base
       date_i = pub_field['dateIssued']  ? process_date_subfield(pub_field['dateIssued'])  : nil
       date_c = pub_field['dateCreated'] ? process_date_subfield(pub_field['dateCreated']) : nil
 
-      return "#{place.sub(/:(?:\s+)?\z/, '')} : #{publisher.sub(/,(?:\s+)?\z/, '')}, #{(date_c || date_i || 'No date of publication provided')}"
+      return "#{place.sub(/:\s*\z/, '')} : #{publisher.sub(/,\s*\z/, '')}, #{(date_c || date_i || 'No date of publication provided')}"
     when Array
-      pub_field.map {|pf| process_pub_field pf }
+      pub_field.map {|pf| process_pub_field pf }.join("\n")
     end
   end
 

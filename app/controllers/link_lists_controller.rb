@@ -59,14 +59,12 @@ class LinkListsController < ApplicationController
 
     @link_list.fetch_metadata if @link_list.cached_metadata.blank?
 
+    @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
+    @authors = @link_list.author.split("\n")
+    @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : ['<No publication data recorded>']
+
     @link_list.save! if @link_list.changed?
 
-    @mods = JSON.parse(@link_list.cached_metadata) unless @link_list.cached_metadata.blank?
-
-    if @mods
-      @title = LinkList.process_title_field(*@mods['mods'].slice('titleInfo', 'note').values)
-      @author = LinkList.process_name_field(@mods['mods']['name'])
-    end
   end
 
   def edit

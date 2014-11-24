@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120035729) do
+ActiveRecord::Schema.define(version: 20141121195016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20141120035729) do
     t.text    "comment"
     t.text    "cached_metadata"
     t.boolean "dateable",          default: true
+    t.text    "title"
+    t.text    "author"
+    t.text    "publication"
   end
 
   create_table "links", force: true do |t|

@@ -20,16 +20,12 @@
   <tbody>
     <tr>
       <th>Title</th>
-      <% unless @typed %>
-        <th>External ID Type</th>
-      <% end %>
+      <th>External ID</th>
       <th>Number of Links</th></tr>
     <% @link_lists.each do |ll| %>
       <tr>
-        <td><%= link_to ll.comment.match(/(?<=Title: ).*?(?=\n)/).to_s, ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ")" %></td>
-        <% unless @typed %>
-          <td><%= ll.ext_id_type %></td>
-        <% end %>
+        <td><%= link_to ll.title , ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ")" %></td>
+        <td><%= "#{ll.ext_id_type}-#{ll.ext_id}" %></td>
         <td><%= ll.links.count %></td>
       </tr>
     <% end %>
