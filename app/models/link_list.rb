@@ -66,16 +66,10 @@ class LinkList < ActiveRecord::Base
     result
   end
 
-  def source_url
-    Erubis::Eruby
-      .new(MetadataSources[ext_id_type]['template'])
-      .result(attributes.slice('ext_id', 'ext_id_type'))
-  end
-
   def fetch_metadata
- 	md = Metadata.new(attributes.slice('ext_id', 'ext_id_type'))
-	md.fetch_metadata
-        self.cached_metadata = md.body
+ 	  md = Metadata.new(*(attributes.slice('ext_id', 'ext_id_type').values))
+	  md.fetch_metadata
+    self.cached_metadata = md.body
     self
   end
 

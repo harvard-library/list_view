@@ -1,14 +1,13 @@
-class Metadata < Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication)
-
+Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication) do
 
   def source_url
     Erubis::Eruby
       .new(MetadataSources[ext_id_type]['template'])
-      .result(self.ext_id, selfext_id_type)
+      .result(:ext_id => ext_id, :ext_id_type => ext_id_type)
   end
 
 
-  def fetch_metadata 
+  def fetch_metadata
     # fetch MODS metadata
     # NOTES: Status codes need different handling (404 vs 5XX)
     #        Check to make sure there's a reasonable timeout
@@ -18,7 +17,7 @@ class Metadata < Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publ
 
       if response.code == 200 && !response.body.blank?
         self.body = response.body
-	self.populate
+	      self.populate
       else
         raise StandardError, "Failed to fetch metadata"
       end
@@ -28,13 +27,12 @@ class Metadata < Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publ
     end
     self
   end
-  
-  def populate
-	md = JSON.parse(self.body) ['mods']
-        self.title = process_title_field(md['titleInfo'], md['note']) if md['titleInfo']
-        self.author = process_name_field(md['name']) if md['name']
-        self.publication = process_pub_field(md['originInfo']) if md['originInfo']
 
+  def populate
+	  md = JSON.parse(self.body)['mods']
+    self.title = process_title_field(md['titleInfo'], md['note']) if md['titleInfo']
+    self.author = process_name_field(md['name']) if md['name']
+    self.publication = process_pub_field(md['originInfo']) if md['originInfo']
   end
 
   def process_statement_of_responsibility note

@@ -108,6 +108,7 @@ class LinkListsController < ApplicationController
 
     ### Helper Methods ###
     def split_qualified_id(q_id)
+      #FIXME Needs to split on FIRST dash
       HashWithIndifferentAccess.new([:ext_id_type, :ext_id].zip(q_id.split('-')).to_h)
     end
 
