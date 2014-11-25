@@ -1,2 +1,7 @@
-<h2>Admin</h2>
-<h3><%= @user.email %>
+<h2><%= @user.username || @user.email %></h2>
+
+<div><span style="font-weight: bold">Username:</span> <%= @user.username || 'none' %></div>
+<div><span style="font-weight: bold">Email:</span> <%= @user.email %></div>
+<% if @user == current_user %>
+  <%= link_to "Edit", edit_user_path(@user), :class => 'btn btn-primary' %>
+<% end %>

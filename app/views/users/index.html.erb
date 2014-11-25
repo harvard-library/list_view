@@ -1,6 +1,6 @@
 <h2>Admins</h2>
 <ul>
   <% @users.each do |u| %>
-    <li><%= link_to u.email, u %> (<%= link_to 'edit', edit_user_path(u) %>) <%= link_to 'Delete', :method => :delete, :class => 'btn btn-danger' %></li>
+    <li><%= link_to (u.username || u.email), u %> (<%= link_to 'edit', edit_user_path(u) %>) <%= link_to 'Delete', :method => :delete, :class => 'btn btn-danger' %></li>
   <% end %>
 </ul>

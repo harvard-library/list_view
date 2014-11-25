@@ -15,6 +15,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def vet_username
+    if params[:user][:username].blank?
+      params[:user][:username] = nil
+    end
+  end
   # Collection actions
 
   def index
@@ -27,7 +32,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
+    vet_username
     vet_password
     if @user.save
       flash[:notice] = "User sucessfully created!"
@@ -50,7 +55,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
+    vet_username
     vet_password
 
     @user.attributes = user_params
@@ -68,6 +73,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :username, :password, :password_confirmation)
   end
 end

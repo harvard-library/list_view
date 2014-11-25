@@ -1,15 +1,18 @@
 <%= semantic_form_for @user do |f|%>
   <%= f.inputs do %>
-    <%= f.input :email, :value => @user.email %>
+    <%= f.input :email, :value => @user.email, :required => true %>
     <% if (action_name == 'new' || current_user == @user) %>
       <%= f.input :password,
-        :placeholder => 'Leave blank unless no change desired.',
+        :placeholder => 'Leave blank if no change desired.',
         :value => ''
       %>
       <%= f.input :password_confirmation, :as => :password,
         :placeholder => 'Must match password'
       %>
     <% end %>
+    <%= f.input :username, :value => @user.username, :hint => 'For display only - email is used for login' %>
   <% end %>
-  <%= f.actions %>
+  <%= f.actions do %>
+    <%= f.submit :class => 'btn btn-primary' %>
+  <% end %>
 <% end %>
