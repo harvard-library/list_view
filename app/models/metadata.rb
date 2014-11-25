@@ -1,6 +1,5 @@
 Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication) do
-# a non-persistant view of metadata
-  attr_reader :body, :title, :author, :publication
+  # a non-persistant view of metadata
   def initialize(opts, *more)
     if more.length == 0 then
       case

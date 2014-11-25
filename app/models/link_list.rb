@@ -70,6 +70,9 @@ class LinkList < ActiveRecord::Base
  	  md = Metadata.new(attributes.slice('ext_id', 'ext_id_type'))
 	  md.fetch_metadata
     self.cached_metadata = md.body
+    self.title = md.title
+    self.publication = md.publication
+    self.author = md.author
     self
   end
 
