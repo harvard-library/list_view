@@ -1,4 +1,6 @@
 # Initializer for metadata sources.  Should point to an endpoint that returns MODS metadata
+# FORMAT_RESTRICTION: keys cannot include the character '-',
+#   because it's used as a parameter separator
 MetadataSources = {
   'hollis' => {
     'template' => "http://webservices.lib.harvard.edu/rest/mods/<%= ext_id_type %>/<%= ext_id %>"}

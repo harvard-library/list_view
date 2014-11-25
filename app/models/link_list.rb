@@ -15,6 +15,9 @@ class LinkList < ActiveRecord::Base
   has_many :links, -> { order('position ASC')}
   accepts_nested_attributes_for :links, :reject_if => :all_blank, :allow_destroy => true
 
+  validates :ext_id, :presence => true
+  validates :ext_id_type, :presence => true, :inclusion => MetadataSources.keys
+
   # Override to force use of ext_id as identifier
   def to_param
     "#{ext_id_type}-#{ext_id}"
