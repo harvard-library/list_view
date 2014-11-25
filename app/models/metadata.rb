@@ -6,7 +6,6 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
       .result(:ext_id => ext_id, :ext_id_type => ext_id_type)
   end
 
-
   def fetch_metadata
     # fetch MODS metadata
     # NOTES: Status codes need different handling (404 vs 5XX)
@@ -25,14 +24,8 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
     rescue SocketError => e
       # squelch
     end
+    self.populate
     self
-  end
-
-  def populate
-	  md = JSON.parse(self.body)['mods']
-    self.title = process_title_field(md['titleInfo'], md['note']) if md['titleInfo']
-    self.author = process_name_field(md['name']) if md['name']
-    self.publication = process_pub_field(md['originInfo']) if md['originInfo']
   end
 
   def process_statement_of_responsibility note
@@ -68,7 +61,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
         end
       end
     when Array
-      result += name_field.map{|m| LinkList.process_name_field m}.join("\n")
+      result += name_field.map{|m| process_name_field m}.join("\n")
     end
     result
   end
@@ -82,7 +75,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
         title_field[f]
       end.join(' ')
     when Array
-      result << LinkList.process_title_field(title_field.first)
+      result << process_title_field(title_field.first)
     end
     "#{result}#{" / " << sor if sor}"
   end
@@ -150,6 +143,13 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
     when Array
       pub_field.map {|pf| process_pub_field pf }.join("\n")
     end
+  end
+
+  def populate
+	  md = JSON.parse(body)['mods']
+    self.title = process_title_field(md['titleInfo'], md['note']) if md['titleInfo']
+    self.author = process_name_field(md['name']) if md['name']
+    self.publication = process_pub_field(md['originInfo']) if md['originInfo']
   end
 
 end
