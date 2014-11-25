@@ -48,7 +48,7 @@ Some basic notes:
 
 ## Contributors
 
-* Bobbi Fox: http://github.com/bobbi_smr
+* Bobbi Fox: http://github.com/bobbi-SMR
 * Dave Mayo: http://github.com/pobocks (primary contact)
 
 ## License and Copyright
