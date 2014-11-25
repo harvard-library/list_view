@@ -93,7 +93,7 @@
   <tbody>
     <% @link_list.links.each do |link| %>
       <tr>
-        <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>"><%= link.url %></a></td>
+        <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>" target="_new"><%= link.url %></a></td>
       </tr>
     <% end %>
   </tbody>
