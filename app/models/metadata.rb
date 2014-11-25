@@ -1,5 +1,28 @@
 Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication) do
+# a non-persistant view of metadata
+  attr_reader :body, :title, :author, :publication
+  def initialize(opts, *more)
+    if more.length == 0 then
+      case
+        when  opts.class.to_s == "Hash"
+        self.ext_id = opts['ext_id']
+        self.ext_id_type = opts['ext_id_type']
+      when opts.class.to_s == "Array"
+        if opts.length > 0 then
+          self.ext_id = opts[0]
+          if opts.length > 1 then
+            self.ext_id_type = opts[1]
+          end
+        end
+      end
+    else
+      self.ext_id = opts
+      self.ext_id_type = more[0]
+    end
+      raise ArgumentError.new("ID type can't be nil") if self.ext_id_type.nil?
+      raise ArgumentError.new("ID can't be nil") if self.ext_id.nil?
 
+  end
   def source_url
     Erubis::Eruby
       .new(MetadataSources[ext_id_type]['template'])
@@ -16,7 +39,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
 
       if response.code == 200 && !response.body.blank?
         self.body = response.body
-	      self.populate
+        self.populate
       else
         raise StandardError, "Failed to fetch metadata"
       end
@@ -146,7 +169,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
   end
 
   def populate
-	  md = JSON.parse(body)['mods']
+    md = JSON.parse(body)['mods']
     self.title = process_title_field(md['titleInfo'], md['note']) if md['titleInfo']
     self.author = process_name_field(md['name']) if md['name']
     self.publication = process_pub_field(md['originInfo']) if md['originInfo']
