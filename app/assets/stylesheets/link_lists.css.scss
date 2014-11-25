@@ -36,8 +36,9 @@ form.link_list fieldset.form-actions {
     width: 65%;
   }
   bottom: 0;
-  input[type="submit"] {
+  input[type="submit"], input.cancel {
     float:left;
+    margin-right: 1em;
   }
 }
 
@@ -61,6 +62,21 @@ form.link_list fieldset.form-actions {
       margin-right: 1em;
       &:last-child {
         margin-right: 0;
+      }
+    }
+  }
+}
+
+/* Show styling */
+body.c_link_lists.a_show {
+  ul.controls {
+    margin: 1em auto;
+    text-align: center;
+    list-style: inside none;
+    > li {
+      display: inline-block;
+      &:first-child {
+        margin-right: 1em;
       }
     }
   }

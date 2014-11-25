@@ -2,12 +2,12 @@
 <%= semantic_form_for @link_list do |f| %>
   <%= f.inputs do %>
 
-    <%= f.input :ext_id_type,
+    <%= f.input :ext_id_type, :required => true,
       :label => 'External ID Type',
       :hint => 'The type or source of the external ID referencing this record.'
     %>
 
-    <%= f.input :ext_id,
+    <%= f.input :ext_id, :required => true,
       :label => 'External ID',
       :hint => 'ID of the bibliographic record pointing at this link page.'
     %>
@@ -84,6 +84,7 @@
 
   <%= f.actions do %>
     <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to "Cancel", :back, :class => "btn btn-danger cancel" %>
     <div class="links">
       <%= link_to_add_association "Add a link", f, :links, :class => "btn btn-success add-link", :data => {'association-insertion-node' => '#links', 'association-insertion-method' => 'append'}  %>
     </div>
