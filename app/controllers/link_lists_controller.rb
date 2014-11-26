@@ -1,3 +1,4 @@
+require 'csv'
 class LinkListsController < ApplicationController
   before_action :authenticate_login!, :except => [:index, :show]
 
@@ -36,14 +37,21 @@ class LinkListsController < ApplicationController
     params.require(:import_link_lists).permit(:xlsx)
     file = params[:import_link_lists][:xlsx]
 
-    tfile = Tempfile.new(['excel', '.xlsx'])
+    if file.original_filename.match /\.xslx$/
+      tfile = Tempfile.new(['excel', '.xlsx'])
+    else
+      tfile = Tempfile.new(['csv', '.csv'])
+    end
     tfile.binmode
     tfile.write file.read
-
-
-    @link_list = LinkList.import_xlsx(Roo::Excelx.new(tfile.path))
-
     tfile.close
+
+    if file.original_filename.match /\.xslx$/
+      @link_list = LinkList.import_xlsx(Roo::Excelx.new(tfile.path))
+    else
+      @link_list = LinkList.import_csv(CSV.read(tfile.path))
+    end
+
     tfile.unlink
 
     flash.now[:notice] = "Your record has been imported, but will not be saved to the database until you submit it."

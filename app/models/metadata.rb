@@ -46,7 +46,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
     rescue SocketError => e
       # squelch
     end
-    self.populate
+    self.populate if self.body
     self
   end
 

@@ -5,11 +5,16 @@ namespace :hl do
     path = File.absolute_path(ENV['SRC'])
     failures = []
     ActiveRecord::Base.transaction do
-
-      Dir.glob(File.join(path, '*.xlsx')).each do |file|
+      files = Dir.glob(File.join(path, '*.csv')) + Dir.glob(File.join(path, '*xlsx'))
+      files.each do |file|
         puts "Processing '#{file}'"
-        excel = Roo::Excelx.new(file)
-        ll = LinkList.import_xlsx(excel)
+        if file.match(/\.xlsx$/)
+          excel = Roo::Excelx.new(file)
+          ll = LinkList.import_xlsx(excel)
+        else
+          csv = CSV.read(file)
+          ll = LinkList.import_csv(csv)
+        end
         ll.fetch_metadata
         begin
           ll.save!

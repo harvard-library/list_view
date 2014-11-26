@@ -3,22 +3,25 @@
   <%= f.inputs do %>
 
     <%= f.input :ext_id_type, :required => true,
+      :as => :select,
+      :collection => MetadataSources.keys,
+      :include_blank => false,
       :label => 'External ID Type',
-      :hint => 'The type or source of the external ID referencing this record.'
+      :hint => 'The type or source of the bibliographic record describing this resource.'
     %>
 
     <%= f.input :ext_id, :required => true,
       :label => 'External ID',
-      :hint => 'ID of the bibliographic record pointing at this link page.'
+      :hint => 'ID of the bibliographic record describing this resource.'
     %>
 
     <%= f.input :url,
       :label => 'URL',
-      :hint => 'The URL of the bibliographic record pointing at this link page.'
+      :hint => 'The URL of the bibliographic record pointing at this resource.'
     %>
 
     <%= f.input :title, :as => :string,
-      :hint => 'Title of the record.'
+      :hint => 'Title of the resource.'
     %>
 
     <%= f.input :author,
@@ -40,24 +43,24 @@
 
     <%= f.input :continues_name,
       :label => 'Continues (Name)',
-      :hint => 'Name of series this record continues.'
+      :hint => 'Name of series this resource continues.'
     %>
 
     <%= f.input :continues_url,
       :label => 'Continues (URL)',
-      :hint => 'URL of series this record continues.'
+      :hint => 'URL of series this resource continues.'
     %>
 
     <hr/>
 
     <%= f.input :continued_by_name,
       :label => 'Continued by (Name)',
-      :hint => 'Name of series this record is continued by.'
+      :hint => 'Name of series this resource is continued by.'
     %>
 
     <%= f.input :continued_by_url,
       :label => 'Continued by (URL)',
-      :hint => 'URL of series this record is continued by.'
+      :hint => 'URL of series this resource is continued by.'
     %>
 
     <hr/>
