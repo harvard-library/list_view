@@ -1,27 +1,14 @@
 Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication) do
   # a non-persistant view of metadata
-  def initialize(opts, *more)
-    if more.length == 0 then
-      case
-        when  opts.class.to_s == "Hash"
-        self.ext_id = opts['ext_id']
-        self.ext_id_type = opts['ext_id_type']
-      when opts.class.to_s == "Array"
-        if opts.length > 0 then
-          self.ext_id = opts[0]
-          if opts.length > 1 then
-            self.ext_id_type = opts[1]
-          end
-        end
-      end
-    else
-      self.ext_id = opts
-      self.ext_id_type = more[0]
-    end
-      raise ArgumentError.new("ID type can't be nil") if self.ext_id_type.nil?
-      raise ArgumentError.new("ID can't be nil") if self.ext_id.nil?
+  def initialize(opts = HashWithIndifferentAccess.new)
+    self.ext_id = opts['ext_id']
+    self.ext_id_type = opts['ext_id_type']
+    self.body = opts['body']
 
+    raise ArgumentError.new("ID type can't be nil") if self.ext_id_type.nil?
+    raise ArgumentError.new("ID can't be nil") if self.ext_id.nil?
   end
+
   def source_url
     Erubis::Eruby
       .new(MetadataSources[ext_id_type]['template'])

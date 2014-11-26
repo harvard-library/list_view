@@ -1,6 +1,6 @@
 require 'csv'
 class LinkListsController < ApplicationController
-  before_action :authenticate_login!, :except => [:index, :show]
+  before_action :authenticate_login!, :except => [:index, :show, :meta]
 
   #### Collection actions
 
@@ -54,11 +54,22 @@ class LinkListsController < ApplicationController
 
     tfile.unlink
 
-    flash.now[:notice] = "Your record has been imported, but will not be saved to the database until you submit it."
+    flash.now[:warning] = "Your record has been imported, but will not be saved to the database until you submit it."
     respond_to do |format|
       format.html { render :action => :new }
     end
   end
+
+  # AJAX route
+  def meta
+    params.permit(:ext_id, :ext_id_type)
+    md = Metadata.new(params.slice(:ext_id, :ext_id_type))
+    md.fetch_metadata
+    respond_to do |f|
+      f.json { render :json => md.as_json }
+    end
+  end
+
 
   ### Member actions
 

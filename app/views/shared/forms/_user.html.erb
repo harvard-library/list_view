@@ -1,16 +1,18 @@
 <%= semantic_form_for @user do |f|%>
   <%= f.inputs do %>
-    <%= f.input :email, :value => @user.email, :required => true %>
+    <%= f.input :email, :input_html => {:autocomplete => 'off'}, :required => true %>
     <% if (action_name == 'new' || current_user == @user) %>
       <%= f.input :password,
-        :placeholder => 'Leave blank if no change desired.',
-        :value => ''
+      :placeholder => (action_name == 'new' ? 'Minimum length 8' : 'Leave blank if no change desired.'),
+        :input_html => {:autocomplete => 'off'}
       %>
       <%= f.input :password_confirmation, :as => :password,
-        :placeholder => 'Must match password'
+        :placeholder => 'Must match password',
+        :input_html => {:autocomplete => 'off'}
       %>
     <% end %>
     <%= f.input :username, :value => @user.username, :hint => 'For display only - email is used for login' %>
+    <%= f.input :affiliation, :hint => 'For display only - institution user is associated in within your organization.' %>
   <% end %>
   <%= f.actions do %>
     <%= f.submit :class => 'btn btn-primary' %>

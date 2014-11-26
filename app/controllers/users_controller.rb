@@ -64,15 +64,17 @@ class UsersController < ApplicationController
       respond_to do |f|
         f.html { redirect_to @user, :action => :show }
       end
+      return
     else
       flash[:error] = "Failed to update user."
       redirect_to :back
+      return false
     end
   end
 
 
   private
   def user_params
-    params.require(:user).permit(:email, :username, :password, :password_confirmation)
+    params.require(:user).permit(:email, :username, :affiliation, :password, :password_confirmation)
   end
 end
