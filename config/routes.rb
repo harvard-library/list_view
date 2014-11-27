@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :link_lists,
             :param => :qualified_id,
-            :constraints => { :qualified_id => %r|[^/]+-[^/]+| },
+            :constraints => { :qualified_id => %r|[^/\-]+-[^/.]+| },
             :path => :lists do
     collection do
       post 'import'

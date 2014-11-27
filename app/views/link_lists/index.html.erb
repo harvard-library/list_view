@@ -21,10 +21,11 @@
     <tr>
       <th>Title</th>
       <th>External ID</th>
-      <th>Number of Links</th></tr>
+      <th>Number of Links</th>
+    </tr>
     <% @link_lists.each do |ll| %>
       <tr>
-        <td><%= link_to ll.title , ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ")" %></td>
+        <td><%= link_to ll.title , ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ") " << link_to("CSV", link_list_path(ll, :format => 'csv')) %></td>
         <td><%= "#{ll.ext_id_type}-#{ll.ext_id}" %></td>
         <td><%= ll.links.count %></td>
       </tr>

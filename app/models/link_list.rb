@@ -38,7 +38,7 @@ class LinkList < ActiveRecord::Base
     result.url = url
     result.ext_id = url.match(/\d+$/)[0].rjust(9, '0') # throw exception if blank!
 
-    (1...separator).each do |row_i|
+    (2...separator).each do |row_i|
       (key, content, extra) = *((1..3).map {|col_i| excel.hl_cell row_i, col_i })
       case key
       when /^continues/i
@@ -82,7 +82,7 @@ class LinkList < ActiveRecord::Base
     result.url = url
     result.ext_id = url.match(/\d+$/)[0].rjust(9, '0') # throw exception if blank!
 
-    (0...separator).each do |row_i|
+    (1...separator).each do |row_i|
       (key, content, extra) = *((0..2).map {|col_i| csv[row_i][col_i]})
       case key
       when /^continues/i
@@ -119,6 +119,31 @@ class LinkList < ActiveRecord::Base
     self.publication = md.publication
     self.author = md.author
     self
+  end
+
+
+  def export_csv
+    CSV.generate(:encoding => 'utf-8') do |csv|
+      csv << ['', url]
+      csv << [] # Existing records all have a blank here, this is visual only
+      csv << ['FTS_Search', fts_search_url] unless fts_search_url.blank?
+      csv << ['FTS_NoDate'] unless dateable?
+      csv << ['Continues:', continues_name, continues_url] unless continues_name.blank?
+      csv << ['Continued by:', continued_by_name, continued_by_url] unless continued_by_name.blank?
+      unless comment.blank?
+        comment.lines.each do |line|
+          if line.index(':')
+            csv << [line[0..line.index(':')], line.sub(/[^:]+?:\s+/, '').chomp]
+          else
+            csv << [line]
+          end
+        end
+      end
+      csv << ['CONTENT_LIST']
+      links.each do |link|
+        csv << link.attributes.slice(*%w|name url|).values
+      end
+    end
   end
 
 end

@@ -1,4 +1,3 @@
-require 'csv'
 class LinkListsController < ApplicationController
   before_action :authenticate_login!, :except => [:index, :show, :meta]
 
@@ -14,7 +13,7 @@ class LinkListsController < ApplicationController
   end
 
   def new
-    flash.now[:notice] = "This is a new record, and has not been saved to the database."
+    flash.now[:warning] = "This is a new record, and has not been saved to the database."
     @link_list = LinkList.new
   end
 
@@ -76,13 +75,17 @@ class LinkListsController < ApplicationController
   def show
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
 
-    @link_list.fetch_metadata if @link_list.cached_metadata.blank?
-
     @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
     @authors = !@link_list.title.blank? ? @link_list.author.split("\n") : '<No author recorded>'
     @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : ['<No publication data recorded>']
 
-    @link_list.save! if @link_list.changed?
+    respond_to do |f|
+      f.html
+      f.csv {
+        headers['Content-Disposition'] = "attachment; filename=\"#{@link_list.ext_id_type}-#{@link_list.ext_id}.csv\""
+        headers['Content-Type'] ||= 'text/csv'
+      }
+    end
 
   end
 
@@ -127,8 +130,7 @@ class LinkListsController < ApplicationController
 
     ### Helper Methods ###
     def split_qualified_id(q_id)
-      #FIXME Needs to split on FIRST dash
-      HashWithIndifferentAccess.new([:ext_id_type, :ext_id].zip(q_id.split('-')).to_h)
+      HashWithIndifferentAccess.new([:ext_id_type, :ext_id].zip(q_id.split('-',2)).to_h)
     end
 
 end

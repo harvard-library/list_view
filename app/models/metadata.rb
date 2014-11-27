@@ -3,7 +3,7 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
   def initialize(opts = HashWithIndifferentAccess.new)
     self.ext_id = opts['ext_id']
     self.ext_id_type = opts['ext_id_type']
-    self.body = opts['body']
+    self.body = opts['body'] if opts['body']
 
     raise ArgumentError.new("ID type can't be nil") if self.ext_id_type.nil?
     raise ArgumentError.new("ID can't be nil") if self.ext_id.nil?

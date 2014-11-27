@@ -3,6 +3,7 @@
     <li><%= link_to "Edit this record", edit_link_list_path(@link_list), :class => 'btn btn-primary' %></li>
     <li><%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %></li>
   </ul>
+  <%= link_to 'CSV', link_list_path(@link_list, :format => 'csv') %>
 <% end %>
 <% if @link_list.cached_metadata %>
   <div class="metadata">
