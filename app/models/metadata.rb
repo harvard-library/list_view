@@ -1,6 +1,7 @@
 Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publication) do
   # a non-persistant view of metadata
-  def initialize(opts = HashWithIndifferentAccess.new)
+  def initialize(opts = {})
+    HashWithIndifferentAccess.new(opts)
     self.ext_id = opts['ext_id']
     self.ext_id_type = opts['ext_id_type']
     self.body = opts['body'] if opts['body']

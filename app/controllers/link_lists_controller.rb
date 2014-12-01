@@ -64,6 +64,14 @@ class LinkListsController < ApplicationController
     params.permit(:ext_id, :ext_id_type)
     md = Metadata.new(params.slice(:ext_id, :ext_id_type))
     md.fetch_metadata
+    if md.body.blank?
+      ll = LinkList.find_by(md.to_h.slice(*%w|ext_id ext_id_type|))
+      if ll && ll.cached_metadata
+        md.body = ll.cached_metadata
+        md.populate
+      end
+    end
+
     respond_to do |f|
       f.json { render :json => md.as_json }
     end
