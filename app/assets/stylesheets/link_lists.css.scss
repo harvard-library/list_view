@@ -36,7 +36,7 @@ form.link_list fieldset.form-actions {
     width: 65%;
   }
   bottom: 0;
-  input[type="submit"], input.cancel {
+  input[type="submit"], input.cancel, a.meta {
     float:left;
     margin-right: 1em;
   }
@@ -79,5 +79,14 @@ body.c_link_lists.a_show {
         margin-right: 1em;
       }
     }
+  }
+}
+
+body.c_link_lists {
+  .modal-field .label {
+    font-size: 1em;
+    display: inline-block;
+    color: black;
+    font-weight: bold;
   }
 }

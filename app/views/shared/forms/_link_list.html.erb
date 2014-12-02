@@ -88,8 +88,11 @@
   <%= f.actions do %>
     <%= f.submit :class => "btn btn-primary" %>
     <%= link_to "Cancel", :back, :class => "btn btn-danger cancel" %>
+    <%= link_to "Retrieve Metadata", '#no-op', :class => 'btn btn-info meta' %>
     <div class="links">
       <%= link_to_add_association "Add a link", f, :links, :class => "btn btn-success add-link", :data => {'association-insertion-node' => '#links', 'association-insertion-method' => 'append'}  %>
     </div>
   <% end %>
 <% end %>
+
+<%= render :partial => 'modal', :locals => {:title => 'Metadata', :fields => %w|Title Author Publication|} %>
