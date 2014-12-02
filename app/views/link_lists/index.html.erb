@@ -16,7 +16,7 @@
   </div>
   <hr class="clearfix">
 <% end %>
-<table class="table table-striped" style="border: 1px solid #ddd, align: center;">
+<table class="table table-striped">
   <tbody>
     <tr>
       <th>Title</th>
@@ -25,7 +25,7 @@
     </tr>
     <% @link_lists.each do |ll| %>
       <tr>
-        <td><%= link_to ll.title , ll %><%== current_user && " (" << link_to("Edit", edit_link_list_path(ll)) << ") " << link_to("CSV", link_list_path(ll, :format => 'csv')) %></td>
+        <td><%= link_to ll.title , ll %> <%== current_user && link_to("Edit", edit_link_list_path(ll), :class => 'btn btn-xs btn-primary', :title => 'Edit this record') << ' ' << link_to("CSV", link_list_path(ll, :format => 'csv'), :class=> 'btn btn-xs btn-info', :title => 'CSV Download') %></td>
         <td><%= "#{ll.ext_id_type}-#{ll.ext_id}" %></td>
         <td><%= ll.links.count %></td>
       </tr>

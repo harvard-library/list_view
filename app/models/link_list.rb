@@ -48,6 +48,7 @@ class LinkList < ActiveRecord::Base
         result.continued_by_name = content
         result.continued_by_url = extra
       when /^fts_search/i
+        # Regex here is specific to Harvard's FTS search params - portability issues ahoy!
         result.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
       when /^fts_nodate/i
         result.dateable = false

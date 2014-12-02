@@ -36,7 +36,7 @@ class LinkListsController < ApplicationController
     params.require(:import_link_lists).permit(:xlsx)
     file = params[:import_link_lists][:xlsx]
 
-    if file.original_filename.match /\.xslx$/
+    if file.original_filename.match /\.xlsx$/
       tfile = Tempfile.new(['excel', '.xlsx'])
     else
       tfile = Tempfile.new(['csv', '.csv'])
@@ -45,7 +45,7 @@ class LinkListsController < ApplicationController
     tfile.write file.read
     tfile.close
 
-    if file.original_filename.match /\.xslx$/
+    if file.original_filename.match /\.xlsx$/
       @link_list = LinkList.import_xlsx(Roo::Excelx.new(tfile.path))
     else
       @link_list = LinkList.import_csv(CSV.read(tfile.path))

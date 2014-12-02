@@ -1,7 +1,14 @@
 <h2>Admins</h2>
-<ul>
-  <% @users.each do |u| %>
-    <li><%= link_to (u.username || u.email), u %> (<%= link_to 'edit', edit_user_path(u) %>) <%= link_to 'Delete', :method => :delete, :class => 'btn btn-danger' %></li>
-  <% end %>
-</ul>
+<%# Buttonize, put pencil glyph on edit, x on delete? %>
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>User</th>
+      <th>Controls</th>
+    </tr>
+    <% @users.each do |u| %>
+      <tr><td><%= link_to (u.username || u.email), u %></td><td><%= link_to 'Edit', edit_user_path(u), :class => 'btn btn-info btn-xs', :title => 'Edit User' %> <%= link_to 'Delete', u, :method => :delete, :class => 'btn btn-danger btn-xs' %></td></tr>
+    <% end %>
+  </tbody>
+</table>
 <%= link_to 'Add User', new_user_path, :class => 'btn btn-primary' %>

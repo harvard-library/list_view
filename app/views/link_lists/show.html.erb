@@ -3,7 +3,7 @@
     <li><%= link_to "Edit this record", edit_link_list_path(@link_list), :class => 'btn btn-primary' %></li>
     <li><%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %></li>
   </ul>
-  <%= link_to 'CSV', link_list_path(@link_list, :format => 'csv') %>
+  <%= link_to 'CSV', link_list_path(@link_list, :format => 'csv'), :title => 'CSV Download' %>
 <% end %>
 <% if @link_list.cached_metadata %>
   <div class="metadata">
@@ -62,9 +62,10 @@
 
 <% unless @link_list.fts_search_url.blank? %>
   <div class="search-box">
-    <form class="formtastic" id="fts" action="<%= @link_list.fts_search_url %>" method='GET'>
+    <form class="formtastic" id="fts" action="<%= @link_list.fts_search_url.sub(/S=[^&]+/, '') %>" method='GET'>
       <p>Full Text Search</p>
       <div class="input-group">
+        <input name="S" type="hidden" value="<%== @link_list.fts_search_url.match(/(?<=S=)[^&]+/i).to_s %>" />
         <input name="Q" class="form-control" type="text" placeholder="Enter search terms here" />
         <span class="input-group-btn">
           <%= submit_tag 'Search', :class => 'btn btn-primary', :name => nil %>

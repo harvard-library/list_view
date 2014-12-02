@@ -72,6 +72,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    unless @user == current_user
+      dead = @user.destroy!
+      flash[:success] = "#{dead.username || dead.email} deleted."
+    else
+      flash[:error] = "You may not delete yourself.  Get someone else to delete you."
+    end
+    respond_to do |f|
+      f.html { redirect_to users_path }
+    end
+  end
 
   private
   def user_params

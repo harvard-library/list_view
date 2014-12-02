@@ -48,7 +48,7 @@ $(function () {
         $me.css('backgroundColor', '')
       })
   }
-  // Copied from console, needs much adjustment.
+
   $(document).on('click', '.btn.meta', function (e) {
     e.preventDefault();
     $.getJSON('/meta/' + $('#link_list_ext_id_type').val() + '/' + $('#link_list_ext_id').val())
