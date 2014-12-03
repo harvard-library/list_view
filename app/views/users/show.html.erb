@@ -3,5 +3,7 @@
 <div><span class="user-label">Email:</span> <%= @user.email %></div>
 <div><span class="user-label">Affiliation:</span> <%= @user.affiliation %></div>
 <% if @user == current_user %>
-  <%= link_to "Edit", edit_user_path(@user), :class => 'btn btn-primary' %>
+  <%= link_to edit_user_path(@user), :class => 'btn btn-primary' do %>
+    Edit <%= glyphicon 'pencil' %>
+  <% end %>
 <% end %>

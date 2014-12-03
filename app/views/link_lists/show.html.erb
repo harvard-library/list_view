@@ -1,9 +1,17 @@
 <% if current_user %>
   <ul class="controls">
-    <li><%= link_to "Edit this record", edit_link_list_path(@link_list), :class => 'btn btn-primary' %></li>
+    <li>
+      <%= link_to link_list_path(@link_list, :format => 'csv'), :title => 'CSV Download', :class => 'btn btn-info' do %>
+        Download CSV <%= glyphicon 'file' %></span>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to edit_link_list_path(@link_list), :class => 'btn btn-primary' do %>
+        Edit this record <%= glyphicon'pencil' %>
+      <% end %>
+    </li>
     <li><%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %></li>
   </ul>
-  <%= link_to 'CSV', link_list_path(@link_list, :format => 'csv'), :title => 'CSV Download' %>
 <% end %>
 <% if @link_list.cached_metadata %>
   <div class="metadata">
@@ -40,6 +48,11 @@
   </div>
 <% end %>
 
+<div class="comment">
+  <%== @link_list.comment.split(/\n/).map { |line| '<div>' << line << '</div>' }.join("\n") %>
+</div>
+
+
 <% unless @link_list.continues_url.blank? %>
   <div class="continues">
     <b>Continues:</b> <%= link_to @link_list.continues_name, @link_list.continues_url %>
@@ -52,12 +65,9 @@
   </div>
 <% end %>
 
-<div class="comment">
-  <%== @link_list.comment.split(/\n/).map { |line| '<div>' << line << '</div>' }.join("\n") %>
-</div>
 
 <div class="url">
-  <a class="ll url" href="<%= @link_list.url %>">Record Link</a>
+  <a class="ll url btn btn-success" href="<%= @link_list.url %>">Record Link</a>
 </div>
 
 <% unless @link_list.fts_search_url.blank? %>

@@ -69,14 +69,19 @@ form.link_list fieldset.form-actions {
 
 /* Show styling */
 body.c_link_lists.a_show {
+  .md-label {
+    color: $ink;
+    font-weight: bold;
+  }
   ul.controls {
     margin: 1em auto;
     text-align: center;
     list-style: inside none;
     > li {
       display: inline-block;
-      &:first-child {
-        margin-right: 1em;
+      margin-right: 1em;
+      &:last-child {
+        margin-right: 0;
       }
     }
   }
