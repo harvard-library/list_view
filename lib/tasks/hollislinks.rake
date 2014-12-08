@@ -1,7 +1,7 @@
 namespace :hl do
   # Batch import expects argument: SRC=$director_name
-  desc "Import all xlsx files in provided directory"
-  task :batch_import_xlsx => :environment do
+  desc "Import all xlsx/csv files in provided directory"
+  task :batch_import => :environment do
     path = File.absolute_path(ENV['SRC'])
     failures = []
     ActiveRecord::Base.transaction do
@@ -17,7 +17,9 @@ namespace :hl do
         end
         ll.fetch_metadata
         begin
+          old = LinkList.find_by(ll.attributes.slice('ext_id', 'ext_id_type'))
           ll.save!
+          old.destroy!
         rescue
           puts "Failure processing: '#{file}'"
           failures << file

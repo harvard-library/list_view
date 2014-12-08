@@ -25,6 +25,9 @@ class LinkList < ActiveRecord::Base
   end
 
   # Converts from .xlsx format, treating all fields as strings.
+  # FIXME: Currently assumes :ext_id_type => 'hollis' (relies on default in DB)
+  #        Above applies to CSV import as well
+  #
   # Note that indexing starts from 1, because spreadsheets ¯\_(ツ)_/¯
   def self.import_xlsx(excel)
     result = LinkList.new
