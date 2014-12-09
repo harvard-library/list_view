@@ -19,6 +19,7 @@ class LinkListsController < ApplicationController
 
   def create
     @link_list = LinkList.new(link_list_params)
+    @link_list.last_touched_by = current_user.email
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} created successfully!"
       respond_to do |format|
@@ -103,6 +104,7 @@ class LinkListsController < ApplicationController
 
   def update
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+    @link_list.last_touched_by = current_user.email
     @link_list.update!(link_list_params)
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} updated successfully!"
@@ -112,6 +114,7 @@ class LinkListsController < ApplicationController
 
   def destroy
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+    @link_list.last_touched_by = current_user.email
     if @link_list.destroy.save
       flash[:notice] = "#{@link_list.ext_id} sucessfully deleted."
       respond_to do |format|

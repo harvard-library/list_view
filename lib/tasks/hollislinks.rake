@@ -1,5 +1,6 @@
 namespace :hl do
-  # Batch import expects argument: SRC=$director_name
+  # Batch import expects argument: SRC=$directory_name
+  # Will take argument: EMAIL=$admin@email.com
   desc "Import all xlsx/csv files in provided directory"
   task :batch_import => :environment do
     path = File.absolute_path(ENV['SRC'])
@@ -16,10 +17,17 @@ namespace :hl do
           ll = LinkList.import_csv(csv)
         end
         ll.fetch_metadata
+        ll.last_touched_by = ENV['EMAIL'] if ENV['EMAIL']
+
         begin
           old = LinkList.find_by(ll.attributes.slice('ext_id', 'ext_id_type'))
-          ll.save!
-          old.destroy!
+          old.last_touched_by = ENV['EMAIL'] if (old && ENV['EMAIL'])
+
+          unless old
+            ll.save!
+          else
+            old.update! ll.attributes.except('id')
+          end
         rescue
           puts "Failure processing: '#{file}'"
           failures << file

@@ -11,26 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125200156) do
+ActiveRecord::Schema.define(version: 20141209131623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "ledgers", force: true do |t|
+    t.string   "user_email",          default: "<Admin Console>", null: false
+    t.string   "ext_id",                                          null: false
+    t.string   "ext_id_type",                                     null: false
+    t.datetime "time"
+    t.string   "event_type"
+    t.json     "serialized_linklist"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ledgers", ["ext_id_type", "ext_id"], name: "index_ledgers_on_ext_id_type_and_ext_id", using: :btree
+
   create_table "link_lists", force: true do |t|
-    t.string  "ext_id",                               null: false
-    t.string  "ext_id_type",       default: "hollis", null: false
-    t.string  "url",                                  null: false
-    t.string  "continues_name"
-    t.string  "continues_url"
-    t.string  "continued_by_name"
-    t.string  "continued_by_url"
-    t.string  "fts_search_url"
-    t.text    "comment"
-    t.text    "cached_metadata"
-    t.boolean "dateable",          default: true
-    t.text    "title"
-    t.text    "author"
-    t.text    "publication"
+    t.string   "ext_id",                               null: false
+    t.string   "ext_id_type",       default: "hollis", null: false
+    t.string   "url",                                  null: false
+    t.string   "continues_name"
+    t.string   "continues_url"
+    t.string   "continued_by_name"
+    t.string   "continued_by_url"
+    t.string   "fts_search_url"
+    t.text     "comment"
+    t.text     "cached_metadata"
+    t.boolean  "dateable",          default: true
+    t.text     "title"
+    t.text     "author"
+    t.text     "publication"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", force: true do |t|

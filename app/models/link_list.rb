@@ -19,9 +19,45 @@ class LinkList < ActiveRecord::Base
   validates :ext_id, :presence => true
   validates :ext_id_type, :presence => true, :inclusion => MetadataSources.keys
 
+  after_create do |ll|
+    Ledger.create(:event_type => 'create',
+                  :user_email => ll.last_touched_by,
+                  :ext_id => ll.ext_id,
+                  :ext_id_type => ll.ext_id_type,
+                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :time => ll.created_at)
+  end
+
+  after_update do |ll|
+    Ledger.create(:event_type => 'update',
+                  :user_email => ll.last_touched_by,
+                  :ext_id => ll.ext_id,
+                  :ext_id_type => ll.ext_id_type,
+                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :time => ll.updated_at)
+  end
+
+  after_destroy do |ll|
+    Ledger.create(:event_type => 'destroy',
+                  :user_email => ll.last_touched_by,
+                  :ext_id => ll.ext_id,
+                  :ext_id_type => ll.ext_id_type,
+                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :time => DateTime.now)
+  end
+
   # Override to force use of ext_id as identifier
   def to_param
     "#{ext_id_type}-#{ext_id}"
+  end
+
+  # Ephemeral instance var used in audit functionality
+  def last_touched_by
+    @last_touched_by || '<Admin Console>'
+  end
+
+  def last_touched_by=(email)
+    @last_touched_by = email
   end
 
   # Converts from .xlsx format, treating all fields as strings.
