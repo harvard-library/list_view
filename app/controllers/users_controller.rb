@@ -47,6 +47,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @actions = Ledger
+               .where(:user_email => @user.email)
+               .order('created_at DESC')
+               .limit(100)
+               .pluck(:ext_id_type, :ext_id, :event_type, :created_at)
   end
 
   def edit

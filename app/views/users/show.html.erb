@@ -7,3 +7,21 @@
     Edit <%= glyphicon 'pencil' %>
   <% end %>
 <% end %>
+<h3>User Activity</h3>
+<p class="help-block">A list of the actions taken by this user, from most recent to most antique.</p>
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>Record</th>
+      <th>Action taken</th>
+      <th>Date/Time</th>
+    </tr>
+    <% @actions.each do |a| %>
+      <tr>
+        <td><%= a[0..1].join(':') %></td>
+        <td><%= a[2] %></td>
+        <td><%= a[3].in_time_zone(Rails.configuration.time_zone).strftime("%Y-%m-%d %I:%M %P") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

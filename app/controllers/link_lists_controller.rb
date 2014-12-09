@@ -105,10 +105,13 @@ class LinkListsController < ApplicationController
   def update
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
     @link_list.last_touched_by = current_user.email
-    @link_list.update!(link_list_params)
+    @link_list.attributes = link_list_params
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} updated successfully!"
       redirect_to :action => :show
+    else
+      flash[:error] = "Failed to update #{@link_list.ext_id}!"
+      redirect_to :back
     end
   end
 
