@@ -13,7 +13,7 @@ class Roo::Excelx
 end
 
 class LinkList < ActiveRecord::Base
-  has_many :links, -> { order('position ASC')}
+  has_many :links, -> { order('position ASC')}, :dependent => :destroy
   accepts_nested_attributes_for :links, :reject_if => :all_blank, :allow_destroy => true
 
   validates :ext_id, :presence => true
