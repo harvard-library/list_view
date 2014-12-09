@@ -118,7 +118,7 @@ class LinkListsController < ApplicationController
   def destroy
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
     @link_list.last_touched_by = current_user.email
-    if @link_list.destroy.save
+    if @link_list.destroy
       flash[:notice] = "#{@link_list.ext_id} sucessfully deleted."
       respond_to do |format|
         format.html { redirect_to link_lists_path }
