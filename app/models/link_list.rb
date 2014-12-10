@@ -19,6 +19,8 @@ class LinkList < ActiveRecord::Base
   validates :ext_id, :presence => true
   validates :ext_id_type, :presence => true, :inclusion => MetadataSources.keys
 
+  mount_uploader :image, ImageUploader
+
   after_create do |ll|
     Ledger.create(:event_type => 'create',
                   :user_email => ll.last_touched_by,

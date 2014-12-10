@@ -30,5 +30,8 @@
 # Ignore database.yml
 /config/database.yml
 
+# Ignore uploads
+/public/uploads/*
+
 # Ignore OSX Finder detritus
 .DS_Store

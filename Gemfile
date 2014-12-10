@@ -18,6 +18,8 @@ gem 'formtastic', '~> 2.1' # Ye Olde Formtastic because formtastic bootstrap doe
 gem 'formtastic-bootstrap'
 gem 'cocoon'
 gem 'dotenv-deployment'
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :development do
   gem 'spring'

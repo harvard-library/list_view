@@ -111,6 +111,7 @@ class LinkListsController < ApplicationController
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
     @link_list.last_touched_by = current_user.email
     @link_list.attributes = link_list_params
+
     if @link_list.save
       flash[:notice] = "#{@link_list.ext_id} updated successfully!"
       redirect_to :action => :show
@@ -140,6 +141,7 @@ class LinkListsController < ApplicationController
                                         :title,
                                         :author,
                                         :publication,
+                                        :image,
                                         :continues_name,
                                         :continues_url,
                                         :continued_by_name,
