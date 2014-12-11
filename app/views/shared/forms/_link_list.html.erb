@@ -44,7 +44,12 @@
       :hint => 'Expected dimensions: 300px square. JPG, PNG, GIF supported.'
     %>
 
-    <hr/>
+    <%= f.input :image_cache, :as => :hidden %>
+    <% unless @link_list.image.blank?  %>
+      <%= image_tag @link_list.image %>
+      <%= f.input :remove_image, :as => :boolean %>
+    <% end %>
+    <hr />
 
     <%= f.input :continues_name,
       :label => 'Continues (Name)',

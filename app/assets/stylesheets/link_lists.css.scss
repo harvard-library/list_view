@@ -73,6 +73,19 @@ body.c_link_lists.a_show {
     color: $ink;
     font-weight: bold;
   }
+  div.image {
+    float: right;
+    img {
+      @media (max-width: $screen-sm-max) {
+        width:150px;
+        height:150px;
+      }
+      @media (min-width: $screen-md-min) {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  }
   ul.controls {
     margin: 1em auto;
     text-align: center;
