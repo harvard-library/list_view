@@ -108,3 +108,18 @@ body.c_link_lists {
     font-weight: bold;
   }
 }
+
+body.c_link_lists.a_index {
+  .ll-create, .ll-import {
+    @media(max-width: $screen-xs-max) {
+      @include make-xs-column(12);
+      &.ll-create {
+        padding-bottom: 1em;
+        border-bottom: 1px solid #eee;
+      }
+    }
+    @media(min-width: $screen-sm-min) {
+      @include make-sm-column(6);
+    }
+  }
+}
