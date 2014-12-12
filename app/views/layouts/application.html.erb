@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HOLLISLinks</title>
+  <title>ListView</title>
   <link type="image/vnd.microsoft.icon" href="http://guidelines.hwp.harvard.edu/profiles/openscholar/themes/hwpi_classic/favicon.ico" rel="shortcut icon">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!--[if lte IE 10]>
+  <%= stylesheet_link_tag    'iefix', media: 'all', 'data-turbolinks-track' => true %>
+  <![endif]-->
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= "c_#{controller.controller_name} a_#{controller.action_name}" %>">
 <div class="container-fluid">
   <div class="page-header">
-    <h1><%= link_to "HOLLISLinks", "/", :class => 'title' %><%== " " << link_to("Sign Out", destroy_user_session_path, :method => :delete, :class => 'sign-out') if current_user %></h1>
-
+    <h1><%= link_to raw("ListView"), "/", :class => 'title' %><%== " " << link_to("Sign Out", destroy_user_session_path, :method => :delete, :class => 'sign-out') if current_user %></h1>
+    <h2><%= content_for(:subhead) if content_for(:subhead) %></h2>
   </div>
   <div id="content">
     <%= render :partial => 'shared/messages' %>

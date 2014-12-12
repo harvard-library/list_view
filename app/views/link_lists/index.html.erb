@@ -1,4 +1,4 @@
-<h2><%= @typed ? @typed.capitalize : 'All'%> Records</h2>
+<% content_for :subhead, "#{@typed ? @typed.capitalize : 'All'} Records" %>
 <% if current_user %>
   <div style="width: 50%; float: left;">
     <p style="font-weight: bold">Create a new linked list from scratch.</p>

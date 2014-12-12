@@ -1,11 +1,22 @@
 .page-header {
-  h1 {
-    color: $crimson;
-    text-align:center;
-    > a.title, > a.title:hover {
-                 color: $crimson;
-                 text-decoration: none;
-               }
+  margin-top: 0;
+  h1{
+    margin:0;
+    border: none;
+    width: 129px;
+    height: 70px;
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    background-image: image-url("pennant.png");
+    > a, > a:hover {
+      display: block;
+      text-indent: -9001px;
+      overflow: hidden;
+    }
+  }
+  h2 {
+    margin-left: 154px;
   }
 }
 

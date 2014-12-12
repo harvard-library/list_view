@@ -1,3 +1,4 @@
+<% content_for :subhead, @title || [:ext_id_type, :ext_id].map {|m| @link_list.send(m).upcase }.join(" ") %>
 <% if current_user %>
   <ul class="controls">
     <li>
