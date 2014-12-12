@@ -1,4 +1,4 @@
-<h2><%= @user.username || @user.email %></h2>
+<% content_for :subhead, (@user.username || @user.email) %>
 <div><span class="user-label">Username:</span> <%= @user.username || 'none' %></div>
 <div><span class="user-label">Email:</span> <%= @user.email %></div>
 <div><span class="user-label">Affiliation:</span> <%= @user.affiliation %></div>

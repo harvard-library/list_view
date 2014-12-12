@@ -13,8 +13,11 @@
 <body class="<%= "c_#{controller.controller_name} a_#{controller.action_name}" %>">
 <div class="container-fluid">
   <div class="page-header">
-    <h1><%= link_to raw("ListView"), "/", :class => 'title' %><%== " " << link_to("Sign Out", destroy_user_session_path, :method => :delete, :class => 'sign-out') if current_user %></h1>
+    <h1><%= link_to "ListView", "/", :class => 'title' %></h1>
     <h2><%= content_for(:subhead) if content_for(:subhead) %></h2>
+    <% if current_user %>
+      <div id="signout"><%= link_to("Sign Out", destroy_user_session_path, :method => :delete, :class => 'sign-out') %></div>
+    <% end %>
   </div>
   <div id="content">
     <%= render :partial => 'shared/messages' %>
