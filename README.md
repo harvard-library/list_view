@@ -14,7 +14,8 @@ This is a Rails 4.1.x application.  It requires:
 * Bundler
 * A webserver capable of running a Rails application.  Tested on Apache and Nginx with Passenger
 * An operating system. Tested on Linux/OSX, may work on other platforms.
-* A database server. Tested on PostgreSQL 9, should work with other DBs
+* PostgreSQL 9.2 or greater
+* Imagemagick
 
 ## Application Set-up Steps
 1. Get code from: https://github.com/harvard-library/hollis_links
@@ -31,6 +32,22 @@ This is a Rails 4.1.x application.  It requires:
   ```Shell
   rake hl:bootstrap
   ```
+
+## Dev Notes
+
+Additional development notes are available [here](DEV_NOTES.md).
+
+## Batch import
+
+If you have a collection of CSV files or XLSX files with record info, you can batch upload them by running an included rake task.  Sample data is included in the `test/data` directory of the application.
+
+```Shell
+rake batch_import SRC=test/data EMAIL=my.email@address.com
+```
+
+SRC should be a directory containing .csv/.xlsx files, or a mixture thereof, each representing one record.  Email should be the email belonging to whomever is ultimately responsible for uploading the records; it can be omitted, in which case a default value representing "random system admin" will be used.
+
+Format for import files located [here](DEV_NOTES.md#user-content-import-format)
 
 ## Capistrano
 
