@@ -68,16 +68,17 @@ class LinkListsController < ApplicationController
 
     ll = LinkList.find_by(md.to_h.slice(:ext_id, :ext_id_type))
 
-    if md.body.blank?
-      if ll && ll.cached_metadata
-        md.body = ll.cached_metadata
-        md.populate
+    if ll
+      if md.body.blank?
+        if ll && ll.cached_metadata
+          md.body = ll.cached_metadata
+          md.populate
+        end
+      else
+        ll.cached_metadata = md.body
+        ll.save!
       end
-    else
-      ll.cached_metadata = md.body
-      ll.save!
     end
-
     respond_to do |f|
       f.json { render :json => md.as_json }
     end
