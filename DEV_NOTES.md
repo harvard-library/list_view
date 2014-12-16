@@ -23,7 +23,7 @@ The first row of the spreadsheet must be:
 | --------- | ----- |
 |  \<blank\>  | URL  |
 
-Where URL is a link to the link list's Hollis record.
+Where URL is a link to the link list's catalog record.
 
 Following the first row, blank rows are skipped. Header rows are processed specially, based on the values in their first cell.
 
@@ -31,7 +31,7 @@ Following the first row, blank rows are skipped. Header rows are processed speci
 
     |  1           | 2                                                    |
     | ------------ | ------------------------------------------------------ |
-    |  FTS_Search  | http://fts.lib.harvard.edu/fts/search?Q=boston&S=HLR |
+    |  FTS_Search  | http://fts.lib.harvard.edu/fts/search?S=HLR |
 
 * `Continues:` or `Continued by:` are processed as continuation links, and follow the structure:
 

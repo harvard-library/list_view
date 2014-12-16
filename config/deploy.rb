@@ -4,8 +4,8 @@ lock '3.1.0'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
-set :application, 'hollis_links'
-set :repo_url, 'git@github.com:harvard-library/hollis_links.git'
+set :application, 'list_view'
+set :repo_url, 'git@github.com:harvard-library/list_view.git'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 

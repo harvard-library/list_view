@@ -41,7 +41,7 @@ $(function () {
     var $me = $(thing);
     var oc = $me.css('background-color');
 
-    $me.animate({backgroundColor: hollis_links.colors.creme}, 300)
+    $me.animate({backgroundColor: listView.colors.creme}, 300)
       .animate({backgroundColor: oc}, 300)
       .promise('fx')
       .done(function () {

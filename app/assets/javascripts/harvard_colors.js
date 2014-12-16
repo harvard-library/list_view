@@ -1,5 +1,5 @@
-hollis_links = {};
-hollis_links.colors = {
+listView = listView || {};
+listView.colors = {
   crimson: "#A51C30",
   ink: "#1E1E1E",
   mortar: "#8C8179",

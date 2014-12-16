@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: hollislinks_development
+  database: listview_development
   pool: 5
   username: postgres
   password:
@@ -9,7 +9,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: hollislinks_testing
+  database: listview_testing
   pool: 5
   username: postgres
   password:
@@ -17,7 +17,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: hollislinks_production
+  database: listview_production
   pool: 5
   username: postgres
   password:

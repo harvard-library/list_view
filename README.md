@@ -1,8 +1,8 @@
-# HOLLISLinks
+# ListView
 
 ## Description
 
-HOLLISLinks is a tool for creating and maintaining digital objects for serial items (such as journals or magazines) in bibliographic catalogs. It represents these items as a list of links, and has the capacity to fetch MODS metadata describing the item for display purposes.  Records can be created in-tool, or imported via spreadsheets.
+ListView is a tool for creating and maintaining digital objects for serial items (such as journals or magazines) in bibliographic catalogs. It represents these items as a list of links, and has the capacity to fetch MODS metadata describing the item for display purposes.  Records can be created in-tool, or imported via spreadsheets.
 
 ## System Requirements
 
@@ -18,12 +18,12 @@ This is a Rails 4.1.x application.  It requires:
 * Imagemagick
 
 ## Application Set-up Steps
-1. Get code from: https://github.com/harvard-library/hollis_links
+1. Get code from: https://github.com/harvard-library/list_view
 2. Run `bundle install`.
 3. Modify "config/database.yml" and create the database.
-4. Create a ".env" file for your environment.  Currently, the following variables are needed to run HOLLISLinks:
+4. Create a ".env" file for your environment.  Currently, the following variables are needed to run ListView:
   ```
-   ROOT_URL=my.hollis.links.host.com
+   ROOT_URL=my.list.view.host.com
    SECRET_KEY_BASE=ThirtyPlusCharStringOfRandomnessGottenFromRakeSecretMaybe # Only needed in RAILS_ENV=production
    DEVISE_SECRET_KEY=anotherThirtyPluscharStringOfRandomness                 # Also only needed in production
   ```
