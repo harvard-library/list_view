@@ -96,16 +96,16 @@
   </div>
 <% end %>
 
-<%# Anchor pointing at this! %>
-<%# NOTE: Maybe present as single list, no table, link directly from label. %>
+
+<a id="#links"></a>
 <table style="border: 1px solid #ddd" class="table table-striped">
   <thead>
-    <tr><th>Label</th> <th>Link</th></tr>
+    <tr><th>Links</th></tr>
   </thead>
   <tbody>
     <% @link_list.links.each do |link| %>
       <tr>
-        <td class="name"><%= link.name %></td> <td class="url"><a href="<%= link.url %>" target="_new"><%= link.url %></a></td>
+        <td><%= link_to link.name, link.url, :target => '_new' %></td>
       </tr>
     <% end %>
   </tbody>
