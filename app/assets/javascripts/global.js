@@ -9,7 +9,6 @@ $(function () {
   });
 
   $(document).on('ready page:receive', function () {
-    console.log('receive');
     clearTimeout(spinnerTimeout);
     $('#tl-loading-spinner').remove();
 
