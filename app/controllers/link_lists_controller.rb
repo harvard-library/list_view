@@ -91,8 +91,8 @@ class LinkListsController < ApplicationController
     @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
 
     @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
-    @authors = !@link_list.author.blank? ? @link_list.author.split("\n") : ['<No author recorded>']
-    @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : ['<No publication data recorded>']
+    @authors = !@link_list.author.blank? ? @link_list.author.split("\n") : []
+    @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : []
 
     respond_to do |f|
       f.html

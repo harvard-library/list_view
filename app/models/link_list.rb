@@ -62,6 +62,34 @@ class LinkList < ActiveRecord::Base
     @last_touched_by = email
   end
 
+  # Helper for import functions below
+  def process_header_field(field)
+    (key, content, extra) = *field
+    case key
+    when /^ext_id_type/i
+      raise "Invalid EXT_ID_TYPE" unless MetadataSources.key?(content)
+      self.ext_id_type = content
+    when /^ext_id/i
+      raise "EXT_ID header MUST be preceded by valid EXT_ID_TYPE" unless self.ext_id_type
+      self.ext_id = MetadataSources[self.ext_id_type]['id_proc'].call(content)
+    when /^continues/i
+      self.continues_name = content
+      self.continues_url = extra
+    when /^continued by/i
+      self.continued_by_name = content
+      self.continued_by_url = extra
+    when /^fts_search/i
+      # Regex here is specific to Harvard's FTS search params - portability issues ahoy!
+      self.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
+    when /^fts_nodate/i
+      self.dateable = false
+    when key.blank?
+    # Nothing
+    else
+      self.comment = "#{self.comment}\n#{key} #{content}".lstrip
+    end
+  end
+
   # Converts from .xlsx format, treating all fields as strings.
   # FIXME: Currently assumes :ext_id_type => 'hollis' (relies on default in DB)
   #        Above applies to CSV import as well
@@ -77,27 +105,10 @@ class LinkList < ActiveRecord::Base
 
     raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
     result.url = url
-    result.ext_id = url.match(/\d+$/)[0].rjust(9, '0') # throw exception if blank!
+
 
     (2...separator).each do |row_i|
-      (key, content, extra) = *((1..3).map {|col_i| excel.hl_cell row_i, col_i })
-      case key
-      when /^continues/i
-        result.continues_name = content
-        result.continues_url = extra
-      when /^continued by/i
-        result.continued_by_name = content
-        result.continued_by_url = extra
-      when /^fts_search/i
-        # Regex here is specific to Harvard's FTS search params - portability issues ahoy!
-        result.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
-      when /^fts_nodate/i
-        result.dateable = false
-      when key.blank?
-        # Nothing
-      else
-        result.comment = "#{result.comment}\n#{key} #{content}".lstrip
-      end
+      result.process_header_field((1..3).map {|col_i| excel.hl_cell row_i, col_i })
     end
 
     # process content
@@ -122,26 +133,9 @@ class LinkList < ActiveRecord::Base
 
     raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
     result.url = url
-    result.ext_id = url.match(/\d+$/)[0].rjust(9, '0') # throw exception if blank!
 
     (1...separator).each do |row_i|
-      (key, content, extra) = *((0..2).map {|col_i| csv[row_i][col_i]})
-      case key
-      when /^continues/i
-        result.continues_name = content
-        result.continues_url = extra
-      when /^continued by/i
-        result.continued_by_name = content
-        result.continued_by_url = extra
-      when /^fts_search/i
-        result.fts_search_url = content.sub(/Q=.*?(&|$)/, '')
-      when /^fts_nodate/i
-        result.dateable = false
-      when key.blank?
-        # Nothing
-      else
-        result.comment = "#{result.comment}\n#{key} #{content}".lstrip
-      end
+      result.process_header_field((0..2).map {|col_i| csv[row_i][col_i]})
     end
 
     # process content

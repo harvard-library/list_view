@@ -17,40 +17,43 @@
 <div class="metadata">
   <div class="image"><%= image_tag @link_list.image unless @link_list.image.blank? %></div>
   <div class="title"><span class="md-label">Title:</span> <%= @title %></div>
-  <div class="author"><span class="md-label">Author<%= @authors.length > 1 ? "s" : '' %>:</span>
-    <% case @authors.length %>
-    <% when 1 %>
-      <%= @authors.first %>
-    <% when 0 %>
-      No author listed.
-    <% else %>
-      <ul>
-        <% @authors.each do |a| %>
-          <li><%= a %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-  </div>
-  <div class="publication">
-    <span class="md-label">Publication:</span>
-    <% case @publication.length %>
-    <% when 1 %>
-      <%= @publication.first %>
-      <% when 0 %>
-      No publication information listed.
-    <% else %>
-      <ul>
-        <% @publication.each do |p| %>
-          <li><%= p %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+  <% unless @authors.blank? %>
+    <div class="author"><span class="md-label">Author<%= @authors.length > 1 ? "s" : '' %>:</span>
+      <% case @authors.length %>
+      <% when 1 %>
+        <%= @authors.first %>
+      <% else %>
+        <ul>
+          <% @authors.each do |a| %>
+            <li><%= a %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
 
-<div class="comment">
-  <%== @link_list.comment.split(/\n/).map { |line| '<div>' << line << '</div>' }.join("\n") %>
+  <% unless @publication.blank? %>
+    <div class="publication">
+      <span class="md-label">Publication:</span>
+      <% case @publication.length %>
+      <% when 1 %>
+        <%= @publication.first %>
+      <% else %>
+        <ul>
+          <% @publication.each do |p| %>
+            <li><%= p %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
 </div>
+
+<% unless @link_list.comment.blank? %>
+  <div class="comment">
+    <%== @link_list.comment.split(/\n/).map { |line| '<div>' << line << '</div>' }.join("\n") %>
+  </div>
+<% end %>
 
 
 <% unless @link_list.continues_url.blank? %>

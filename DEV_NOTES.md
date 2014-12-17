@@ -27,6 +27,18 @@ Where URL is a link to the link list's catalog record.
 
 Following the first row, blank rows are skipped. Header rows are processed specially, based on the values in their first cell.
 
+* `EXT_ID_TYPE` - The type of external ID associated with a record.  This should be the name of one of the metadata sources defined by site admins ([exemplar file here](config/initializers/metadata_sources.rb.example)). MUST be present in spreadsheet before `EXT_ID`, if `EXT_ID` is included.
+
+    |  1              | 2      |
+    | --------------- | ------ |
+    |  EXT\_ID\_TYPE  | hollis |
+
+* `EXT_ID` - The ID value in said external catalog.  If you are providing an `EXT_ID`, it MUST be preceded by an `EXT_ID_TYPE`
+
+    |  1      | 2         |
+    | ------- | --------- |
+    |  EXT_ID | 008675309 |
+
 * `FTS_Search` - URL pointing at full text search for a record:
 
     |  1           | 2                                                    |
