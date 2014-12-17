@@ -22,16 +22,18 @@ This is a Rails 4.1.x application.  It requires:
 2. Run `bundle install`.
 3. Modify "config/database.yml" and create the database.
 4. Create a ".env" file for your environment.  Currently, the following variables are needed to run ListView:
-  ```
-   ROOT_URL=my.list.view.host.com
-   SECRET_KEY_BASE=ThirtyPlusCharStringOfRandomnessGottenFromRakeSecretMaybe # Only needed in RAILS_ENV=production
-   DEVISE_SECRET_KEY=anotherThirtyPluscharStringOfRandomness                 # Also only needed in production
-  ```
+
+    ```
+    ROOT_URL=my.list.view.host.com
+    SECRET_KEY_BASE=ThirtyPlusCharStringOfRandomnessGottenFromRakeSecretMaybe # Only needed in RAILS_ENV=production
+    DEVISE_SECRET_KEY=anotherThirtyPluscharStringOfRandomness                 # Also only needed in production
+    ```
 5. Set up record types and meta-data sources in "config/initializers/metadata_sources.rb"
 6. Run bootstrap rake task to set up initial admin user.
-  ```Shell
-  rake hl:bootstrap
-  ```
+
+    ```Shell
+    rake hl:bootstrap
+    ```
 
 ## Dev Notes
 
