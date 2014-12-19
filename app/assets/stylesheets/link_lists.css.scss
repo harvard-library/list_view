@@ -89,6 +89,10 @@ body.c_link_lists.a_show {
   label[for="D_Y"], label[for="D_S"] {
     font-weight: normal;
   }
+  select#O {
+    display:inline-block;
+    width: auto;
+  }
   ul.controls {
     margin: 1em auto;
     text-align: center;

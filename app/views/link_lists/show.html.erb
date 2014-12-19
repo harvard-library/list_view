@@ -96,8 +96,8 @@
           <div><label for="D_S">No</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
         </div>
       <% end %>
-      <% select_options = {"By Relevance" => "R", "By Date" => "D", "By Title (Alphabetical)" => "A"} %>
-      <div><label for="O">Sort by:</label>&nbsp;<%= select_tag "O", options_for_select(select_options, "R") %></div>
+      <% select_options = {"relevance" => "R", "date (oldest to newest)" => "D", "title (Alphabetical)" => "A"} %>
+      <div><label for="O">Sort results by:</label>&nbsp;<span class="form-wrapper"><%= select_tag "O", options_for_select(select_options, "R"), :class => 'form-control' %></span></div>
     </form>
   </div>
 <% end %>

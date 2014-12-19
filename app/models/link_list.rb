@@ -108,13 +108,8 @@ class LinkList < ActiveRecord::Base
     # Find split between headers and content ()
     separator = (excel.find_index {|row| row[0] == 'CONTENT_LIST'} + 1) || # array_index + 1 == spreadsheet_index
                 raise(StandardError, "No CONTENT_LIST in excel")
-    (naught, url) = excel.hl_cell(1,1), excel.hl_cell(1,2)
 
-    raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
-    result.url = url
-
-
-    (2...separator).each do |row_i|
+    (1...separator).each do |row_i|
       result.process_header_field((1..3).map {|col_i| excel.hl_cell row_i, col_i })
     end
 
