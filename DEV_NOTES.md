@@ -17,15 +17,7 @@ ListView can import records from .csv or .xlsx files.  These files are broadly s
 ### Header
 The header consists of all rows until CONTENT_LIST marker.
 
-The first row of the spreadsheet must be:
-
-|  1        | 2    |
-| --------- | ----- |
-|  \<blank\>  | URL  |
-
-Where URL is a link to the link list's catalog record.
-
-Following the first row, blank rows are skipped. Header rows are processed specially, based on the values in their first cell.
+Blank rows are skipped. Header rows are processed based on the values in their first cell.
 
 * `EXT_ID_TYPE` - The type of external ID associated with a record.  This should be the name of one of the metadata sources defined by site admins ([exemplar file here](config/initializers/metadata_sources.rb.example)). MUST be present in spreadsheet before `EXT_ID`, if `EXT_ID` is included.
 
@@ -45,11 +37,18 @@ Following the first row, blank rows are skipped. Header rows are processed speci
     | ------------ | ------------------------------------------------------ |
     |  FTS_Search  | http://fts.lib.harvard.edu/fts/search?S=HLR |
 
-* `Continues:` or `Continued by:` are processed as continuation links, and follow the structure:
+* `Continues:` - Label and URL for a preceding record; by convention, URL points to the preceding record's entry in the bibliographic catalog of record, not to the preceding ListView object if it exists.  Follows the structure:
 
     | 1                  | 2     | 3   |
     | -------------------- | ------- | ----- |
-    | Continue(ed by\|s): | label | URL |
+    | Continues: | label | URL |
+
+* `Continued by:` - Label and URL for a succeeding record; by convention, URL points to the succeeding record's entry in the bibliographic catalog of record, not to the preceding ListView object if it exists.  Follows the structure:
+
+    | 1                  | 2     | 3   |
+    | -------------------- | ------- | ----- |
+    | Continues: | label | URL |
+
 
 * `FTS_NoDate` the `FTS_Search` for this record does not allow date qualification
 

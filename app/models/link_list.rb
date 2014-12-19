@@ -53,6 +53,13 @@ class LinkList < ActiveRecord::Base
     "#{ext_id_type}-#{ext_id}"
   end
 
+  # Get URL for bibliographic record based on template
+  def url
+    Erubis::Eruby
+      .new(MetadataSources[ext_id_type]['templates']['record_url'])
+      .result(:ext_id => ext_id, :ext_id_type => ext_id_type)
+  end
+
   # Ephemeral instance var used in audit functionality
   def last_touched_by
     @last_touched_by || '<Admin Console>'
@@ -129,12 +136,8 @@ class LinkList < ActiveRecord::Base
     # Find split between headers and content ()
     separator = (csv.find_index {|row| row[0] == 'CONTENT_LIST'}) ||
                 raise(StandardError, "No CONTENT_LIST in csv")
-    (naught, url) = csv[0][0], csv[0][1]
 
-    raise StandardError, "Initial row must consist of [blank, url], not #{[naught, url]}" unless naught.blank?
-    result.url = url
-
-    (1...separator).each do |row_i|
+    (0...separator).each do |row_i|
       result.process_header_field((0..2).map {|col_i| csv[row_i][col_i]})
     end
 
@@ -160,8 +163,8 @@ class LinkList < ActiveRecord::Base
 
   def export_csv
     CSV.generate(:encoding => 'utf-8') do |csv|
-      csv << ['', url]
-      csv << [] # Existing records all have a blank here, this is visual only
+      csv << ['EXT_ID_TYPE', ext_id_type]
+      csv << ['EXT_ID', ext_id]
       csv << ['FTS_Search', fts_search_url] unless fts_search_url.blank?
       csv << ['FTS_NoDate'] unless dateable?
       csv << ['Continues:', continues_name, continues_url] unless continues_name.blank?

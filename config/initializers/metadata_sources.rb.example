@@ -3,7 +3,10 @@
 #   because it's used as a parameter separator
 MetadataSources = {
   'hollis' => {
-    'template' => "http://webservices.lib.harvard.edu/rest/mods/<%= ext_id_type %>/<%= ext_id %>",
+    'templates' => {
+      'metadata' => "http://webservices.lib.harvard.edu/rest/mods/<%= ext_id_type %>/<%= ext_id %>",
+      'record_url' => "http://id.lib.harvard.edu/aleph/<%= ext_id %>/catalog"
+    },
     'id_proc' => ->(id) { id.rjust(9, '0') }
   }
 }

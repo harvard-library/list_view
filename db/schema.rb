@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210184604) do
+ActiveRecord::Schema.define(version: 20141219153943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20141210184604) do
   create_table "link_lists", force: true do |t|
     t.string   "ext_id",                               null: false
     t.string   "ext_id_type",       default: "hollis", null: false
-    t.string   "url",                                  null: false
     t.string   "continues_name"
     t.string   "continues_url"
     t.string   "continued_by_name"

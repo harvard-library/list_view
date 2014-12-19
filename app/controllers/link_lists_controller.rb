@@ -138,7 +138,6 @@ class LinkListsController < ApplicationController
       params.require(:link_list).permit(:ext_id,
                                         :ext_id_type,
                                         :qualified_id,
-                                        :url,
                                         :title,
                                         :author,
                                         :publication,
