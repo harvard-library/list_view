@@ -86,6 +86,9 @@ body.c_link_lists.a_show {
       }
     }
   }
+  label[for="D_Y"], label[for="D_S"] {
+    font-weight: normal;
+  }
   ul.controls {
     margin: 1em auto;
     text-align: center;

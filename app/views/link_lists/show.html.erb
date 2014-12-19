@@ -85,16 +85,19 @@
         </span>
       </div>
       <% if @link_list.dateable? %>
-        <div class="input-group date-qualified">
-          <div><label for="D_N">Disable:</label>&nbsp;<%= radio_button_tag 'D', 'N', true %></div>
-          <div><label for="D_Y">Loose (Return Undated):</label>&nbsp;<%= radio_button_tag 'D', 'Y', false %></div>
-          <div><label for="D_S">Strict (No Undated Results):</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
-        </div>
+        <br>
         <div class="input-group date-range">
           <label for="L">From:</label>&nbsp;<input name="L" placeholder="YYYY(/MM(/DD))" />
           <label for="U">To:</label>&nbsp;<input name="U" placeholder="YYYY(/MM(/DD))" />
         </div>
+        <div id="date-qualified" class="input-group date-qualified">
+          <label for="date-qualified">Include results without dates?</label>
+          <div><label for="D_Y">Yes</label>&nbsp;<%= radio_button_tag 'D', 'Y', true %></div>
+          <div><label for="D_S">No</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
+        </div>
       <% end %>
+      <% select_options = {"By Relevance" => "R", "By Date" => "D", "By Title (Alphabetical)" => "A"} %>
+      <div><label for="O">Sort by:</label>&nbsp;<%= select_tag "O", options_for_select(select_options, "R") %></div>
     </form>
   </div>
 <% end %>
