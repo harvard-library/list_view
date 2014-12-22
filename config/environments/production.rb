@@ -78,4 +78,9 @@ Rails.application.configure do
 
   # configure timezone
   config.time_zone = 'Eastern Time (US & Canada)'
+
+  # SSL-only for sessions, registrations, and passwords
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
 end
