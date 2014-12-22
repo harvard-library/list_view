@@ -16,7 +16,7 @@
     <h1><%= link_to "ListView", "/", :class => 'title' %></h1>
     <h2><%= content_for(:subhead) if content_for(:subhead) %></h2>
     <% if current_user %>
-      <div id="signout"><%= link_to("Sign Out", destroy_user_session_url(:protocol => 'https'), :method => :delete, :class => 'sign-out') %></div>
+      <div id="signout"><%= link_to("Sign Out", destroy_user_session_url(Rails.env.production? ? {:protocol => 'https'} : {}), :method => :delete, :class => 'sign-out') %></div>
     <% end %>
   </div>
   <div id="content">
