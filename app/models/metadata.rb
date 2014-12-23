@@ -22,7 +22,8 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
     #        Check to make sure there's a reasonable timeout
     begin
       response = HTTParty.get(self.source_url,
-                              :headers => {"Accept" => "application/json"})
+                              :headers => {"Accept" => "application/json",
+                                           "User-Agent" => "ListView"})
 
       if response.code == 200 && !response.body.blank?
         self.body = response.body
