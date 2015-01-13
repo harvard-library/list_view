@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.7'
-gem 'pg'
+gem 'pg', :platforms => [:ruby, :mswin]
+platforms :jruby do
+  gem 'activerecord-jdbcpostgresql-adapter'
+  gem 'puma', :platforms => :jruby
+end
+
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
@@ -26,8 +31,8 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'better_errors', :platforms => :ruby
+  gem 'binding_of_caller', :platforms => :ruby
 end
 
 group :development, :test do

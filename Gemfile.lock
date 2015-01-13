@@ -214,6 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-jdbcpostgresql-adapter
   acts_as_list
   autoprefixer-rails
   better_errors
@@ -239,6 +240,7 @@ DEPENDENCIES
   poltergeist
   pry-doc
   pry-rails
+  puma
   rails (= 4.1.7)
   roo
   sass-rails (~> 4.0.3)
