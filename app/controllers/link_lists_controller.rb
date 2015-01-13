@@ -88,7 +88,7 @@ class LinkListsController < ApplicationController
   ### Member actions
 
   def show
-    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+    @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
 
     @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
     @authors = !@link_list.author.blank? ? @link_list.author.split("\n") : []
@@ -105,7 +105,7 @@ class LinkListsController < ApplicationController
   end
 
   def edit
-    @link_list = LinkList.find_by!(split_qualified_id(params[:qualified_id]))
+    @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
   end
 
   def update
