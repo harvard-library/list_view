@@ -4,7 +4,8 @@ gem 'rails', '4.1.7'
 gem 'pg', :platforms => [:ruby, :mswin]
 platforms :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'puma', :platforms => :jruby
+  gem 'puma'
+  gem 'backports'
 end
 
 gem 'sass-rails', '~> 4.0.3'
