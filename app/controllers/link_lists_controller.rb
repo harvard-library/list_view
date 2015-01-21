@@ -142,6 +142,7 @@ class LinkListsController < ApplicationController
                                         :author,
                                         :publication,
                                         :image,
+                                        :remove_image,
                                         :continues_name,
                                         :continues_url,
                                         :continued_by_name,
