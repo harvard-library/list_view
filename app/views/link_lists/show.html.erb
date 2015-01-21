@@ -75,7 +75,7 @@
 
 <% unless @link_list.fts_search_url.blank? %>
   <div class="search-box">
-    <form class="formtastic" id="fts" action="<%= @link_list.fts_search_url.sub(/S=[^&]+/, '') %>" method='GET'>
+    <form class="formtastic" id="fts" target="_blank" action="<%= @link_list.fts_search_url.sub(/S=[^&]+/, '') %>" method='GET'>
       <p>Full Text Search</p>
       <div class="input-group search-field">
         <input name="S" type="hidden" value="<%== @link_list.fts_search_url.match(/(?<=S=)[^&]+/i).to_s %>" />
@@ -114,7 +114,7 @@
   <tbody>
     <% @link_list.links.each do |link| %>
       <tr>
-        <td><%= link_to link.name, link.url, :target => '_new' %></td>
+        <td><%= link_to link.name, link.url, :target => '_blank' %></td>
       </tr>
     <% end %>
   </tbody>
