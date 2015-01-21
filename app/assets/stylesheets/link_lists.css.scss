@@ -55,9 +55,12 @@ form.link_list fieldset.form-actions {
   p {
     font-weight: bold;
   }
+  span.nobreak {
+    display: inline-block;
+  }
   .date-qualified {
     margin: 0.6em 0;
-    > div {
+    > span > div {
       display: inline-block;
       margin-right: 1em;
       &:last-child {
@@ -67,6 +70,7 @@ form.link_list fieldset.form-actions {
   }
 }
 
+
 /* Show styling */
 body.c_link_lists.a_show {
   .md-label {
@@ -75,7 +79,7 @@ body.c_link_lists.a_show {
   }
   div.image {
     float: right;
-    margin: 0 0 1em 1em;
+    margin: 0 0 1em 2em;
     img {
       @media (max-width: $screen-sm-max) {
         width:150px;
@@ -87,6 +91,12 @@ body.c_link_lists.a_show {
       }
     }
   }
+  #fts {
+    .search-field { margin: 0 0 1.5em 0; }
+    .date-range, .sortby {  margin: 0 0 1em 0; }
+    .date-qualified { margin: 0 0 0.5em 0; }
+  }
+
   label[for="D_Y"], label[for="D_S"] {
     font-weight: normal;
   }
