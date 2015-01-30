@@ -15,6 +15,7 @@
             <% end %>
             <%= link_to u,
                         :method => :delete,
+                        :data => {:confirm => "Are you sure you want to delete #{u.username || u.email}?"},
                         :class => 'btn btn-danger btn-xs' do %>
             Delete <%= glyphicon 'trash' %>
             <% end %>

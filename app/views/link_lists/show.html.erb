@@ -11,7 +11,10 @@
         Edit this record <%= glyphicon'pencil' %>
       <% end %>
     </li>
-    <li><%= link_to "Delete this record", link_list_path(@link_list), :method => :delete, :class => 'btn btn-danger' %></li>
+    <li><%= link_to "Delete this record", link_list_path(@link_list),
+              :method => :delete,
+              :data => {:confirm => "Are you sure you want to delete \"#{@title}\"?"},
+              :class => 'btn btn-danger' %></li>
   </ul>
 <% end %>
 <div class="metadata">
