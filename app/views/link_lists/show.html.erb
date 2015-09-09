@@ -73,41 +73,20 @@
 
 
 <div class="url">
-  <a class="ll url btn btn-success" href="<%= @link_list.url %>">Record Link</a>
+  <a class="ll url btn btn-success" target="_blank" href="<%= @link_list.url %>">Record Link</a>
 </div>
 
-<% unless @link_list.fts_search_url.blank? %>
-  <div class="search-box">
-    <form class="formtastic" id="fts" target="_blank" action="<%= @link_list.fts_search_url.sub(/S=[^&]+/, '') %>" method='GET'>
-      <p>Full Text Search</p>
-      <div class="input-group search-field">
-        <input name="S" type="hidden" value="<%== @link_list.fts_search_url.match(/(?<=S=)[^&]+/i).to_s %>" />
-        <input name="Q" class="form-control" type="text" placeholder="Enter search terms here" />
-        <span class="input-group-btn">
-          <%= submit_tag 'Search', :class => 'btn btn-primary', :name => nil %>
-        </span>
-      </div>
-      <div  class="search-options">
-      <% if @link_list.dateable? %>
-          <div class="input-group date-range">
-            <span class="nobreak"><label for="L">From:</label>&nbsp;<input name="L" placeholder="YYYY(/MM(/DD))" /></span>
-            <span class="nobreak"><label for="U">To:</label>&nbsp;<input name="U" placeholder="YYYY(/MM(/DD))" /></span>
-          </div>
-          <div id="date-qualified" class="input-group date-qualified">
-            <label for="date-qualified">Include results without dates?</label>
-            <span class="nobreak">
-              <div><label for="D_Y">Yes</label>&nbsp;<%= radio_button_tag 'D', 'Y', true %></div>
-              <div><label for="D_S">No</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
-            </span>
-          </div>
-      <% end %>
-      <% select_options = {"relevance" => "R", "date (oldest to newest)" => "D", "title (Alphabetical)" => "A"} %>
-      <div class="sortby"><label for="O">Sort results by:</label>&nbsp;<%= select_tag "O", options_for_select(select_options, "R"), :class => 'form-control' %></span></div>
-      </div>
-    </form>
-  </div>
-<% end %>
 
+<div class="urllist">
+	<% unless @link_list.fts_search_url.blank? %>
+	  <span id="fts-icon" class="glyphicon glyphicon-search link-icon" aria-hidden="true"></span><%= link_to "Full Text Search", '#fts-button', :class => 'fts-link' %>
+	<% end %>
+
+  <a class="ll url" href="#"><span id="cite-icon" class="link-icon" aria-hidden="true"></span>Cite</a>
+  <a class="ll url" href="#"><span id="rl-icon" class="link-icon" aria-hidden="true"></span>Related Links</a>
+  <a class="ll url" href="#"><span id="share-icon" class="link-icon" aria-hidden="true"></span>Share</a>
+  <a class="ll url" href="#"><span id="help-icon" class="link-icon" aria-hidden="true"></span>Help</a>
+</div>
 
 <a id="#links"></a>
 <table style="border: 1px solid #ddd" class="table table-striped">
@@ -134,3 +113,6 @@
     <b>Continued By:</b> <%= link_to @link_list.continued_by_name, @link_list.continued_by_url %>
   </div>
 <% end %>
+
+<%= render :partial => 'modal_search' %>
+

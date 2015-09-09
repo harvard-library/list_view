@@ -1,0 +1,42 @@
+<div id="modal-search" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Full Text Search</h4>
+      </div>
+      <div class="modal-body">
+        <div class="search-box">
+		    <form class="formtastic" id="fts" target="_blank" action="<%= @link_list.fts_search_url.sub(/S=[^&]+/, '') %>" method='GET'>
+		      <p>Full Text Search</p>
+		      <div class="input-group search-field">
+		        <input name="S" type="hidden" value="<%== @link_list.fts_search_url.match(/(?<=S=)[^&]+/i).to_s %>" />
+		        <input name="Q" class="form-control" type="text" placeholder="Enter search terms here" />
+		      </div>
+		      <div  class="search-options">
+		      <% if @link_list.dateable? %>
+		          <div class="input-group date-range">
+		            <span class="nobreak"><label for="L">From:</label>&nbsp;<input name="L" placeholder="YYYY(/MM(/DD))" /></span>
+		            <span class="nobreak"><label for="U">To:</label>&nbsp;<input name="U" placeholder="YYYY(/MM(/DD))" /></span>
+		          </div>
+		          <div id="date-qualified" class="input-group date-qualified">
+		            <label for="date-qualified">Include results without dates?</label>
+		            <span class="nobreak">
+		              <div><label for="D_Y">Yes</label>&nbsp;<%= radio_button_tag 'D', 'Y', true %></div>
+		              <div><label for="D_S">No</label>&nbsp;<%= radio_button_tag 'D', 'S', false %></div>
+		            </span>
+		          </div>
+		      <% end %>
+		      <% select_options = {"relevance" => "R", "date (oldest to newest)" => "D", "title (Alphabetical)" => "A"} %>
+		      <div class="sortby"><label for="O">Sort results by:</label>&nbsp;<%= select_tag "O", options_for_select(select_options, "R"), :class => 'form-control' %></span></div>
+		      </div>
+		    </form>
+		  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary search-accept" data-dismiss="modal">Search</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
