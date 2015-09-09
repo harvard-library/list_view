@@ -1,4 +1,6 @@
 $(function () {
+	var dialog, form;
+	
   $(document).on('cocoon:before-remove', function (e, removed_item) {
     $rem = $(removed_item);
     if ($rem.hasClass('deleted')){
@@ -89,4 +91,14 @@ $(function () {
     }
     highlight($('#link_list_title, #link_list_author, #link_list_publication').get())
   });
+  
+  $(document).on('click', '.fts-link', function (e) {
+	    e.preventDefault();
+	    $('#modal-search').modal();
+  });
+  
+  $(document).on('click', '.btn.search-accept', function (e) {
+	  	$( "#fts" ).submit();
+  });
+  
 });
