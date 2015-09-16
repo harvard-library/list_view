@@ -5,11 +5,15 @@ class LinkListsController < ApplicationController
 
   def index
     params.permit(:ext_id_type)
-    @link_lists = LinkList.all
-    if params[:ext_id_type]
-      @typed = params[:ext_id_type]
-      @link_lists = @link_lists.where(:ext_id_type => params[:ext_id_type])
-    end
+    if APP_CONFIG['listview_instance'] == 'DRS'
+      @link_lists = DRSLinkList.all
+    else
+      @link_lists = LinkList.all
+      if params[:ext_id_type]
+        @typed = params[:ext_id_type]
+        @link_lists = @link_lists.where(:ext_id_type => params[:ext_id_type])
+      end
+    end        
   end
 
   def new
@@ -132,6 +136,11 @@ class LinkListsController < ApplicationController
       end
     end
   end
+  
+  def test
+    testmodel = Test.new()
+    @mystring = testmodel.get_string()
+  end
 
   private
     def link_list_params
@@ -155,6 +164,7 @@ class LinkListsController < ApplicationController
 
     ### Helper Methods ###
     def split_qualified_id(q_id)
+      #HashWithIndifferentAccess.new([:ext_id_type, :ext_id].zip(q_id.split('-',2)).to_h)
       HashWithIndifferentAccess.new(Hash[[:ext_id_type, :ext_id].zip(q_id.split('-',2))])
     end
 

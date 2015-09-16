@@ -1,0 +1,23 @@
+#Custom configurations
+
+#Is this a HOLLIS or DRS list_view instance?
+
+defaults: &defaults
+  listview_instance: DRS
+  
+development:
+  <<: *defaults
+  DRS2_TIMEOUT: 5
+  DRS2_SERVICE_APPKEY: WEBADMIN
+  DRS2_SERVICE_BASE_URL: https://drs2-services-dev.hul.harvard.edu:18643
+
+  # properties related to SSL
+  SERVICES_KEYSTORE_PATH: /Users/vac765/Documents/DRS2/LO/drs2keys/dev/drs2services.keystore
+  SERVICES_KEYSTORE_PASS: drs2servicespass
+  SERVICES_TRUSTSTORE_PATH: /Users/vac765/Documents/DRS2/LO/drs2keys/dev/drs2services.truststore
+  SERVICES_TRUSTSTORE_PASS: drs2servicestrustpass
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
