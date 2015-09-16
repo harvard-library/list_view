@@ -1,0 +1,36 @@
+#Custom configurations
+
+#Is this a HOLLIS or DRS list_view instance?
+
+defaults: &defaults
+  DRS2_TIMEOUT: 5
+  DRS2_SERVICE_APPKEY: <appkey>
+  
+development:
+  <<: *defaults
+  DRS2_SERVICE_BASE_URL: <service base url>
+
+  # properties related to SSL
+  SERVICES_KEYSTORE_PATH: <keystore path>
+  SERVICES_KEYSTORE_PASS: <keystore password>
+  SERVICES_TRUSTSTORE_PATH: <truststore path>
+  SERVICES_TRUSTSTORE_PASS: <trustore password>
+test:
+  <<: *defaults
+  DRS2_SERVICE_BASE_URL: <service base url>
+
+  # properties related to SSL
+  SERVICES_KEYSTORE_PATH: <keystore path>
+  SERVICES_KEYSTORE_PASS: <keystore password>
+  SERVICES_TRUSTSTORE_PATH: <truststore path>
+  SERVICES_TRUSTSTORE_PASS: <trustore password>
+
+production:
+  <<: *defaults
+  DRS2_SERVICE_BASE_URL: <service base url>
+
+  # properties related to SSL
+  SERVICES_KEYSTORE_PATH: <keystore path>
+  SERVICES_KEYSTORE_PASS: <keystore password>
+  SERVICES_TRUSTSTORE_PATH: <truststore path>
+  SERVICES_TRUSTSTORE_PASS: <trustore password>
