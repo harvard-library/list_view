@@ -28,10 +28,10 @@ class DRSServices
       svc = ServiceWrapper.new(APP_CONFIG['DRS2_SERVICE_BASE_URL'],
 		                            APP_CONFIG['DRS2_SERVICE_APPKEY'],
 		                             APP_CONFIG['DRS2_TIMEOUT'],
-		                             APP_CONFIG['SERVICES_KEYSTORE_PATH'],
-		                             APP_CONFIG['SERVICES_KEYSTORE_PASS'],
-		                             APP_CONFIG['SERVICES_TRUSTSTORE_PATH'],
-		                             APP_CONFIG['SERVICES_TRUSTSTORE_PASS'])
+		                             APP_CONFIG['CLIENT_KEYSTORE_PATH'],
+		                             APP_CONFIG['CLIENT_KEYSTORE_PASS'],
+		                             APP_CONFIG['CLIENT_TRUSTSTORE_PATH'],
+		                             APP_CONFIG['CLIENT_TRUSTSTORE_PASS'])
 		  conent = svc.getDRSObjectByID(object_id, DRSObjectViewDTO_v2.java_class, true)
       @list_objects = []
             @list_objects.push DRSListObject.new('Test 1', '1', ['abc', '123'])
