@@ -92,8 +92,13 @@ class LinkListsController < ApplicationController
   ### Member actions
 
   def show
-    @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
-
+    splitid = split_qualified_id(params[:qualified_id])
+    if splitid[:ext_id_type] == 'drs'
+      @link_list = DRSLinkList.all
+    else
+      @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
+    end
+      
     @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
     @authors = !@link_list.author.blank? ? @link_list.author.split("\n") : []
     @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : []
