@@ -5,7 +5,8 @@ class DRSLinkList
   include ActiveModel::Model
   
   java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.Mods"
-  java_import "edu.harvard.hul.ois.ots.schemas.XmlContent.GenericElement"
+  java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.ModsElement"
+    java_import "edu.harvard.hul.ois.ots.schemas.XmlContent.GenericElement"
   #java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.ModsStringElement"
   #java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.Name"
   java_import "javax.xml.stream.XMLInputFactory"
@@ -14,13 +15,14 @@ class DRSLinkList
   java_import "java.io.ByteArrayInputStream"
   java_import "java.io.ByteArrayOutputStream"
     
-  #todo - this should eventually just return one DRSListObject
-  def self.all
-    drsObjectViewDTO_v2 = DRSServices.drs_object("400086909")
+  #Returns a DRSListObject for the given object_id
+  def self.display_object(object_id)
+    #Retrieve it from the services
+    drsObjectViewDTO_v2 = DRSServices.drs_object(object_id)
     
-    #This is where the DRSListObject will be created
     pdslinks = []
     pdsobjects = drsObjectViewDTO_v2.getDocumentListMapping()
+    #Add the pds links
     pdsobjects.each{ 
       |pdsobject| 
       if pdsobject.getDocumentObject().getUrns().size() > 0
@@ -28,18 +30,17 @@ class DRSLinkList
       else 
         deliveryURN = ""
       end
-      pdslinks.push PDSLink.new(pdsobject.getDocumentObject().getOwnerSuppliedName(), deliveryURN) }
-    #the PDSLinks are formed from the  (drsObjectViewDTO_v2.getDocumentListMapping())
-      # which returns a list of ListDocumentMapDTO objects
-      #the parse_title will be the same as the parse_title method below
- 
-      #ultimately, this will be the call 
-      title = drsObjectViewDTO_v2.getOwnerSuppliedName()
-
+      #Push onto the array
+      pdslinks.push PDSLink.new(parse_title(pdsobject.getDocumentObject()), deliveryURN) 
+    }
+    
     #set up the Mods object for use in extracting title, author, etc.
-    mods = get_mods(drsObjectViewDTO_v2.getMods())
-      
-    @list_object = DRSListObject.new(title, display_name(mods), drsObjectViewDTO_v2.getId(),  pdslinks)
+    mymods = create_mods_from_string(drsObjectViewDTO_v2.getMods())
+        
+    #TODO Get the title from Mods
+    title = parse_title(drsObjectViewDTO_v2)
+
+    @list_object = DRSListObject.new(title, 'Temp Author', drsObjectViewDTO_v2.getId(),  pdslinks)
     if drsObjectViewDTO_v2.getUrns().size() > 0
       @list_object.url = APP_CONFIG['NRS_RESOLVER_URL'] + "/" + drsObjectViewDTO_v2.getUrns().iterator().next().getUrn()
     end
@@ -47,35 +48,25 @@ class DRSLinkList
   end
   
   def self.parse_title(content_object)
-    #do this in a method called parse_title
+    #Todo - get the title from the MODS once Mods parsing is working
     #titles = mods.getTitleInfos()
     #loop through the titles and get the status
     #if status.index > 0  title = info.getTitle
-    @title = "Title"
+    @title = content_object.getOwnerSuppliedName()
   end
+
   
-  def self.parse_url(content_object)
-    @url = "http://www.google.com"
-  end
-  
-  def self.get_mods(string_mods)
+  def self.create_mods_from_string(string_mods)
     #Java code to get the mods from the returned doc
     #begin
-      mods = Mods.new()
                     
       if !string_mods.nil?
+        
         # parse the mods chunk
         xmlif = XMLInputFactory.newInstance()
         xmlReader = xmlif.createXMLStreamReader(ByteArrayInputStream.new(string_mods.to_java_bytes))
-        mods.parse(xmlReader)
-        #mods.java_send(:parse, [javax.xml.stream.XMLStreamReader], xmlif.createXMLStreamReader(ByteArrayInputStream.new(string_mods.to_java_bytes)))     
-        
-        #convert mods chunk to something usable by JSTree for display in user interface
-        xmlf = XMLOutputFactory.newInstance()
-        outputStream = ByteArrayOutputStream.new()
-        xmlw = xmlf.createXMLStreamWriter(outputStream)
-        mods.setRoot(true)
-        mods.output(xmlw)
+        construct = Mods.java_class.constructor(javax.xml.stream.XMLStreamReader, Java::boolean)
+        m = construct.new_instance(xmlReader, true)
       end
     #rescue 
               #String errMsg = "error parsing mods: " + e.getMessage();
@@ -89,7 +80,7 @@ class DRSLinkList
     if mods.nil?
       return "nil"
     end
-    mods.getNames().each{ 
+    mods.java_object.getNames().each{ 
           |n| 
           if "personal" == n.getAttribute("type")
               return "personal"#display_personal_name(n)

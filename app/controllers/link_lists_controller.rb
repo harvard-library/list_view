@@ -94,7 +94,7 @@ class LinkListsController < ApplicationController
   def show
     splitid = split_qualified_id(params[:qualified_id])
     if splitid[:ext_id_type] == 'drs'
-      @link_list = DRSLinkList.all
+      @link_list = DRSLinkList.display_object(splitid[:ext_id])
     else
       @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
     end
