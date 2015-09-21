@@ -5,10 +5,6 @@ class DRSLinkList
   include ActiveModel::Model
   
   java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.Mods"
-  java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.ModsElement"
-    java_import "edu.harvard.hul.ois.ots.schemas.XmlContent.GenericElement"
-  #java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.ModsStringElement"
-  #java_import "edu.harvard.hul.ois.ots.schemas.ModsMD.Name"
   java_import "javax.xml.stream.XMLInputFactory"
   java_import "javax.xml.stream.XMLOutputFactory"
   java_import "javax.xml.stream.XMLStreamWriter"
