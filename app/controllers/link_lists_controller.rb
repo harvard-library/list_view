@@ -5,15 +5,11 @@ class LinkListsController < ApplicationController
 
   def index
     params.permit(:ext_id_type)
-    if APP_CONFIG['listview_instance'] == 'DRS'
-      @link_lists = DRSLinkList.all
-    else
       @link_lists = LinkList.all
       if params[:ext_id_type]
         @typed = params[:ext_id_type]
         @link_lists = @link_lists.where(:ext_id_type => params[:ext_id_type])
-      end
-    end        
+      end       
   end
 
   def new
