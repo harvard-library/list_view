@@ -188,8 +188,12 @@ class DRSLinkList
         publicationstring = publicationstring + delimiter + datestring
       end
       publications.push publicationstring
-      return publications.join("\n")
     }
+    if publications.empty?
+      return ""
+    end
+    return publications.join("\n")
+      
 #    <s:iterator var="oinfo" value="mods.getOriginInfos()">
 #    39                      <s:iterator value="#oinfo.getPlaces()">
 #    40                        <s:iterator var="places" value="#oinfo.getPlaces()">
