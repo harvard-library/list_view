@@ -1,0 +1,77 @@
+<div id="modal-cite" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Citation</h4>
+      </div>
+      <div class="modal-body">
+      	<p>Please note that a complete citation may require additional information
+      	(document date, author name, range of pages/sequence numbers, etc.)</p>
+	      <ul>
+	        <li><span class="citelabel plink">Persistent Link</span> <a href="<%= @link_list.url %>"><%= @link_list.url %></a></li>
+	        <li><span class="citelabel desc">Description</span> <%= @link_list.title %></li>
+	        <li><span class="citelabel repo">Repository</span> <%= @link_list.repository %></li>
+	        <li><span class="citelabel inst">Institution</span> <%= @link_list.institution %></li>
+	        <li><span class="citelabel access">Accessed</span> <%= @link_list.accdate %></li>
+	      </ul>	  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="modal-links" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Related Links</h4>
+      </div>
+      <div class="modal-body">
+      	<p><strong>Links relating to: </strong> <%= @link_list.title %></p>
+		<p><strong>Related Links</strong> take you to information outside of PDS that relates to 
+		the displayed document. E.g.,  a link to a description of the document in HOLLIS,  to a finding aid
+		in OASIS, or to a specialized web site with additional information.</p>
+		<p>Click on the link and the information will display in a new browser window. </p>
+		
+	      <% @link_list.related_links.each do |link| %>
+	      <li>
+	      	<% if (!link.related_url().nil?) then %>
+	        <%= link.type %> <%= link_to link.label, link.related_url(), :target => '_blank' %>
+	        <% else  %>
+	        <%= link.type %> <%= link.label %>
+	        <% end %>
+	      </li>
+	    <% end %>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="modal-share" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Share</h4>
+      </div>
+      <div class="modal-body">
+      		 <div class="social-likes">
+				<div class="facebook" title="Share link on Facebook">Facebook</div>
+				<div class="twitter" title="Share link on Twitter">Twitter</div>
+				<div class="plusone" title="Share link on Google+">Google+</div>
+				<div class="pinterest" title="Share image on Pinterest" data-media="">Pinterest</div>
+			</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

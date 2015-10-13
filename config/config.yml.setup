@@ -4,33 +4,41 @@
 
 defaults: &defaults
   DRS2_TIMEOUT: 5
-  DRS2_SERVICE_APPKEY: <appkey>
+  DRS2_SERVICE_APPKEY: LISTVIEW
+  OASIS_URL: http://oasis.lib.harvard.edu/oasis/deliver/deepLink?_collection=oasis
   
 development:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
-
+  NRS_RESOLVER_URL: http://nrstest.harvard.edu:10031
+  FTS_SEARCH_URL: http://ftstest.lib.harvard.edu:10006/fts/search?S=
+  
   # properties related to SSL
-  SERVICES_KEYSTORE_PATH: <keystore path>
-  SERVICES_KEYSTORE_PASS: <keystore password>
-  SERVICES_TRUSTSTORE_PATH: <truststore path>
-  SERVICES_TRUSTSTORE_PASS: <trustore password>
+  CLIENT_KEYSTORE_PATH: <keystore path>
+  CLIENT_KEYSTORE_PASS: <keystore password>
+  CLIENT_TRUSTSTORE_PATH: <truststore path>
+  CLIENT_TRUSTSTORE_PASS: <trustore password>
+  
 test:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
-
+  NRS_RESOLVER_URL: http://nrstest.harvard.edu:9031
+  FTS_SEARCH_URL: http://ftstest.lib.harvard.edu:9006/fts/search?S=
+ 
   # properties related to SSL
-  SERVICES_KEYSTORE_PATH: <keystore path>
-  SERVICES_KEYSTORE_PASS: <keystore password>
-  SERVICES_TRUSTSTORE_PATH: <truststore path>
-  SERVICES_TRUSTSTORE_PASS: <trustore password>
+  CLIENT_KEYSTORE_PATH: <keystore path>
+  CLIENT_KEYSTORE_PASS: <keystore password>
+  CLIENT_TRUSTSTORE_PATH: <truststore path>
+  CLIENT_TRUSTSTORE_PASS: <trustore password>
 
 production:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
+  NRS_RESOLVER_URL: http://nrs.harvard.edu
+  FTS_SEARCH_URL: http://fts.lib.harvard.edu/fts/search?S=
 
   # properties related to SSL
-  SERVICES_KEYSTORE_PATH: <keystore path>
-  SERVICES_KEYSTORE_PASS: <keystore password>
-  SERVICES_TRUSTSTORE_PATH: <truststore path>
-  SERVICES_TRUSTSTORE_PASS: <trustore password>
+  CLIENT_KEYSTORE_PATH: <keystore path>
+  CLIENT_KEYSTORE_PASS: <keystore password>
+  CLIENT_TRUSTSTORE_PATH: <truststore path>
+  CLIENT_TRUSTSTORE_PASS: <trustore password>

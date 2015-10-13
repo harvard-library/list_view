@@ -101,4 +101,19 @@ $(function () {
 	  	$( "#fts" ).submit();
   });
   
+  $(document).on('click', '.cite', function (e) {
+	    e.preventDefault();
+	    $('#modal-cite').modal();
+  });
+
+  $(document).on('click', '.relatedlinks', function (e) {
+	    e.preventDefault();
+	    $('#modal-links').modal();
+  });
+  
+  $(document).on('click', '.share', function (e) {
+	    e.preventDefault();
+	    $('#modal-share').modal();
+  });
+
 });

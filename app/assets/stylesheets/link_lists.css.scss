@@ -70,6 +70,32 @@ form.link_list fieldset.form-actions {
   }
 }
 
+#modal-cite p.header {
+  font-size: 115%;
+  font-weight: bold;
+}
+.ui-dialog-titlebar {
+  display: block;
+  color: black;
+  font-size: 1.3em;
+}
+#modal-cite span.citelabel {
+  font-weight: bold;
+}
+#modal-cite ul {
+  list-style: none inside none;
+}
+#modal-cite ul li {
+  margin-bottom: 0.5em;
+}
+#modal-cite p.header:after,
+#modal-cite span.citelabel:after {
+  content: ":";
+}
+
+#modal-links li {
+  margin-left: 25px;
+}
 
 /* Show styling */
 body.c_link_lists.a_show {

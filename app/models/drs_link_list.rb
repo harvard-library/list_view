@@ -49,20 +49,24 @@ class DRSLinkList
     if drsObjectViewDTO_v2.getUrns().size() > 0
       @list_object.url = APP_CONFIG['NRS_RESOLVER_URL'] + "/" + drsObjectViewDTO_v2.getUrns().iterator().next().getUrn()
     end
+    @list_object.fts_search_url=APP_CONFIG['FTS_SEARCH_URL'] + drsObjectViewDTO_v2.getId().to_s
     
     publication = get_publication(mymods)
     if !publication.empty?
       @list_object.publication = publication
     end
     
+    if (!drsObjectViewDTO_v2.getOwner().nil?)
+      @list_object.repository = drsObjectViewDTO_v2.getOwner().getCode()
+    end
+    
+    @list_object.related_links = get_related_links(drsObjectViewDTO_v2)
     @list_object
   end
 
   
   def self.create_mods_from_string(string_mods)
-    #Java code to get the mods from the returned doc
-    #begin
-      mmods = Mods.new()      
+     mmods = Mods.new()      
       if !string_mods.nil?
         
         # parse the mods chunk
@@ -72,11 +76,7 @@ class DRSLinkList
         mmods.parse(xmlReader)
       end
       return mmods
-    #rescue 
-#              String errMsg = "error parsing mods: " + e.getMessage();
-#              LOG.error(errMsg);
-#              addActionError(errMsg); 
-    #end
+
   end
   
   #Java methods for creating the display name
@@ -193,24 +193,6 @@ class DRSLinkList
       return ""
     end
     return publications.join("\n")
-      
-#    <s:iterator var="oinfo" value="mods.getOriginInfos()">
-#    39                      <s:iterator value="#oinfo.getPlaces()">
-#    40                        <s:iterator var="places" value="#oinfo.getPlaces()">
-#    41                          <s:iterator value="#places.getPlaceTerms()">
-#    42                            <s:if test="#originStatus.index > 0">, </s:if>
-#    43                            <s:property/>
-#    44                          </s:iterator>
-#    45                        </s:iterator>
-#    46                      </s:iterator>
-#    47                      <s:iterator value="#oinfo.getPublishers()">
-#    48                        <s:if test="#originStatus.index > 0">, </s:if>
-#    49                        <s:property/>
-#    50                      </s:iterator>
-#    51                      <s:iterator value="#oinfo.getDatesIssued()" status="originStatus">
-#    52                        <s:if test="#originStatus.index > 0">, </s:if>
-#    53                        <s:property/>
-#    54                      </s:iterator>
   end
 
   def self.get_places(places)
@@ -256,5 +238,26 @@ class DRSLinkList
       delimiter = ", " 
     }
     return datestring
+  end
+  
+  def self.get_related_links(drsObjectViewDTO_v2)
+    
+    relatedlinks = []
+      
+    harvardmetadatalinks = drsObjectViewDTO_v2.getHarvardMetadata()
+    #Add the md links
+    harvardmetadatalinks.each{ 
+          |harvardmd| 
+      relatedlinks.push DRSRelatedLink.new(harvardmd.getMetadataType(), harvardmd.getMetadataIdentifier(), harvardmd.getDisplayLabel())
+    }
+    
+    otherrelatedlinks = drsObjectViewDTO_v2.getRelatedLinks()
+    #Add otherrelatedlinks md links
+    otherrelatedlinks.each{ 
+          |otherrl| 
+      relatedlinks.push DRSRelatedLink.new('Link', nil, otherrl.getRelationship(), otherrl.getRelatedUri())
+    }
+    
+    return relatedlinks
   end
 end
