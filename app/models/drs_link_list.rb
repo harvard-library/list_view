@@ -14,10 +14,10 @@ class DRSLinkList
   #Returns a DRSListObject for the given object_id
   def self.display_object(object_id)
     #Retrieve it from the services
-    drsObjectViewDTO_v2 = DRSServices.drs_object(object_id)
+    drsObjectListViewDTO = DRSServices.drs_object(object_id)
     
     pdslinks = []
-    pdsobjects = drsObjectViewDTO_v2.getDocumentListMapping()
+    pdsobjects = drsObjectListViewDTO.getActiveDocumentListMapping()
     #Add the pds links
     pdsobjects.each{ 
       |pdsobject| 
@@ -28,39 +28,42 @@ class DRSLinkList
       end
       #Push onto the array
       #What should the title be if there is no alternate label?
-      pdslinktitle = pdsobject.getDocumentObject().label
-      if pdslinktitle.nil? || pdslinktitle.empty?
+      pdslinktitle = pdsobject.getAlternateLabel()
+      if pdslinktitle.nil? || pdslinktitle.empty? 
+        pdslinktitle = pdsobject.getDocumentObject().getLabel()
+      end
+      if pdslinktitle.nil? || pdslinktitle.empty? 
         pdslinktitle = pdsobject.getDocumentObject().getOwnerSuppliedName()
       end
-      pdslinks.push PDSLink.new(pdslinktitle, deliveryURN) 
+      pdslinks.push PDSLink.new(pdslinktitle, deliveryURN)
     }
     
     #set up the Mods object for use in extracting title, author, etc.
-    mymods = create_mods_from_string(drsObjectViewDTO_v2.getMods())
+    mymods = create_mods_from_string(drsObjectListViewDTO.getMods())
 
-    title = drsObjectViewDTO_v2.label
+    title = drsObjectListViewDTO.label
     if title.nil? || title.empty?
-      title = drsObjectViewDTO_v2.getOwnerSuppliedName()
+      title = drsObjectListViewDTO.getOwnerSuppliedName()
     end
     
     names = get_display_names(mymods)
     
-    @list_object = DRSListObject.new(title, names, drsObjectViewDTO_v2.getId(),  pdslinks)
-    if drsObjectViewDTO_v2.getUrns().size() > 0
-      @list_object.url = APP_CONFIG['NRS_RESOLVER_URL'] + "/" + drsObjectViewDTO_v2.getUrns().iterator().next().getUrn()
+    @list_object = DRSListObject.new(title, names, drsObjectListViewDTO.getId(),  pdslinks)
+    if drsObjectListViewDTO.getUrns().size() > 0
+      @list_object.url = APP_CONFIG['NRS_RESOLVER_URL'] + "/" + drsObjectListViewDTO.getUrns().iterator().next().getUrn()
     end
-    @list_object.fts_search_url=APP_CONFIG['FTS_SEARCH_URL'] + drsObjectViewDTO_v2.getId().to_s
+    @list_object.fts_search_url=APP_CONFIG['FTS_SEARCH_URL'] + drsObjectListViewDTO.getId().to_s
     
     publication = get_publication(mymods)
     if !publication.empty?
       @list_object.publication = publication
     end
     
-    if (!drsObjectViewDTO_v2.getOwner().nil?)
-      @list_object.repository = drsObjectViewDTO_v2.getOwner().getCode()
+    if (!drsObjectListViewDTO.getOwner().nil?)
+      @list_object.repository = drsObjectListViewDTO.getOwner().getCode()
     end
     
-    @list_object.related_links = get_related_links(drsObjectViewDTO_v2)
+    @list_object.related_links = get_related_links(drsObjectListViewDTO)
     @list_object
   end
 
@@ -240,18 +243,18 @@ class DRSLinkList
     return datestring
   end
   
-  def self.get_related_links(drsObjectViewDTO_v2)
+  def self.get_related_links(drsObjectListViewDTO)
     
     relatedlinks = []
       
-    harvardmetadatalinks = drsObjectViewDTO_v2.getHarvardMetadata()
+    harvardmetadatalinks = drsObjectListViewDTO.getHarvardMetadata()
     #Add the md links
     harvardmetadatalinks.each{ 
           |harvardmd| 
       relatedlinks.push DRSRelatedLink.new(harvardmd.getMetadataType(), harvardmd.getMetadataIdentifier(), harvardmd.getDisplayLabel())
     }
     
-    otherrelatedlinks = drsObjectViewDTO_v2.getRelatedLinks()
+    otherrelatedlinks = drsObjectListViewDTO.getRelatedLinks()
     #Add otherrelatedlinks md links
     otherrelatedlinks.each{ 
           |otherrl| 

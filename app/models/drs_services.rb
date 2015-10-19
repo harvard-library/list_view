@@ -7,7 +7,7 @@ Dir[File.expand_path("../../lib/java/*.jar", File.dirname(__FILE__))].each { |ja
   
 class DRSServices
   java_import 'edu.harvard.hul.ois.drs2.callservice.ServiceWrapper'
-  java_import 'edu.harvard.hul.ois.drs2.services.dto.ext.v2.DRSObjectViewDTO_v2'
+  java_import 'edu.harvard.hul.ois.drs2.services.dto.ext.DRSObjectListViewDTO'
 
     # This gets the DRSObjectViewDTO_v2 object from the drs2_services
     # using the proper keys
@@ -21,7 +21,7 @@ class DRSServices
 		                            APP_CONFIG['CLIENT_TRUSTSTORE_PATH'],
 		                             APP_CONFIG['CLIENT_TRUSTSTORE_PASS'])
 		  #Get the object from the service                             
-		  content = svc.getDRSObjectByID(object_id, DRSObjectViewDTO_v2.java_class, true)
+		  content = svc.getDRSObjectByID(object_id, DRSObjectListViewDTO.java_class, true)
     end
 	
 end

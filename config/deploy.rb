@@ -24,7 +24,7 @@ set :bundle_binstubs, nil
 # set :pty, true
 
 # Create these in /path/to/deploy/shared
-set :linked_files, %w{config/database.yml .env config/initializers/metadata_sources.rb}
+set :linked_files, %w{config/database.yml .env config/initializers/metadata_sources.rb config/config.yml}
 
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
@@ -32,7 +32,7 @@ set :keep_releases, 3
 
 namespace :deploy do
 
-  desc 'Run arbitrary remote rake task'
+ desc 'Run arbitrary remote rake task'
   task :rrake do
     on roles(:app) do
       within release_path do
