@@ -1,4 +1,5 @@
-<% content_for :subhead, @title || [:ext_id_type, :ext_id].map {|m| @link_list.send(m).upcase }.join(" ") %>
+<% content_for :subhead, @page_title || [:ext_id_type, :ext_id].map {|m| @link_list.send(m).upcase }.join(" ") %>
+
 <% if current_user && @link_list.ext_id_type == "hollis" %>
   <ul class="controls">
     <li>
@@ -19,7 +20,23 @@
 <% end %>
 <div class="metadata">
   <div class="image"><%= image_tag @link_list.image unless @link_list.image.blank? %></div>
-  <div class="title"><span class="md-label">Title:</span> <%= @title %></div>
+  <% unless @title.blank? %>
+    <div class="title"><span class="md-label">Title<%= !@title.is_a?(Array) && !@title.blank? ? @title : '' %>:</span>
+      <% if @title.is_a?(Array) %>
+	      <% case @title.length %>
+	      <% when 1 %>
+	        <%= @title.first %>
+	      <% else %>
+	        <ul>
+	          <% @title.each do |t| %>
+	            <li><%= t %></li>
+	          <% end %>
+	        </ul>
+	      <% end %>
+	  <% end %>
+    </div>
+  <% end %>
+
   <% unless @authors.blank? %>
     <div class="author"><span class="md-label">Author<%= @authors.length > 1 ? "s" : '' %>:</span>
       <% case @authors.length %>
@@ -51,6 +68,10 @@
     </div>
   <% end %>
 </div>
+
+<% if @link_list.ext_id_type == "drs" %>
+	<div class="osn_id"><span class="md-label">ID:</span> <%= @link_list.osn_id %></div>
+<% end %>
 
 <% unless @link_list.comment.blank? %>
   <div class="comment">

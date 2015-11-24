@@ -4,7 +4,7 @@ class DRSListObject
   attr_accessor :title, :links, :ext_id, :ext_id_type, :author, :publication, 
     :image, :comment, :continues_url, 
     :continued_by_url, :url, :fts_search_url, :repository, :institution, :accdate,
-    :related_links
+    :related_links, :osn_id, :mets_title
   
   def initialize(title, author, ext_id, links)
     @title = title
@@ -17,6 +17,7 @@ class DRSListObject
     @repository = 'Harvard University Library'
     @institution = 'Harvard University' 
     @accdate = Time.now.to_date.to_formatted_s(:rfc822)  
+    @mets_title = ""
   end
   
   def to_param

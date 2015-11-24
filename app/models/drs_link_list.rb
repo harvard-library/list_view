@@ -41,14 +41,19 @@ class DRSLinkList
     #set up the Mods object for use in extracting title, author, etc.
     mymods = create_mods_from_string(drsObjectListViewDTO.getMods())
 
-    title = drsObjectListViewDTO.label
-    if title.nil? || title.empty?
-      title = drsObjectListViewDTO.getOwnerSuppliedName()
-    end
     
+    title = get_mods_title(mymods)
+
     names = get_display_names(mymods)
     
     @list_object = DRSListObject.new(title, names, drsObjectListViewDTO.getId(),  pdslinks)
+    @list_object.mets_title = drsObjectListViewDTO.label
+    if drsObjectListViewDTO.label.nil? || drsObjectListViewDTO.label.empty?
+      @list_object.mets_title = drsObjectListViewDTO.getOwnerSuppliedName()
+    end
+           
+    @list_object.osn_id = drsObjectListViewDTO.getOwnerSuppliedName()
+        
     if drsObjectListViewDTO.getUrns().size() > 0
       @list_object.url = APP_CONFIG['NRS_RESOLVER_URL'] + "/" + drsObjectListViewDTO.getUrns().iterator().next().getUrn()
     end
@@ -165,6 +170,25 @@ class DRSLinkList
     return name.toString()
   end
   
+  def self.get_mods_title(mods)
+      if mods.nil?
+        return ""
+      end
+      
+      titles = []
+      mods.getTitleInfos().each{ 
+          |info|
+          info.getTitles().each {
+          |t|
+            titles.push t.toString()
+          }
+      }
+      if titles.empty?
+        return ""
+      end
+      return titles
+  end
+    
   def self.get_publication(mods)
     if mods.nil?
       return ""

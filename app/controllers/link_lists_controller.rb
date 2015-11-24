@@ -91,14 +91,18 @@ class LinkListsController < ApplicationController
     splitid = split_qualified_id(params[:qualified_id])
     if splitid[:ext_id_type] == 'drs'
       @link_list = DRSLinkList.display_object(splitid[:ext_id])
+      @page_title = !(@link_list.mets_title.blank?) ? @link_list.mets_title : @link_list.osn_id
+      
     else
       @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
+      @page_title = @link_list.title  
     end
       
-    @title = !@link_list.title.blank? ? @link_list.title : '<No title recorded>'
+    @title = @link_list.title
     @authors = !@link_list.author.blank? ? @link_list.author.split("\n") : []
     @publication = !@link_list.publication.blank? ? @link_list.publication.split("\n") : []
 
+    
     respond_to do |f|
       f.html
       f.csv {
