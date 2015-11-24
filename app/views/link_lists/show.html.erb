@@ -67,11 +67,12 @@
       <% end %>
     </div>
   <% end %>
+  <% if @link_list.ext_id_type == "drs" %>
+	<div class="osn_id"><span class="md-label">ID:</span> <%= @link_list.osn_id %></div>
+  <% end %>
 </div>
 
-<% if @link_list.ext_id_type == "drs" %>
-	<div class="osn_id"><span class="md-label">ID:</span> <%= @link_list.osn_id %></div>
-<% end %>
+
 
 <% unless @link_list.comment.blank? %>
   <div class="comment">
