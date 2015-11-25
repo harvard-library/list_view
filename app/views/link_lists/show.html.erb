@@ -99,7 +99,7 @@
 </div>
 
 <div class="urllist">
-	<% unless @link_list.fts_search_url.blank? %>
+	<% unless @link_list.fts_search_url.blank? || @link_list.fts_search_url.nil? %>
 	  <span id="fts-icon" class="glyphicon glyphicon-search link-icon" aria-hidden="true"></span><%= link_to "Full Text Search", '#fts-button', :class => 'fts-link' %>
 	<% end %>
 
