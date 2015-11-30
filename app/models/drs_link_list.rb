@@ -48,8 +48,12 @@ class DRSLinkList
     
     @list_object = DRSListObject.new(title, names, drsObjectListViewDTO.getId(),  pdslinks)
     @list_object.mets_title = drsObjectListViewDTO.label
-    if drsObjectListViewDTO.label.nil? || drsObjectListViewDTO.label.empty?
-      @list_object.mets_title = drsObjectListViewDTO.getOwnerSuppliedName()
+    if drsObjectListViewDTO.label.blank?
+      if !title.blank?
+        @list_object.mets_title = title
+      else
+        @list_object.mets_title = drsObjectListViewDTO.getOwnerSuppliedName()
+      end
     end
            
     @list_object.osn_id = drsObjectListViewDTO.getOwnerSuppliedName()
@@ -232,8 +236,11 @@ class DRSLinkList
       |place|
       place.getPlaceTerms().each {
         |placeterm|
-        placestring = placestring + delimiter + placeterm.toString()
-        delimiter = ", "
+        if placeterm.getAuthority().nil? && placeterm.getAuthority() != "marccountry"
+            placestring = placestring + delimiter + placeterm.toString()
+            delimiter = ", "
+        end
+        
       }
     }
     return placestring

@@ -91,11 +91,21 @@ class LinkListsController < ApplicationController
     splitid = split_qualified_id(params[:qualified_id])
     if splitid[:ext_id_type] == 'drs'
       @link_list = DRSLinkList.display_object(splitid[:ext_id])
-      @page_title = !(@link_list.mets_title.blank?) ? @link_list.mets_title : @link_list.osn_id
-      
+      @page_title = !@link_list.mets_title.is_a?(Array) && !@link_list.mets_title.blank? ? @link_list.mets_title : ''
+      if @link_list.mets_title.is_a?(Array)
+        delimiter = ""
+        if @link_list.mets_title.length == 1
+          @page_title = @link_list.mets_title.first
+        else
+          @link_list.mets_title.each do |t|
+            @page_title = @page_title + delimiter + t
+            delimiter = ", "
+            end
+        end
+      end
     else
       @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
-      @page_title = @link_list.title  
+      @page_title = @link_list.title
     end
       
     @title = @link_list.title
