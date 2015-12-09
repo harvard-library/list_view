@@ -29,10 +29,10 @@ class DRSLinkList
       #Push onto the array
       #What should the title be if there is no alternate label?
       pdslinktitle = pdsobject.getAlternateLabel()
-      if pdslinktitle.nil? || pdslinktitle.empty? 
+      if pdslinktitle.blank? 
         pdslinktitle = pdsobject.getDocumentObject().getLabel()
       end
-      if pdslinktitle.nil? || pdslinktitle.empty? 
+      if pdslinktitle.blank? 
         pdslinktitle = pdsobject.getDocumentObject().getOwnerSuppliedName()
       end
       pdslinks.push PDSLink.new(pdslinktitle, deliveryURN)

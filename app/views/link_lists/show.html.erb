@@ -118,9 +118,13 @@
   </thead>
   <tbody>
     <% @link_list.links.each do |link| %>
-      <tr>
-        <td><%= link_to link.name, link.url, :target => '_blank' %></td>
-      </tr>
+    	<tr>
+    		<% if !link.url.blank? %>
+        	<td><%= link_to link.name, link.url, :target => '_blank' %></td>
+        	<% else %>
+        	<td><%= link.name %>
+        	<% end %>
+      	</tr>
     <% end %>
   </tbody>
 </table>
