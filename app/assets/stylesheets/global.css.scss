@@ -1,27 +1,69 @@
 .page-header {
   margin-top: 0;
-  h1{
-    margin:0;
-    border: none;
-    width: 129px;
-    height: 70px;
-    position: absolute;
-    top: 0px;
-    left: 10px;
-    background-image: image-url("pennant.png");
-    > a, > a:hover {
-      display: block;
-      text-indent: -9001px;
-      height: 100%;
-      margin:0;
-      padding: 0;
-      overflow: hidden;
-    }
-  }
-  h2 {
+  h1 {
     margin-left: 154px;
     text-align: left;
   }
+}
+.listview-main-menu-bar {
+    background-color: #000;
+    border-bottom: 1px solid #555;
+    color: #fff;
+    height: 33px;
+    width: 100%;
+    top: 0;
+}
+.listview-main-menu {
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 8px 12px 0 0;
+    text-align: right;
+}
+.listview-main-menu.user-logo {
+    padding-right: 0;
+    padding-left: 0;
+    float: left;
+}
+.listview-main-menu li {
+    cursor: pointer;
+    float: left;
+    padding: 0 15px;
+}
+.listview-main-menu a, .listview-main-menu a:active, .listview-main-menu a:visited {
+    color: #fff;
+    font-weight: normal;
+    text-decoration: none !important;
+}
+#harvard-logo {
+    background: url('header.jpg') no-repeat left bottom;
+    display: inline-block;
+    color: transparent;
+    text-indent: 9000px;
+    overflow: hidden;
+    height: 33px;
+    padding: 0;
+    width: 234px;
+    margin-top: -8px;
+}
+
+.listview-main-menu.user-buttons {
+    padding-right: 0;
+}
+.user-buttons li .fa {
+    color: #888;
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h2 {

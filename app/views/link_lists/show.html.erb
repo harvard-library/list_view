@@ -98,19 +98,6 @@
   <a class="ll url btn btn-success" target="_blank" href="<%= @link_list.url %>">Record Link</a>
 </div>
 
-<div class="urllist">
-	<% unless @link_list.fts_search_url.blank? %>
-	  <span id="fts-icon" class="glyphicon glyphicon-search link-icon" aria-hidden="true"></span><%= link_to "Full Text Search", '#fts-button', :class => 'fts-link' %>
-	<% end %>
-
-<% if @link_list.ext_id_type == 'drs' %>
-  <a class="ll url cite" href="#" id="cite"><span id="cite-icon" class="link-icon" aria-hidden="true"></span>Cite</a>
-  <a class="ll url relatedlinks" id="relatedlinks" href="#no-op"><span id="rl-icon" class="link-icon" aria-hidden="true"></span>Related Links</a>
-<% end %>
-  <a class="ll url share" href="#"><span id="share-icon" class="link-icon" aria-hidden="true"></span>Share</a>
-  <a class="ll url" href="https://wiki.harvard.edu/confluence/display/LibraryStaffDoc/ListView" target="_blank"><span id="help-icon" class="link-icon" aria-hidden="true"></span>Help</a>
-</div>
-
 <a id="#links"></a>
 <table style="border: 1px solid #ddd" class="table table-striped">
   <thead>

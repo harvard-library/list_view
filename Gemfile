@@ -26,6 +26,7 @@ gem 'cocoon'
 gem 'dotenv-deployment'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'font-awesome-sass'
 
 group :development do
   gem 'spring'

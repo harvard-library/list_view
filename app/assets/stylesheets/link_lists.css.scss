@@ -146,51 +146,6 @@ body.c_link_lists.a_show {
   	color: $slate;
   	text-decoration: none;
   }
-  .link-icon {
-  	margin-right: 5px;
-  	margin-left: 20px;
-  	opacity: 0.3;
-    filter: alpha(opacity=30); 
-  }
-  #fts-icon {
-  	margin-left: 0px;
-  }
-  #cite-icon {
-  	background:url("cite.png") no-repeat left bottom;
-  	background-size: 20px;
-  	display: inline-block;
-	height: 20px;
-	width: 20px;
-	position: relative;
-	top: 5px;
-  }
-  #rl-icon {
-  	background:url("cite.png") no-repeat left bottom;
-  	background-size: 20px;
-  	display: inline-block;
-	height: 20px;
-	width: 20px;
-  	position: relative;
-	top: 5px;
-  }
-  #share-icon {
-  	background:url("share.png") no-repeat left bottom;
-  	background-size: 20px;
-  	display: inline-block;
-	height: 20px;
-	width: 20px;
-  	position: relative;
-	top: 5px;
-  }
-  #help-icon {
-  	background:url("help.png") no-repeat left bottom;
-  	background-size: 20px;
-  	display: inline-block;
-	height: 20px;
-	width: 20px;
-  	position: relative;
-	top: 5px;
-  }
 }
 
 body.c_link_lists {

@@ -12,9 +12,24 @@
 </head>
 <body class="<%= "c_#{controller.controller_name} a_#{controller.action_name}" %>">
 <div class="container-fluid">
+  <div class="listview-main-menu-bar">
+    <ul class="user-logo listview-main-menu">
+    	<li><a href="http://lib.harvard.edu" id="harvard-logo">Harvard Library</a></li>
+    </ul>
+    <ul class="user-buttons listview-main-menu">
+    	<li><a class="help" href="https://wiki.harvard.edu/confluence/display/LibraryStaffDoc/ListView" target="_blank"><span class="fa fa-question-circle"></span>Help</a></li>
+    	<li><a class="share" href="#" target="_blank"><span class="fa fa-share-alt"></span>Share</a></li>
+    	<% if !@link_list.blank? %>
+		  <li><a class="cite" href="#"><span class="fa fa-quote-left"></span>Cite</a></li>
+		  <li><a class="relatedlinks" href="#no-op"><span class="fa fa-link"></span>Related Links</a></li>
+		<% end %>
+		<% unless !@link_list.blank? && @link_list.fts_search_url.blank? %>
+		  <li><span id="fts-icon" class="fa fa-search"></span><%= link_to "Full Text Search", '#fts-button', :class => 'fts-link' %></li>
+		<% end %>
+    </ul>
+  </div>
   <div class="page-header">
-    <h1><%= link_to "ListView", "/", :class => 'title' %></h1>
-    <h2><%= content_for(:subhead) if content_for(:subhead) %></h2>
+    <h1><%= content_for(:subhead) if content_for(:subhead) %></h1>
     <% if current_user %>
       <div id="signout"><%= link_to("Sign Out", destroy_user_session_url(Rails.env.production? ? {:protocol => 'https'} : {}), :method => :delete, :class => 'sign-out') %></div>
     <% end %>

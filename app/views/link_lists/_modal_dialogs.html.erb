@@ -1,4 +1,3 @@
-<% if @link_list.ext_id_type == 'drs' %>
 <div id="modal-cite" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -33,11 +32,14 @@
       </div>
       <div class="modal-body">
       	<p><strong>Links relating to: </strong> <%= @link_list.title %></p>
-		<p><strong>Related Links</strong> take you to information outside of PDS that relates to 
+		<p><strong>Related Links</strong> take you to information outside of List View that relates to 
 		the displayed document. E.g.,  a link to a description of the document in HOLLIS,  to a finding aid
 		in OASIS, or to a specialized web site with additional information.</p>
 		<p>Click on the link and the information will display in a new browser window. </p>
-		
+		<% if @link_list.ext_id_type == 'hollis' %>
+	    	<li>Aleph <%= link_to @link_list.url, :target => '_blank' %></li>
+	    <% end %>
+		<% if !@link_list.related_links.blank? %>
 	      <% @link_list.related_links.each do |link| %>
 	      <li>
 	      	<% if (!link.related_url().nil?) then %>
@@ -46,7 +48,8 @@
 	        <%= link.type %> <%= link.label %>
 	        <% end %>
 	      </li>
-	    <% end %>  
+	    <% end %> 
+	   <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -55,7 +58,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<% end %>
 
 <div id="modal-share" class="modal fade">
   <div class="modal-dialog">

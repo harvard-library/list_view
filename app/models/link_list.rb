@@ -16,6 +16,16 @@ class LinkList < ActiveRecord::Base
   has_many :links, -> { order('position ASC')}, :dependent => :destroy
   accepts_nested_attributes_for :links, :reject_if => :all_blank, :allow_destroy => true
 
+  attr_accessor :repository, :institution, :accdate,
+        :related_links
+   
+  #Default values for repository, insitution, and accdate.     
+  after_initialize do |ll|
+    @repository = 'Harvard University Library'
+    @institution = 'Harvard University'
+    @accdate = Time.now.to_date.to_formatted_s(:rfc822)
+  end
+          
   validates :ext_id, :presence => true
   validates :ext_id_type, :presence => true, :inclusion => MetadataSources.keys
 
