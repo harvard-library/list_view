@@ -13,4 +13,10 @@ $(function () {
     $('#tl-loading-spinner').remove();
 
   });
+  
+  $('.user-buttons').slicknav({
+	  label: 'Menu',
+	  prependTo: '.listview-main-menu-bar'
+  });
 });
+

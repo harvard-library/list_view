@@ -16,7 +16,8 @@
     <ul class="user-logo listview-main-menu">
     	<li><a href="http://lib.harvard.edu" id="harvard-logo">Harvard Library</a></li>
     </ul>
-    <ul class="user-buttons listview-main-menu">
+    
+  	<ul class="user-buttons listview-main-menu">
     	<li><a class="help" href="https://wiki.harvard.edu/confluence/display/LibraryStaffDoc/ListView" target="_blank"><span class="fa fa-question-circle"></span>Help</a></li>
     	<li><a class="share" href="#" target="_blank"><span class="fa fa-share-alt"></span>Share</a></li>
     	<% if !@link_list.blank? %>
@@ -24,7 +25,7 @@
 		  <li><a class="relatedlinks" href="#no-op"><span class="fa fa-link"></span>Related Links</a></li>
 		<% end %>
 		<% unless !@link_list.blank? && @link_list.fts_search_url.blank? %>
-		  <li><span id="fts-icon" class="fa fa-search"></span><%= link_to "Full Text Search", '#fts-button', :class => 'fts-link' %></li>
+		  <li><a class="fts-link" href="#fts-button"><span class="fa fa-search"></span>Full Text Search</a></li>
 		<% end %>
     </ul>
   </div>
