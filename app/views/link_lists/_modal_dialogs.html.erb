@@ -10,7 +10,24 @@
       	(document date, author name, range of pages/sequence numbers, etc.)</p>
 	      <ul>
 	        <li><span class="citelabel plink">Persistent Link</span> <a href="<%= @link_list.url %>"><%= @link_list.url %></a></li>
-	        <li><span class="citelabel desc">Description</span> <%= @link_list.title %></li>
+	        <li> 
+	        	<% unless @link_list.title.blank? %>
+    				<span class="citelabel desc">Description<%= !@link_list.title.is_a?(Array) && !@title.blank? ? @link_list.title : '' %>:</span>
+      				<% if @link_list.title.is_a?(Array) %>
+				      <% case @link_list.title.length %>
+				      <% when 1 %>
+				        <%= @link_list.title.first %>
+				      <% else %>
+				        <ul>
+				          <% @link_list.title.each do |t| %>
+				            <li><%= t %></li>
+				          <% end %>
+				        </ul>
+				      <% end %>
+				  <% end %>
+			    </div>
+			  <% end %>        
+	        </li>
 	        <li><span class="citelabel repo">Repository</span> <%= @link_list.repository %></li>
 	        <li><span class="citelabel inst">Institution</span> <%= @link_list.institution %></li>
 	        <li><span class="citelabel access">Accessed</span> <%= @link_list.accdate %></li>
