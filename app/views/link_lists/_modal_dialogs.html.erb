@@ -12,20 +12,18 @@
 	        <li><span class="citelabel plink">Persistent Link</span> <a href="<%= @link_list.url %>"><%= @link_list.url %></a></li>
 	        <li> 
 	        	<% unless @link_list.title.blank? %>
-    				<span class="citelabel desc">Description<%= !@link_list.title.is_a?(Array) && !@title.blank? ? @link_list.title : '' %>:</span>
-      				<% if @link_list.title.is_a?(Array) %>
+	        		<% if !@link_list.title.is_a?(Array) %>
+	        			<span class="citelabel desc">Description</span> <%= @link_list.title %>
+	        		<% else %>
 				      <% case @link_list.title.length %>
 				      <% when 1 %>
-				        <%= @link_list.title.first %>
+				      	<span class="citelabel desc">Description</span> <%= @link_list.title.first %>
 				      <% else %>
-				        <ul>
-				          <% @link_list.title.each do |t| %>
-				            <li><%= t %></li>
+				          <span class="citelabel desc">Description</span> <% @link_list.title.each do |t| %>
+				            <%= t %><br/>
 				          <% end %>
-				        </ul>
 				      <% end %>
 				  <% end %>
-			    </div>
 			  <% end %>        
 	        </li>
 	        <li><span class="citelabel repo">Repository</span> <%= @link_list.repository %></li>
