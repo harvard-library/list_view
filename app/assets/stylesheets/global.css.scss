@@ -87,12 +87,12 @@ h2 {
 a[href]:not(.btn) {
   text-decoration: underline;
   &:hover {
-    color: #293352;
+    color: $indigo;
   }
 }
 
 .user-buttons a[href]:not(.btn):hover {
-  color: #FFDB6D;
+  color: $lemon;
 }
 
 #content > div {
