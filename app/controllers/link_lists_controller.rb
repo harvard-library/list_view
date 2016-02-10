@@ -103,6 +103,7 @@ class LinkListsController < ApplicationController
             end
         end
       end
+      
     else
       @link_list = LinkList.includes(:links).find_by!(split_qualified_id(params[:qualified_id]))
       @page_title = @link_list.title
