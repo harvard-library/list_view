@@ -4,7 +4,7 @@
 
     <%= f.input :ext_id_type, :required => true,
       :as => :select,
-      :collection => MetadataSources.keys,
+      :collection => ["hollis"],
       :include_blank => false,
       :label => 'External ID Type',
       :hint => 'The type or source of the bibliographic record describing this resource.'
