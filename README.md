@@ -11,25 +11,31 @@ ListView is a tool for creating and maintaining digital objects for serial items
 This is a Rails 4.1.x application.  It requires:
 
 * Ruby 2.x
+* JRuby 1.7+
 * Bundler
 * A webserver capable of running a Rails application.  Tested on Apache and Nginx with Passenger
 * An operating system. Tested on Linux/OSX, may work on other platforms.
 * PostgreSQL 9.2 or greater
-* Imagemagick
+* ImageMagick
+
+Furthermore, List View displays List Object data from the DRS but requires the following:
+* Access to the secure DRS2 Services (for use in displaying List Objects stored in the DRS)
+* DRS2 Client Service keys
 
 ## Application Set-up Steps
 1. Get code from: https://github.com/harvard-library/list_view
 2. Run `bundle install`.
 3. Modify "config/database.yml" and create the database.
-4. Create a ".env" file for your environment.  Currently, the following variables are needed to run ListView:
+4. Modify "config/config.yml" to point to the DRS2 services
+5. Create a ".env" file for your environment.  Currently, the following variables are needed to run ListView:
 
     ```
     ROOT_URL=my.list.view.host.com
     SECRET_KEY_BASE=ThirtyPlusCharStringOfRandomnessGottenFromRakeSecretMaybe # Only needed in RAILS_ENV=production
     DEVISE_SECRET_KEY=anotherThirtyPluscharStringOfRandomness                 # Also only needed in production
     ```
-5. Set up record types and meta-data sources in "config/initializers/metadata_sources.rb"
-6. Run bootstrap rake task to set up initial admin user.
+6. Set up record types and meta-data sources in "config/initializers/metadata_sources.rb"
+7. Run bootstrap rake task to set up initial admin user.
 
     ```Shell
     rake hl:bootstrap
@@ -68,10 +74,11 @@ Some basic notes:
 ## Contributors
 
 * Bobbi Fox: http://github.com/bobbi-SMR
-* Dave Mayo: http://github.com/pobocks (primary contact)
+* Dave Mayo: http://github.com/pobocks
+* Dee Dee Crema: http://github.com/ives1227 (primary contact)
 
 ## License and Copyright
 
 This application is licensed under the GPL, version 3.
 
-2014 President and Fellows of Harvard College
+2016 President and Fellows of Harvard College
