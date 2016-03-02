@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.7'
+gem 'rails', '4.1.14.2'
 gem 'pg', :platforms => [:ruby, :mswin]
 platforms :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
@@ -10,9 +10,9 @@ end
 
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'jquery-rails', '>=3.1.3'
 gem 'turbolinks'
-gem 'devise'
+gem 'devise', '>=3.5.4'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'roo'
