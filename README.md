@@ -17,6 +17,7 @@ This is a Rails 4.1.x application.  It requires:
 * An operating system. Tested on Linux/OSX, may work on other platforms.
 * PostgreSQL 9.2 or greater
 * ImageMagick
+* A JS runtime supported by the Rails asset pipeline (Node.js, Rhino, etc)
 
 Furthermore, List View displays List Object data from the DRS but requires the following:
 * Access to the secure DRS2 Services (for use in displaying List Objects stored in the DRS)
@@ -25,6 +26,11 @@ Furthermore, List View displays List Object data from the DRS but requires the f
 ## Application Set-up Steps
 1. Get code from: https://github.com/harvard-library/list_view
 2. Run `bundle install`.
+
+   Note: If this fails with a Java `OutOfMemoryError`, you can give the JVM additional memory via JRUBY_OPTS.
+   ```Shell
+   JRUBY_OPTS=-J-Xmx2048m bundle install
+   ```
 3. Modify "config/database.yml" and create the database.
 4. Modify "config/config.yml" to point to the DRS2 services
 5. Create a ".env" file for your environment.  Currently, the following variables are needed to run ListView:
