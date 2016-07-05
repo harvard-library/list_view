@@ -1,5 +1,8 @@
 RELEASE NOTES
 
+2.0.2 (07/05/2016) VC
+-- Typo correction changed from 'startsWith' to 'starts_with?' for string comparison
+
 2.0 (02/16/2016) VC
 -- Support for DRS PDS Document List Object display
 -- Customized Harvard banner and logo
