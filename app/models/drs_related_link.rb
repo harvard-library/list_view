@@ -36,7 +36,7 @@ class DRSRelatedLink
       @relatedurl = @value
     end
     if (type.casecmp("finding aid") == 0)
-      if (@value.startsWith("http://") || value.startsWith("www.")) 
+      if (@value.start_with?("http://") || @value.start_with?("www.")) 
         @relatedurl = @value
       else
         @relatedurl = APP_CONFIG['OASIS_URL'] + "&uniqueid=" + @value
