@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.14.2'
+gem 'rails', '4.2.7.1'
 gem 'pg', :platforms => [:ruby, :mswin]
 platforms :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
