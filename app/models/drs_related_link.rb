@@ -22,25 +22,16 @@ class DRSRelatedLink
   def build_url()
     if (type.casecmp("hollis") == 0 || type.casecmp("aleph") == 0)
       @relatedurl = "http://id.lib.harvard.edu/aleph/"+@value+"/catalog"
-    end
-    if (type.casecmp("oldhollis") == 0)
+    elsif (type.casecmp("oldhollis") == 0)
       @relatedurl = "http://hollisclassic.harvard.edu/F?func=find-c&amp;CCL_TERM=sys="+@value
-    end
-    if (type.casecmp("uri") == 0)
-      @relatedurl = @value
-    end
-    if (type.casecmp("link") == 0)
-      @relatedurl = @value
-    end
-    if (type.casecmp("related") == 0)
-      @relatedurl = @value
-    end
-    if (type.casecmp("finding aid") == 0)
+    elsif (type.casecmp("finding aid") == 0)
       if (@value.start_with?("http://") || @value.start_with?("www.")) 
         @relatedurl = @value
       else
         @relatedurl = APP_CONFIG['OASIS_URL'] + "&uniqueid=" + @value
       end
+    else
+      @relatedurl = @value
     end
   end
 
