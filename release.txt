@@ -1,5 +1,8 @@
 RELEASE NOTES
 
+2.0.3 (02/28/2017) VC
+-- Releated links now display Local identifiers
+
 2.0.2 (07/05/2016) VC
 -- Typo correction changed from 'startsWith' to 'starts_with?' for string comparison
 
