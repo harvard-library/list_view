@@ -58,10 +58,10 @@
 	      <% @link_list.related_links.each do |link| %>
 	      <li>
 	      	<% if (!link.related_url().nil?) then %>
-	      		<% if (link.related_url().start_with?("http://") || link.related_url().start_with?("www.")) %>
+	      		<% if (link.related_url().start_with?("http://") || link.related_url().start_with?("www.") || link_related_url().start_with?("https://") %>
 	        		<%= link.type %> <%= link_to link.label, link.related_url(), :target => '_blank' %>
 	        	<% else %>
-	        		<%= link.type %> <%= link.label %>: <% link.related_url() %>
+	        		<%= link.type %> <%= link.label %>: <%= link.related_url() %>
 	        	<% end %>
 	        <% else  %>
 	        <%= link.type %> <%= link.label %>
