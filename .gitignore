@@ -36,3 +36,4 @@
 # Ignore OSX Finder detritus
 .DS_Store
 /.project
+/release.txt
