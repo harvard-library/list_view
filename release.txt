@@ -1,4 +1,7 @@
 RELEASE NOTES
+2.0.6 (05/31/2017) VC
+-- Updates to nokogiri/mail gems due to vulnerabilities.
+
 2.0.5 (04/11/2017) VC
 -- Updates to nokogiri/libxml2 gems due to vulnerabilities.
 
