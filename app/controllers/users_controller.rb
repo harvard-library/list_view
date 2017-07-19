@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_login!
+  before_action :authenticate_login!, :except => [:new, :create]
 
   # Helper methods
 
