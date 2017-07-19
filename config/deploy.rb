@@ -5,7 +5,8 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
 set :application, 'list_view'
-set :repo_url, 'git@github.com:harvard-library/list_view.git'
+#set :repo_url, 'git@github.com:harvard-library/list_view.git'
+set :repo_url, 'https://github.com/harvard-library/list_view.git'
 
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
