@@ -1,6 +1,6 @@
 class LinkListsController < ApplicationController
   before_action :authenticate_login!, :except => [:index, :show, :meta]
-  after_action :allow_iframe, only: :embed
+  after_action :allow_iframe, only: :show
 
   #### Collection actions
 
