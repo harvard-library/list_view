@@ -10,7 +10,7 @@ defaults: &defaults
 development:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
-  NRS_RESOLVER_URL: http://nrstest.harvard.edu:10031
+  NRS_RESOLVER_URL: https://nrs-dev.lib.harvard.edu/
   FTS_SEARCH_URL: http://ftstest.lib.harvard.edu:10006/fts/search?S=
   
   # properties related to SSL
@@ -22,7 +22,7 @@ development:
 test:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
-  NRS_RESOLVER_URL: http://nrstest.harvard.edu:9031
+  NRS_RESOLVER_URL: https://nrs-qa.lib.harvard.edu/
   FTS_SEARCH_URL: http://ftstest.lib.harvard.edu:9006/fts/search?S=
  
   # properties related to SSL
@@ -34,7 +34,7 @@ test:
 production:
   <<: *defaults
   DRS2_SERVICE_BASE_URL: <service base url>
-  NRS_RESOLVER_URL: http://nrs.harvard.edu
+  NRS_RESOLVER_URL: https://nrs.harvard.edu
   FTS_SEARCH_URL: http://fts.lib.harvard.edu/fts/search?S=
 
   # properties related to SSL
