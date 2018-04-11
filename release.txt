@@ -1,4 +1,11 @@
 RELEASE NOTES
+2.0.9 (04/12/2018) VC
+-- Updates to vulnerabilities:
+   -loofah (gemnasium bug CVE-2018-8048) XSS vulnerability
+   -nokogiri (gemnasium bug CVE-2017-15412) Denial of service; (gemnasium bug CVE-2017-16932) infinite recursion
+   -rails-html-sanitizer (gemnasium bug CVE-2018-3741) XSS vulnerability 
+   -yard (gemnasium bug CVE-2017-17042) directory traversal
+
 2.0.8 (09/25/2017) VC
 -- Updates to nokogiri/libxml2 gems due to vulnerabilities.
 
