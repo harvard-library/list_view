@@ -90,6 +90,7 @@ class LinkListsController < ApplicationController
 
   def show
     splitid = split_qualified_id(params[:qualified_id])
+    @lvtype = splitid[:ext_id_type]
     if splitid[:ext_id_type] == 'drs'
       @link_list = DRSLinkList.display_object(splitid[:ext_id])
       @page_title = !@link_list.mets_title.is_a?(Array) && !@link_list.mets_title.blank? ? @link_list.mets_title : ''

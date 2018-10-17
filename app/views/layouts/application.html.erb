@@ -18,7 +18,11 @@
     </ul>
     
   	<ul class="user-buttons listview-main-menu">
+  	<% if @lvtypen == 'drs' %>
+  		<li><a class="help" href="http://nrs.harvard.edu/urn-3:hul.ois:drslistview-help" target="_blank"><span class="fa fa-question-circle"></span>Help</a></li>
+  	<% else %>
     	<li><a class="help" href="https://wiki.harvard.edu/confluence/display/LibraryStaffDoc/ListView" target="_blank"><span class="fa fa-question-circle"></span>Help</a></li>
+   	<% end %>
     	<li><a class="share" href="#" target="_blank"><span class="fa fa-share-alt"></span>Share</a></li>
     	<% if !@link_list.blank? %>
 		  <li><a class="cite" href="#"><span class="fa fa-quote-left"></span>Cite</a></li>
