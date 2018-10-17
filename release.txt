@@ -1,4 +1,12 @@
 RELEASE NOTES
+
+2.0.10 (04/12/2018) VC
+-- Updates to vulnerabilities:
+   -sprockets
+   -ffi
+   -rubyzip
+-- Changed the help link for DRS LV
+   
 2.0.9 (04/12/2018) VC
 -- Updates to vulnerabilities:
    -loofah (gemnasium bug CVE-2018-8048) XSS vulnerability
