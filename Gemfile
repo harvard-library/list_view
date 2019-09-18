@@ -17,7 +17,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'roo'
 gem 'acts_as_list'
 gem 'httparty'
-gem 'bootstrap-sass', '3.3.6'
+gem 'bootstrap-sass', '3.4.1'
 gem 'autoprefixer-rails'
 gem 'formtastic', '~> 2.1' # Ye Olde Formtastic because formtastic bootstrap doesn't work with formtastic 3 re: https://github.com/mjbellantoni/formtastic-bootstrap/issues/109
 gem 'formtastic-bootstrap'
