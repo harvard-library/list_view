@@ -55,17 +55,17 @@
 .listview-main-menu.user-buttons {
     padding-right: 0;
 }
-.user-buttons li .fa, .slicknav_nav li .fa {
+.user-buttons li .fas, .slicknav_nav li .fas {
     color: #888;
     font-size: 18px;
     vertical-align: middle;
     margin-right: 5px;
 }
-.fa {
+.fas {
     display: inline-block;
-    font-family: FontAwesome;
+    font-family: Font Awesome 5 Free;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 900;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

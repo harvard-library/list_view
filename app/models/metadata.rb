@@ -11,9 +11,10 @@ Metadata = Struct.new(:ext_id, :ext_id_type, :body, :title, :author, :publicatio
   end
 
   def source_url
-    Erubis::Eruby
-      .new(MetadataSources[ext_id_type]['templates']['metadata'])
-      .result(:ext_id => ext_id, :ext_id_type => ext_id_type)
+    b = binding
+    b.local_variable_set(:ext_id, ext_id)
+    b.local_variable_set(:ext_id_type, ext_id_type)
+    eval(Erubi::Engine.new(MetadataSources[ext_id_type]['templates']['record_url']).src, b)
   end
 
   def fetch_metadata

@@ -1,5 +1,20 @@
 RELEASE NOTES
 
+2.0.11 (08/13/2019) VC
+-- Updates to vulnerabilities:
+   - rails (CVE-2019-5418/9)
+   - actionview (CVE-2019-5418)
+   - mini_magick (CVE-2019-13574)
+   - yard (GHSA-xfhh-rx56-rxcr)
+   - nokogiri (CVE-2018-14404/CVE-2019-5477)
+   - devise (CVE-2019-5421)
+   - bootstrap-sass (CVE-2019-8331)
+   - rack (CVE-2018-16471)
+   - loofah (CVE-2018-16468)
+-- Update to Font Awesome 5+
+-- Update to JRuby 9.2.7.0
+-- Update to Node v10.16.0
+
 2.0.10 (04/12/2018) VC
 -- Updates to vulnerabilities:
    -sprockets

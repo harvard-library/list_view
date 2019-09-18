@@ -36,7 +36,7 @@ class LinkList < ActiveRecord::Base
                   :user_email => ll.last_touched_by,
                   :ext_id => ll.ext_id,
                   :ext_id_type => ll.ext_id_type,
-                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :serialized_linklist => ll.links.to_json,
                   :time => ll.created_at)
   end
 
@@ -45,7 +45,7 @@ class LinkList < ActiveRecord::Base
                   :user_email => ll.last_touched_by,
                   :ext_id => ll.ext_id,
                   :ext_id_type => ll.ext_id_type,
-                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :serialized_linklist => ll.links.to_json,
                   :time => ll.updated_at)
   end
 
@@ -54,7 +54,7 @@ class LinkList < ActiveRecord::Base
                   :user_email => ll.last_touched_by,
                   :ext_id => ll.ext_id,
                   :ext_id_type => ll.ext_id_type,
-                  :serialized_linklist => ll.serializable_hash(:include => :links).to_json,
+                  :serialized_linklist => ll.links.to_json,
                   :time => DateTime.now)
   end
 
@@ -65,9 +65,10 @@ class LinkList < ActiveRecord::Base
 
   # Get URL for bibliographic record based on template
   def url
-    Erubis::Eruby
-      .new(MetadataSources[ext_id_type]['templates']['record_url'])
-      .result(:ext_id => ext_id, :ext_id_type => ext_id_type)
+    b = binding
+    b.local_variable_set(:ext_id, ext_id)
+    b.local_variable_set(:ext_id_type, ext_id_type)
+    eval(Erubi::Engine.new(MetadataSources[ext_id_type]['templates']['record_url']).src, b)
   end
 
   # Ephemeral instance var used in audit functionality
