@@ -19,7 +19,7 @@
   </ul>
 <% end %>
 <div class="metadata">
-  <div class="image"><%= image_tag @link_list.image unless @link_list.image.blank? %></div>
+  <div class="image"><%= image_tag @link_list.image.url unless @link_list.image.blank? %></div>
   <% unless @title.blank? %>
     <div class="title"><span class="md-label">Title: </span><%= !@title.is_a?(Array) && !@title.blank? ? @title : '' %>
       <% if @title.is_a?(Array) %>
