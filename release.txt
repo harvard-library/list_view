@@ -1,7 +1,7 @@
 RELEASE NOTES
 
 <Next release> (Date TBD) VC
--- Corrected image call for Rails 5.2
+-- Corrected image calls for Rails 5.2
 
 2.0.11 (08/13/2019) VC
 -- Updates to vulnerabilities:

@@ -41,7 +41,7 @@
 
     <%= f.input :image_cache, :as => :hidden %>
     <% unless @link_list.image.blank?  %>
-      <%= image_tag @link_list.image %>
+      <%= image_tag @link_list.image.url %>
       <%= f.input :remove_image, :as => :boolean %>
     <% end %>
     <hr />
