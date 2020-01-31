@@ -2,6 +2,7 @@ RELEASE NOTES
 
 <Next release> (Date TBD) VC
 -- Corrected image calls for Rails 5.2
+-- Updated formtastic to v3 (old problems no longer seem to exist)
 
 2.0.11 (08/13/2019) VC
 -- Updates to vulnerabilities:
